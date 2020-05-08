@@ -1,0 +1,49 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.pojo.Right;
+import com.dxm.insuranceSpring.pojo.Role;
+
+@Service
+public interface RoleDao {
+	
+	@Select("select count(*) from t_role")
+	public Integer countRoles(); //统计行
+	@Select("select *from t_role order by roleid")
+	public List<Role> queryRoles(); //遍历角色--数据接口开发
+	@Select("select *from t_role order by roleid")
+	public List<Role> selectRoles(RowBounds rb); //遍历角色--正常web开发
+	
+	
+	@Insert("insert into t_role values(0,#{rolename})")
+	public Integer insertRole(String rolename); //添加角色
+	
+	@Delete("delete from t_role where roleid=#{roleid}")
+	public Integer deleteRole(Integer roleid); //删除角色
+	
+	@Update("update t_role set rolename=#{roleName} where roleid=#{roleId}")
+	public Integer updateRole(Role role);//修改角色
+	
+	@Select("select *from t_role where roleid=#{roleid}")
+	public Role queryRoleByRid(Integer roleid);//根据id查询角色
+	@Select("select *from t_right where rightid in(select rightid from t_roleright where roleid=#{roleid})")
+	public List<Right> queryHaveRight(Integer roleid);//查询已拥有权限
+	@Select("select *from t_right where rightid not in(select rightid from t_roleright where roleid=#{roleid})")
+	public List<Right> queryUnhaveRight(Integer roleid);//查询未拥有权限
+	
+	//添加权限到角色
+	@Insert("insert into t_roleright values(#{roleid},#{rightid})")
+	public Integer addRightToRole(@Param("roleid")Integer roleid,@Param("rightid")Integer rightid);
+    //从角色移除权限
+	@Delete("delete from t_roleright where roleid=#{roleid} and rightid in(${rightid})")
+	public Integer deleteRightToRole(@Param("roleid")Integer roleid,@Param("rightid")String rightid);
+}

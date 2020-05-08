@@ -1,0 +1,5 @@
+package com.dxm.insuranceSpring.dao;
+
+public interface WarrantyDao {
+
+}

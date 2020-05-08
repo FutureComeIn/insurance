@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxm.insuranceSpring.mappers.reportMap">
+
+<!-- 保单和报案  一对多-->
+<resultMap type="com.dxm.insuranceSpring.pojo.Report" id="reportBean">
+	    <id column="reportId" property="reportId" javaType="java.lang.Integer"/>
+		<result column="warrantyId" property="warrantyId" javaType="java.lang.Integer"/>
+		<result column="reportPersonName" property="reportPersonName" javaType="java.lang.String"/>
+		<result column="reporPersontPhone" property="reporPersontPhone" javaType="java.lang.String"/>
+		<result column="reportTime" property="reportTime" javaType="java.lang.String"/>
+		<result column="reportReason" property="reportReason" javaType="java.lang.String"/>
+		<result column="province" property="province" javaType="java.lang.String"/>
+		<result column="city" property="city" javaType="java.lang.String"/>
+		<result column="area" property="area" javaType="java.lang.String"/>
+		<result column="road" property="road" javaType="java.lang.String"/>
+		<result column="road_direction" property="road_direction" javaType="java.lang.String"/>
+		<result column="userId" property="userId" javaType="java.lang.Integer"/>
+		<result column="userName" property="userName" javaType="java.lang.String"/>
+		<result column="caseStatus" property="caseStatus" javaType="java.lang.Integer"/>
+		<association property="warranty" select="selectWarrantyByReport" column="warrantyId" javaType="com.dxm.insuranceSpring.pojo.Warranty"/>
+</resultMap>
+<!-- Warranty -->
+<select id="selectWarrantyByReport" resultType="com.dxm.insuranceSpring.pojo.Warranty">
+	select policyholdersName,recognizeeName,sailId from t_warranty where warrantyId=#{warrantyId}
+</select>
+
+</mapper>

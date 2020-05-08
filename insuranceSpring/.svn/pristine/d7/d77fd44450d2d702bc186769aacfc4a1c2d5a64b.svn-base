@@ -1,0 +1,53 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.*;
+
+import com.dxm.insuranceSpring.pojo.Warranty;
+
+public interface WarrantyDao {
+	/**
+	 * 查询单条保单
+	 * @param warranty_number 保单编号
+	 * @return
+	 */
+	@Select("select * from t_warranty where warrantyId=#{warrantyId}")
+	public Warranty querySingleInsurance(Integer warrantyId);
+	
+
+	/**
+	 * 修改保单信息
+	 * @param info
+	 * @return
+	 */
+	@Update("")
+	public int updateWarranty(Warranty wa);
+	
+	
+	/**
+	 * 添加保单信息
+	 * @param info
+	 * @return
+	 */
+	@Insert("insert into t_warranty values()")
+	public int addWarranty(Warranty wa);
+	
+	/**
+	 * 更新保单止期
+	 * @param insurance_end_date
+	 * @return
+	 */
+	@Update("")
+	public int insurancedate(Warranty info);
+	
+	/**
+	 * 保单查询
+	 * @param info 保单编号 投保人 被保人
+	 * @return 保单信息
+	 */
+	@Select("")
+	public List<Warranty> insurancequery(Warranty info);
+	
+	
+}

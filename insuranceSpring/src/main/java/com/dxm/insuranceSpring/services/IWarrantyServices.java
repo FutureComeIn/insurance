@@ -1,0 +1,144 @@
+package com.dxm.insuranceSpring.services;
+
+
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Policyholders;
+import com.dxm.insuranceSpring.pojo.Recognizee;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface IWarrantyServices {
+	/**
+	 * 	查询单条保单
+	 * @param warrantyId 保单号
+	 * @return 单条数据
+	 */
+	public Warranty queryWarrantyById(Integer warrantyId);
+	
+	public CarType queryWarrantyCarTypeById(Integer carId);
+	
+	public APIRequest queryWarrantyCarTypeByName(String carTypeName);
+	/**
+	 * 修改保单
+	 * @param info 保单信息
+	 * @return	是否成功
+	 */
+	public APIRequest update(Warranty wa);
+	
+	/**
+	 * 续保
+	 * @param warrantyId 保单号
+	 * @param years	续保年数
+	 * @return 是否成功
+	 */
+	public APIRequest xubao(Integer warrantyId,String years);
+	
+		/**
+		 * 添加保单信息
+		 * @param info 保单信息
+		 * @return	是否成功
+		 */
+		 
+		public APIRequest add(Warranty wa);
+		
+		/**
+		 * 	保单模糊查询	
+		 * @param warrantyId 保单号	
+		 * @param policyholdersName 投保人姓名	
+		 * @param recognizeeName 被保人姓名
+		 * @param idCard 被保人身份证 
+		 * @param indexpage 当前页
+		 * @return	保单分页数据
+		 */
+		public APIRequest queryByInfo(Warranty wa,Integer indexpage);
+		/**
+		 * 分页查询
+		 * @param indexpage
+		 * @return
+		 */
+		public APIRequest queryAll(Integer indexpage);
+		/***
+		 * 添加投保人
+		 * @param Policyholders 投保人信息
+		 * @return
+		 */
+		public APIRequest addPolicyHolder(Policyholders pc);
+		/***
+		* 修改投保人
+	    * @param Policyholders投保人信息
+		* @return
+		*/
+		public Integer updatePolicyHolder(Policyholders pc);
+		
+		public APIRequest updatePolicy(Policyholders pc);
+			/***
+			 * 查询投保人
+			 * @param policyholdersName  投保人姓名
+			 * @param credentialsId  身份证号码
+			 * @return
+			 */
+			public APIRequest queryPolicyHolderByInfo(Policyholders pc,Integer indexpage);
+			/**
+			 * 根据Id查询数据
+			 * @param policyholderId
+			 * @return
+			 */
+			public Policyholders queryPolicyholderById(Integer policyholderId);
+			
+			public APIRequest queryPolicyholderByCardId(String cardId);
+			/**
+			 * 根据Id查询数据
+			 * @param recognizeeId
+			 * @return
+			 */
+			public Recognizee queryRecognizeeById(Integer recognizeeId);
+			
+			public APIRequest queryRecognizeeByCardId(String cardId);
+			/**
+			 * 分页查询投保人信息
+			 * @param indexpage
+			 * @return
+			 */
+			public APIRequest queryPolicyHolder(Integer indexpage);
+			/***
+			 * 删除投保人
+			 * @param policyholdersId 投保人编号
+			 * @return
+			 */
+			public APIRequest deletePolicyHolder(Integer policyholdersId);
+			
+			/***
+			 * 添加被保人
+			 * @param Recognizee 投保人信息
+			 * @return
+			 */
+				public APIRequest addRecognizee(Recognizee rg);
+				/***
+				 * 修改被保人
+				 * @param Recognizee投保人信息
+				 * @return
+				 */
+				public APIRequest updateRecognizee(Recognizee rg);
+				/***
+				 * 查询被保人
+				 * @param RecognizeeName  投保人姓名 
+				 * @param idCard  身份证号码
+				 * @return
+				 */
+				public APIRequest queryRecognizeeByInfo(Recognizee rg,Integer indexpage);
+				/**
+				 * 分页查询被保人信息
+				 * @param indexpage
+				 * @return
+				 */
+				public APIRequest queryRecognizee(Integer indexpage);
+				/***
+				 * 删除投保人
+				 * @param RecognizeeId 投保人编号
+				 * @return
+				 */
+				public APIRequest deleteRecognizee(Integer RecognizeeId);
+				
+				public APIRequest<Warranty> queryWarrantyDetilsById(Integer warrantyId);
+				
+}

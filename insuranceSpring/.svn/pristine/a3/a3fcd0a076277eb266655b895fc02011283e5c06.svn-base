@@ -1,0 +1,39 @@
+package com.dxm.insuranceSpring.controls;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+public class LoginControls {
+	
+	@RequestMapping("/login.do")
+	public String login(HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		System.out.println("sessionid："+session.getId());
+//		Cookie[] cs = request.getCookies();
+//		for (Cookie cookie : cs) {
+//			System.out.println("cookie:"+cookie.getName());
+//			System.out.println("cookie-value:"+cookie.getValue());
+//		}
+//		Cookie c = new Cookie("aaaa", "admin");
+//		response.addCookie(c);
+		
+		//自己的登陆交给shiro完成
+		//他需要一组TOKEN
+		try {
+			UsernamePasswordToken token = new UsernamePasswordToken("admin","123456");
+			SecurityUtils.getSubject().login(token);
+			System.out.println("登陆成功");
+			return "src/page/welcome/index";	
+		} catch (Exception e) {
+			System.out.println("登陆失败");
+			return "src/page/welcome/login";
+		}
+	}
+}

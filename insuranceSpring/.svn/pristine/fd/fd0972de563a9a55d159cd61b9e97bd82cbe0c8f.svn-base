@@ -1,0 +1,42 @@
+package com.dxm.insuranceSpring.pojo;
+
+public class Right {
+	private Integer rightId;
+	private String rightName;
+	private String rightDetails;
+	
+	
+	public Right() {
+		super();
+	}
+	public Right(Integer rightId, String rightName, String rightDetails) {
+		super();
+		this.rightId = rightId;
+		this.rightName = rightName;
+		this.rightDetails = rightDetails;
+	}
+	public Integer getRightId() {
+		return rightId;
+	}
+	public void setRightId(Integer rightId) {
+		this.rightId = rightId;
+	}
+	public String getRightName() {
+		return rightName;
+	}
+	public void setRightName(String rightName) {
+		this.rightName = rightName;
+	}
+	public String getRightDetails() {
+		return rightDetails;
+	}
+	public void setRightDetails(String rightDetails) {
+		this.rightDetails = rightDetails;
+	}
+	@Override
+	public String toString() {
+		return "Right [rightId=" + rightId + ", rightName=" + rightName + ", rightDetails=" + rightDetails + "]";
+	}
+	
+	
+}

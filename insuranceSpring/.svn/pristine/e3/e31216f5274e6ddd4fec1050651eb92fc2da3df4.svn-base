@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxm.insuanceSpring.mappers.CarLossSqlMap">
+	
+	<!-- 定损表 
+	<select id="selectAssessment" resultMap="AssessmentBean">
+		select * from t_assessment where AssessmentId=#{id}	
+	</select>
+	-->
+	<resultMap type="com.dxm.insuranceSpring.pojo.Assessment" id="assessmentBean">
+		<id column="assessmentId" property="assessmentId" javaType="java.lang.Integer"/>
+		<result column="myCarDamageId" property="myCarDamageId" javaType="java.lang.Integer"/>
+		<result column="adverseCarDamageId" property="adverseCarDamageId" javaType="java.lang.Integer"/>
+		<result column="assessmentTime" property="assessmentTime" javaType="java.util.Date"/>
+		<result column="totalPrice" property="totalPrice" javaType="java.lang.Integer"/>
+		<result column="remark" property="remark" javaType="java.lang.String"/>
+		<result column="UserId" property="UserId" javaType="java.lang.Integer"/>
+		<result column="assessmentPerson" property="assessmentPerson" javaType="java.lang.String"/>
+		<result column="status" property="status" javaType="java.lang.String"/>
+		<association property="myCarDamageInfo" select="selectMyCarDamage" column="myCarDamageId" javaType="com.dxm.insuranceSpring.pojo.MyCarDamage"/>
+		<association property="adverseCarDamageInfo" select="selectAdverseCarDamage" column="adverseCarDamageId" javaType="com.dxm.insuranceSpring.pojo.AdverseCarDamage"/>
+	</resultMap>
+	<!-- 我方车损信息及详情 -->
+	<select id="selectMyCarDamage" resultMap="myCarDamageBean">
+		select * from t_myCarDamage where 	myCarDamageId=#{id}	
+	</select>
+	
+	<resultMap type="com.dxm.insuranceSpring.pojo.MyCarDamage" id="myCarDamageBean">
+		<id column="myCarDamageId" property="myCarDamageId" javaType="java.lang.Integer"/>
+		<result column="caseId" property="caseId" javaType="java.lang.Integer"/>
+		<result column="name" property="name" javaType="java.lang.String"/>
+		<result column="tel" property="tel" javaType="java.lang.String"/>
+		<result column="carType" property="carType" javaType="java.lang.String"/>
+		<result column="carNumber" property="carNumber" javaType="java.lang.String"/>
+		<result column="damageExtend" property="carNumber" javaType="java.lang.String"/>
+		<result column="price" property="carNumber" javaType="java.lang.Integer"/>
+		<collection property="myCarDamageDetailsInfo" column="myCarDamageId" ofType="com.tmf.bbs.pojo.MyCarDamageDetails" select="selectMyCarDamageDetails " />
+	</resultMap>
+	
+	<select id="selectMyCarDamageDetails" resultType="com.dxm.insuranceSpring.pojo.MyCarDamageDetails">
+		select * from t_adversecardamagedetails where myCarDamageId=#{id}
+	</select>
+	
+	<!-- 对方车损信息及详情 -->
+	<select id="selectAdverseCarDamage" resultMap="adverseCarDamageBean">
+		select * from t_adverseCarDamage where 	adverseCarDamageId=#{id}	
+	</select>
+	<resultMap type="com.dxm.insuranceSpring.pojo.AdverseCarDamage" id="adverseCarDamageBean">
+		<id column="adverseCarDamageId" property="adverseCarDamageId" javaType="java.lang.Integer"/>
+		<result column="caseId" property="caseId" javaType="java.lang.Integer"/>
+		<result column="name" property="name" javaType="java.lang.String"/>
+		<result column="tel" property="tel" javaType="java.lang.String"/>
+		<result column="carType" property="carType" javaType="java.lang.String"/>
+		<result column="carNumber" property="carNumber" javaType="java.lang.String"/>
+		<result column="damageExtend" property="carNumber" javaType="java.lang.String"/>
+		<result column="price" property="carNumber" javaType="java.lang.Integer"/>
+		<collection property="myCarDamageDetailsInfo" column="adverseCarDamageId" ofType="com.dxm.insuranceSpring.pojo.AdverseCarDamageDetails" select="selectAdverseCarDamageDetails" />
+	</resultMap>
+	<select id="selectAdverseCarDamageDetails" resultType="com.dxm.insuranceSpring.pojo.AdverseCarDamageDetails">
+		select * from t_adversecardamagedetails where adverseCarDamageId=#{id}
+	</select>
+	
+</mapper>

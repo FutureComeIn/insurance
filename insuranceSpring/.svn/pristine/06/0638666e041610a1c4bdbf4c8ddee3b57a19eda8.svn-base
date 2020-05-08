@@ -1,0 +1,45 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.Policyholders;
+import com.dxm.insuranceSpring.services.IWarrantyServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+public class PolicyholdersControls {
+	@Resource(name="warrantyServicesImpl")
+	IWarrantyServices service;
+	@RequestMapping(value="/addPolicyholders.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addPolicyholders(Policyholders pc){
+		APIRequest<Policyholders> api=service.addPolicyHolder(pc);
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/queryPolicyholders.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryPolicyholders(Integer indexpage) {
+		APIRequest<Policyholders> api=service.queryPolicyHolder(indexpage);
+		//System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/queryPolicyholdersByInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryPolicyholdersByInfo(Policyholders pc,Integer indexpage) {
+		APIRequest<Policyholders> api = service.queryPolicyHolderByInfo(pc, indexpage);
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/updatePolicyholders.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updatePolicyholders(Policyholders pc){
+		APIRequest<Policyholders> api=service.updatePolicyHolder(pc);
+		return api.toString();
+	}
+}

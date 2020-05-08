@@ -1,0 +1,234 @@
+package com.dxm.insuranceSpring.pojo;
+
+public class User {
+	private Integer userId; /*用户编号*/
+	private String  userName;  /*用户名*/
+	private String	cardId;/*身份证号*/
+	private String	workTime;/*入职日期*/
+	private String  sex; /*性别*/
+	private Integer age;/*年龄*/
+	private String	tel;/*联系方式*/
+	private String	province;/*省*/
+	private String  city;  /*市*/
+	private String	email;/*邮箱*/
+	private Integer	leaveStatus;/*是否离职*/	
+	private String	img; /*头像*/
+	private String	account;/*昵称*/
+	private String  password;/*密码*/
+
+	private String rolenames; /*拥有的角色名*/
+	public String getRolenames() {
+		return rolenames;
+	}
+	public void setRolenames(String rolenames) {
+		this.rolenames = rolenames;
+	}
+
+
+
+	public User() {
+		super();
+	}
+
+
+
+	public User(Integer userId, String userName, String cardId, String workTime, String sex, Integer age, String tel,
+			String province, String city, String email, Integer leaveStatus, String img, String account,
+			String password) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.cardId = cardId;
+		this.workTime = workTime;
+		this.sex = sex;
+		this.age = age;
+		this.tel = tel;
+		this.province = province;
+		this.city = city;
+		this.email = email;
+		this.leaveStatus = leaveStatus;
+		this.img = img;
+		this.account = account;
+		this.password = password;
+	}
+
+
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+	public String getCardId() {
+		return cardId;
+	}
+
+
+
+	public void setCardId(String cardId) {
+		this.cardId = cardId;
+	}
+
+
+
+	public String getWorkTime() {
+		return workTime;
+	}
+
+
+
+	public void setWorkTime(String workTime) {
+		this.workTime = workTime;
+	}
+
+
+
+	public String getSex() {
+		return sex;
+	}
+
+
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+
+
+	public Integer getAge() {
+		return age;
+	}
+
+
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+
+
+	public String getTel() {
+		return tel;
+	}
+
+
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+
+
+	public String getProvince() {
+		return province;
+	}
+
+
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public Integer getLeaveStatus() {
+		return leaveStatus;
+	}
+
+
+
+	public void setLeaveStatus(Integer leaveStatus) {
+		this.leaveStatus = leaveStatus;
+	}
+
+
+
+	public String getImg() {
+		return img;
+	}
+
+
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+
+
+	public String getAccount() {
+		return account;
+	}
+
+
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", cardId=" + cardId + ", workTime=" + workTime
+				+ ", sex=" + sex + ", age=" + age + ", tel=" + tel + ", province=" + province + ", city=" + city
+				+ ", email=" + email + ", leaveStatus=" + leaveStatus + ", img=" + img + ", account=" + account
+				+ ", password=" + password + "]";
+	}
+	
+	
+}

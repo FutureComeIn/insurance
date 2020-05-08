@@ -1,0 +1,234 @@
+function updateCarLossDetails(CarDamageDetailsId,CarDamageId,obj){
+	//alert(adverseCarDamageDetailsId);
+	var tr=$(obj).parent().parent();
+	var xiaoji=tr.children().eq(5).text();
+	var price=parseInt(tr.children().eq(2).children().eq(0).val());//详细价格
+	var oldprice=parseInt(tr.children().eq(2).children().eq(1).val());//修改前详细价格
+	var count=parseInt(tr.children().eq(3).children().eq(0).val());//详细数量
+	var oldcount=parseInt(tr.children().eq(3).children().eq(1).val());//修改前详细数量
+	var tab=tr.parent();
+	var div=tab.parent().parent();
+	var prevdiv=div.prev();
+	var previd=prevdiv.children().eq(0).attr("id");
+	//原始车损价格
+	var otherxiaoji=parseInt(prevdiv.children().eq(0).children().eq(1).children().eq(1).children().eq(5).text());
+	
+	if(price==""){
+		alert("定损价格未填");
+		return false;
+	}
+	if(count==""){
+		alert("定损数量未填");
+		return false;
+	}
+	if(price==oldprice&&count==oldcount){
+		return false;
+	}
+	if(previd=="adversecar"){
+		//alert(previd);
+		
+		$.ajax({
+			url:'http://localhost:8080/src/page/dinsun/updateAdverseCarDamageDetails.do',
+			type:'post',
+			data:{
+				'adverseCarDamageDetailsId':CarDamageDetailsId,
+				'adverseCarDamageId':CarDamageId,
+				'price':price,
+				'totalPrice':otherxiaoji-(price*count)+(oldprice*oldcount),
+				'amount':count
+			},
+			dataType:'json',
+			success:function(data){
+//				//控制输出
+				console.log(data);
+				if(data.result){
+					tr.children().eq(2).children().eq(1).val(price);
+					tr.children().eq(3).children().eq(1).val(count);
+				}else{
+					tr.children().eq(2).children().eq(0).val(oldprice);
+					tr.children().eq(3).children().eq(0).val(oldcount);
+				}
+				alert(data.message);
+			},
+			error:function(){
+				alert("更新失败");
+				tr.children().eq(2).children().eq(0).val(oldprice);
+				tr.children().eq(3).children().eq(0).val(oldcount);
+			}
+		})
+		
+	}
+	if(previd=="mycar"){
+		//alert(previd);
+		$.ajax({
+			url:'http://localhost:8080/src/page/dinsun/updateMyCarDamageDetails.do',
+			type:'post',
+			data:{
+				'myCarDamageDetailsId':CarDamageDetailsId,
+				'myCarDamageId':CarDamageId,
+				'price':price,
+				'totalPrice':otherxiaoji-(price*count)+(oldprice*oldcount),
+				'amount':count
+			},
+			dataType:'json',
+			success:function(data){
+//				//控制输出
+				console.log(data);
+				if(data.result){
+					tr.children().eq(2).children().eq(1).val(price);
+					tr.children().eq(3).children().eq(1).val(count);
+				}else{
+					tr.children().eq(2).children().eq(0).val(oldprice);
+					tr.children().eq(3).children().eq(0).val(oldcount);
+				}
+				alert(data.message);
+			},
+			error:function(){
+				alert("更新失败");
+				tr.children().eq(2).children().eq(0).val(oldprice);
+				tr.children().eq(3).children().eq(0).val(oldcount);
+			}
+		})
+	}
+
+}
+
+
+//function resetprice(obj){
+//	var input=$(obj).val();
+//	alert(input);
+//}
+
+//function searchFreight(obj){
+//	var input=$(obj).val();
+//	var price=parseInt($(obj).parent());
+//	var count=parseInt($(obj).parent().parent().children().eq(3).children().eq(1).val());
+//	var xiaojivar=parseInt($(obj).parent().parent().children().eq(5).text());
+//	alert(count);
+//	//alert(count);
+//}
+//输入金额时动态显示金额小计
+$(function(){
+	$(".money").keyup(function (){
+		var money=$(this);
+		var price=parseInt(money.val());
+		var oldprice=parseInt(money.next().val());
+		var total=money.parent().next().next().next();
+		var count=parseInt(money.parent().next().children().eq(0).val());
+		var oldcount=parseInt(money.parent().next().children().eq(1).val());
+		var coin=money.parent().parent().parent().parent().parent().prev().children().children().children().eq(1).children().eq(5);
+		var oldcoin=coin.children().eq(1).val();
+		var c=parseInt(coin.children().eq(0).text());
+		var xiaoji=money.parent().parent().parent().children();
+		total.text(price*count);
+		var newcoin=0;
+		xiaoji.each(function(index,element){
+			var i=parseInt($(element).children().eq(5).text());
+			if(index!=0){
+				newcoin+=i;
+			}
+		})
+		coin.children().eq(0).text(newcoin);
+		
+	})
+	
+	
+})
+//输入数量时动态显示金额小计
+$(function(){
+	$(".count").keyup(function (){
+		var count=$(this);
+		var counts=parseInt(count.val());
+		var oldcount=parseInt(count.next().val());
+		var total=count.parent().next().next();
+		var price=parseInt(count.parent().prev().children().eq(0).val());
+		var oldprice=parseInt(count.parent().prev().children().eq(1).val());
+		//alert(counts);
+		var coin=count.parent().parent().parent().parent().parent().prev().children().children().children().eq(1).children().eq(5);
+		var oldcoin=coin.children().eq(1).val();
+		var c=parseInt(coin.children().eq(0).text());
+		var xiaoji=count.parent().parent().parent().children();
+		total.text(price*counts);
+		var newcoin=0;
+		xiaoji.each(function(index,element){
+			var i=parseInt($(element).children().eq(5).text());
+			if(index!=0){
+				newcoin+=i;
+				//alert(i);
+			}
+		})
+		coin.children().eq(0).text(newcoin);
+		
+	})
+	
+})
+
+//删除定损详情
+function deleteCarLossDetails(CarDamageDetailsId,CarDamageId,obj){
+		var tr=$(obj).parent().parent();
+		var xiaoji=tr.children().eq(5).text();
+		var oldprice=parseInt(tr.children().eq(2).children().eq(1).val());//修改前详细价格
+		var oldcount=parseInt(tr.children().eq(3).children().eq(1).val());//修改前详细数量
+		var tab=tr.parent();
+		var div=tab.parent().parent();
+		var prevdiv=div.prev();
+		var previd=prevdiv.children().eq(0).attr("id");
+		//原始车损价格
+		var otherxiaoji=prevdiv.children().eq(0).children().eq(1).children().eq(1).children().eq(5).children().eq(1);
+		var xiaoji=prevdiv.children().eq(0).children().eq(1).children().eq(1).children().eq(5).children().eq(0);
+		var total=parseInt(otherxiaoji.val())-(oldprice*oldcount);
+		if(previd=="adversecar"){
+			//alert(previd);
+			$.ajax({
+				url:'http://localhost:8080/src/page/dinsun/deleteAdverseCarDamageDetails.do',
+				type:'post',
+				data:{
+					'adverseCarDamageDetailsId':CarDamageDetailsId,
+					'adverseCarDamageId':CarDamageId,
+					'price':total
+				},
+				dataType:'json',
+				success:function(data){
+//					//控制输出
+					console.log(data);
+					if(data.result){
+						xiaoji.text(total);
+						otherxiaoji.val(total);
+						tr.remove();
+					}
+					alert(data.message);
+				},
+				error:function(){
+					alert("删除失败");
+				}
+			})
+			
+		}
+		if(previd=="mycar"){
+			//alert(previd);
+			$.ajax({
+				url:'http://localhost:8080/src/page/dinsun/deleteMyCarDamageDetails.do',
+				type:'post',
+				data:{
+					'MyCarDamageDetailsId':CarDamageDetailsId,
+					'MyCarDamageId':CarDamageId,
+					'price':total
+				},
+				dataType:'json',
+				success:function(data){
+//					//控制输出
+					console.log(data);
+					if(data.result){
+						xiaoji.text(total);
+						otherxiaoji.val(total);
+						tr.remove();
+					}
+					alert(data.message);
+				},
+				error:function(){
+					alert("删除失败");
+				}
+			})
+		}
+
+	}

@@ -1,0 +1,98 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.InsuranceTypeDao;
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Data;
+import com.dxm.insuranceSpring.pojo.InsuranceType;
+import com.dxm.insuranceSpring.services.InsuranceTypeServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+@Service("InsuranceTypeServicesImpls")
+public class InsuranceTypeServicesImpls implements InsuranceTypeServices {
+@Resource
+InsuranceTypeDao  dao;
+	@Override
+	public APIRequest addInsuranceType(InsuranceType it) {
+		APIRequest api=new APIRequest();
+		if(dao.addInsuranceType(it)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateInsuranceType(InsuranceType it) {
+		APIRequest api=new APIRequest();
+		if(dao.updateInsuranceType(it)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest deleteInsuranceType(Integer id) {
+		APIRequest api=new APIRequest();
+		if(dao.deleteInsuranceType(id)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("删除失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest<InsuranceType> queryInsuranceType() {
+		APIRequest<InsuranceType> api=new APIRequest<InsuranceType>();
+		List<InsuranceType> datas=dao.queryAllInsuranceType();
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+	
+	}
+
+	@Override
+	public APIRequest queryInsuranceTypeById(Integer id) {
+		APIRequest api=new APIRequest();
+		List<InsuranceType> cartype=dao.queryInsuranceTypeById(id);
+		if(cartype.size()>0) {
+			api.setResult(true);
+			api.setSingerData(cartype.get(0));
+		}else {
+			api.setResult(false);
+			api.setMessage("查找失败");
+		}
+		return api; 
+	}
+
+	@Override
+	public APIRequest queryInsuranceByreportId(Integer caseId) {
+		APIRequest api=new APIRequest();
+		List<InsuranceType> cartype=dao.queryInsuranceBycaseId(caseId);
+		if(cartype.size()>0) {
+			api.setResult(true);  
+			api.setSingerData(cartype.get(0));
+		}else {    
+			api.setResult(false);
+			api.setMessage("查找失败");
+		}
+		return api; 
+	}
+
+}

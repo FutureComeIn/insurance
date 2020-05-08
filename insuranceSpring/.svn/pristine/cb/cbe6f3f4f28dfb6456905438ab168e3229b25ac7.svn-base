@@ -1,0 +1,149 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+   
+    <!-- iCheck -->
+   
+	
+    <!-- bootstrap-progressbar 
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap 
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker 
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style 
+    <link href="../../../build/css/custom.min.css" rel="stylesheet">
+    -->
+    <style type="text/css">
+
+    	</style>
+    <!-- jQuery -->
+     <script src="../../../src/js/jquery-1.8.3.js"></script>
+     <script type="text/javascript">
+	/*	function caronloads(){
+			$("#carinfo").empty();
+			$.ajax({
+				url:'http://localhost:8080/loadCarInfo.do',
+				type:'post',
+				dataType : 'json',
+				success : function(data) {
+					//data=$.parseJSON(data);
+					var contentHtml ="";
+					for (var i = 0; i < data.datas.length; i++) {
+						var rowHtml = "<tr>";
+						rowHtml+="<td width='100'>"+data.datas[i].carTypeId+"</td>";
+						rowHtml+="<td width='100'>"+data.datas[i].carName+"</td>";
+						rowHtml+="<td width='100'>"+data.datas[i].carBrand+"</td>";
+						rowHtml+="<td width='100'>"+data.datas[i].carSpecificType+"</td>";
+						rowHtml+="<td width='100'>"+data.datas[i].carValue+"</td>";
+						rowHtml+="<td><a href='#' id='' onclick='deletecarInfo("+data.datas[i].carTypeId+");'>删除</a>";
+						rowHtml+="<a href='http://localhost:8080/toupdateCarType.do?id="+data.datas[i].carTypeId+"' id=''>修改</a></td></tr>";
+						contentHtml += rowHtml;			
+					}
+					$("#carinfo").append(contentHtml);
+					
+					//initPageBar(data.singerData,"loadRole");
+				},
+				error : function() {
+					alert("查找失败!");
+				}
+			})
+		}   
+		
+		function deletecarInfo(id){
+			if(window.confirm("你确定要删除吗？")){
+				$.ajax({
+					url:'http://localhost:8080/deleteCarInfo.do',
+					type:'post',
+					data:{'id':id},
+					dataType : 'json',
+					success : function(data) {
+						//data=$.parseJSON(data);
+						alert("删除成功");		
+						caronloads();
+						//initPageBar(data.singerData,"loadRole");
+					},
+					error : function() {
+						alert("删除失败!");
+					}
+				})
+			}else{
+				return false;
+			}
+		}
+		window.onload = function(){caronloads();};          */
+     </script>
+  </head>
+
+  <body style="background: #F7F7F7;" >
+    
+				
+				<!--
+                	作者：offline
+                	时间：2017-10-24
+                	描述：内容开始
+                -->
+
+         <div align="center">
+         <h1>车辆类型表</h1></div>
+      <div class="table">
+    
+     </div>
+     	<div class="table">
+			<table style="width:100%" class="table tableTwo table-bordered" >
+			   <thead>
+			    <tr>
+			      <td >车辆类型编号</td>
+			      <td >车辆名称</td>
+			      <td >车辆品牌</td>
+			      <td >车辆具体类型</td>
+			      <td >市场价格</td>
+				  	   <td >操作</td>
+			    
+			    </tr>
+			    </thead>
+			    <tbody id="carinfo">
+                <tr>
+			      <td >001</td>
+			        <td >红色宝马</td>
+			      <td >宝马</td>
+			      <td >宝马X5</td>
+			      <td >50000￥</td>
+			     
+			   	  <td><a href="#" id="">删除</a>
+			       	<a href="CarInfoUpdate.jsp" id="">修改</a></td>
+			    </tr> 
+			    </tbody>
+            </table>
+          </div>  
+
+          
+
+          <div id="page" align="center">
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">首页</button>
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">上一页</button>
+			1/1
+			<button class="btn btn-sm btn-primary" style="margin-right:20px;margin-left:20px">下一页</button>
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">尾页</button>
+		</div>
+
+                   
+      </div>             
+               <input type="hidden" id="dapartment" value="<%=request.getParameter("dapartment") %>"/>    
+				<!--
+                	作者：offline
+                	时间：2017-10-24
+                	描述：内容结束
+                -->								
+  </body>
+</html>

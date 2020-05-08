@@ -1,0 +1,102 @@
+package com.dxm.insuranceSpring.pojo;
+
+/**
+ * 案件信息实体类
+ * @author Administrator
+ *
+ */
+public class Case {
+	private Integer caseId;
+	private Integer reportId;
+	private String reportReason;
+	private String province;
+	private String city;
+	private String road;
+	private String road_direction; 
+	private Integer checkId;
+	private Integer assessmentId;
+	private Integer settlementId;
+	private Integer settleId;
+	private Integer caseStatus;
+	public Integer getCaseId() {
+		return caseId;
+	}
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
+	}
+	public Integer getReportId() {
+		return reportId;
+	}
+	public void setReportId(Integer reportId) {
+		this.reportId = reportId;
+	}
+	public String getReportReason() {
+		return reportReason;
+	}
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getRoad() {
+		return road;
+	}
+	public void setRoad(String road) {
+		this.road = road;
+	}
+	public String getRoad_direction() {
+		return road_direction;
+	}
+	public void setRoad_direction(String road_direction) {
+		this.road_direction = road_direction;
+	}
+	public Integer getCheckId() {
+		return checkId;
+	}
+	public void setCheckId(Integer checkId) {
+		this.checkId = checkId;
+	}
+	public Integer getAssessmentId() {
+		return assessmentId;
+	}
+	public void setAssessmentId(Integer assessmentId) {
+		this.assessmentId = assessmentId;
+	}
+	public Integer getSettlementId() {
+		return settlementId;
+	}
+	public void setSettlementId(Integer settlementId) {
+		this.settlementId = settlementId;
+	}
+	public Integer getSettleId() {
+		return settleId;
+	}
+	public void setSettleId(Integer settleId) {
+		this.settleId = settleId;
+	}
+	public Integer getCaseStatus() {
+		return caseStatus;
+	}
+	public void setCaseStatus(Integer caseStatus) {
+		this.caseStatus = caseStatus;
+	}
+	@Override
+	public String toString() {
+		return "Case [caseId=" + caseId + ", reportId=" + reportId + ", reportReason=" + reportReason + ", province="
+				+ province + ", city=" + city + ", road=" + road + ", road_direction=" + road_direction + ", checkId="
+				+ checkId + ", assessmentId=" + assessmentId + ", settlementId=" + settlementId + ", settleId="
+				+ settleId + ", caseStatus=" + caseStatus + "]";
+	}
+	
+
+}

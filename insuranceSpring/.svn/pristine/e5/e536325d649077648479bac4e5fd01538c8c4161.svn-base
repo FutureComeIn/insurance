@@ -1,0 +1,57 @@
+	function caronloads(){
+			$("#carinfo").empty();
+			$.ajax({
+				url:'http://localhost:8080/loadInsuranceInfo.do',
+				type:'post',
+				dataType : 'json',
+				success : function(data) {
+					//data=$.parseJSON(data);
+					var contentHtml ="";
+					for (var i = 0; i < data.datas.length; i++) {
+						var rowHtml = "<tr>";
+						rowHtml+="<td >"+data.datas[i].insuranceTypeId+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceTypeName+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceTerm+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceTypeRemark+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceTypeSize+"</td>";
+						rowHtml+="<td><a href='#' id='' onclick='deleteInsuranceInfo("+data.datas[i].insuranceTypeId+");'>删除</a>";
+						rowHtml+="<a href='http://localhost:8080/toupdateInsuranceInfo.do?id="+data.datas[i].insuranceTypeId+"' id=''>修改</a></td></tr>";
+						contentHtml += rowHtml;		              
+						//alert(data.datas[i].insuranceTypeId);
+					}   
+					$("#carinfo").append(contentHtml);
+					
+					
+					
+					
+					contentHtml += rowHtml;		
+					//initPageBar(data.singerData,"loadRole");
+				},
+				error : function() {
+					alert("查找失败!");
+				}
+			})
+		}   
+		
+		function deleteInsuranceInfo(id){
+			if(window.confirm("你确定要删除吗？")){
+				$.ajax({
+					url:'http://localhost:8080/deleteInsuranceInfo.do',
+					type:'post',
+					data:{'id':id},
+					dataType : 'json',
+					success : function(data) {
+						//data=$.parseJSON(data);
+						alert("删除成功");		
+						caronloads();
+						//initPageBar(data.singerData,"loadRole");
+					},
+					error : function() {
+						alert("删除失败!");
+					}
+				})
+			}else{
+				return false;
+			}
+		}
+		window.onload = function(){caronloads();};    

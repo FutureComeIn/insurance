@@ -1,0 +1,14 @@
+package com.dxm.insuranceSpring.dao;
+
+import org.apache.ibatis.annotations.Insert;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.pojo.Log;
+
+@Service
+public interface LogDao {
+	
+	@Insert("insert into t_log values(0,#{logName},#{logContent},#{logTime},#{consumeTime})")
+	public Integer insertLog(Log log);
+	
+}

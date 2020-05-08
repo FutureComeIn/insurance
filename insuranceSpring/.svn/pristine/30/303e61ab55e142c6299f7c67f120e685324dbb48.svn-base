@@ -1,0 +1,70 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dxm.insuranceSpring.pojo.User;
+import com.dxm.insuranceSpring.services.IUserServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+
+@Controller
+@RequestMapping("/src/page/welcome")
+public class LoginControls {
+	
+	@Resource(name="iUserServicesImpls")
+	IUserServices service;
+	
+	//登录
+	@RequestMapping("/login.do")
+	public String login(HttpServletRequest request,User userlogin,HttpServletResponse response) {
+		//自己的登陆交给shiro完成
+		//他需要一组TOKEN
+		try {
+			HttpSession session = request.getSession();
+			System.out.println("sessionid："+session.getId());
+			Cookie[] cs = request.getCookies();
+			System.out.println("size="+cs.length);
+			for (Cookie cookie : cs) {
+				System.out.println("cookie:"+cookie.getName());
+				System.out.println("cookie-value:"+cookie.getValue());
+			}
+			//给cookie添加中文要设置编码
+//			Cookie c = new Cookie(URLEncoder.encode(userlogin.getAccount(),"utf-8"),userlogin.getPassword());
+//			response.addCookie(c);
+			
+			//------------------------------------------------------------------
+			UsernamePasswordToken token = new UsernamePasswordToken(userlogin.getAccount(),userlogin.getPassword());
+			//SecurityManager则管理所有用户的安全操作,它是Shiro框架的核心
+			SecurityUtils.getSubject().login(token);
+			/*System.out.println(userlogin);  只有账户和密码不为空*/
+			/*System.out.println("token:"+token);
+			                       org.apache.shiro.authc.UsernamePasswordToken - 牛市, rememberMe=false
+			*/
+			
+			//只能重新再查一遍，绑定到session
+			APIRequest<User> api=service.selectUserByAccount(userlogin.getAccount(),userlogin.getPassword());
+			session.setAttribute("loginUser",(User)api.getSingerData());
+			System.out.println("登陆成功");
+			return "src/page/welcome/index";	
+		} catch (Exception e) {
+			System.out.println("登陆失败");
+			return "src/page/welcome/login";
+		}
+	}
+	
+	//退出登录
+	@RequestMapping("/loginout.do")
+	public String loginout() {
+		SecurityUtils.getSubject().logout();
+		return "src/page/welcome/login";
+	}
+}

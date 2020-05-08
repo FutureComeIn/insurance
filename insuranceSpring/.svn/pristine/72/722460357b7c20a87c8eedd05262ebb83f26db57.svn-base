@@ -1,0 +1,133 @@
+package com.dxm.insuranceSpring.pojo;
+
+import java.util.Date;
+
+/**
+ * 报案信息实体类
+ * @author 熊珍
+ *
+ */
+public class Report {
+	private int reportId;//报案编号
+	private int warrantyId;//保单编号	
+	private String reportPersonName;//报案人姓名	
+	private String reporPersontPhone;//报案人电话	
+	private Date reportTime;//报案时间	
+	private String reportReason;//报案原因	
+	private String province;//省	
+	private String city;//市	
+	private String area;//区
+	private String road;//路段	
+	private String road_direction;//方向	
+	private int userId;//操作用户编号	
+	private int caseStatus;//案件状态 0:未指派 1：未勘察 2：已勘察
+	public Report() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Report(int reportId, int warrantyId, String reportPersonName, String reporPersontPhone, Date reportTime,
+			String reportReason, String province, String city, String area, String road, String road_direction,
+			int userId, int caseStatus) {
+		super();
+		this.reportId = reportId;
+		this.warrantyId = warrantyId;
+		this.reportPersonName = reportPersonName;
+		this.reporPersontPhone = reporPersontPhone;
+		this.reportTime = reportTime;
+		this.reportReason = reportReason;
+		this.province = province;
+		this.city = city;
+		this.area = area;
+		this.road = road;
+		this.road_direction = road_direction;
+		this.userId = userId;
+		this.caseStatus = caseStatus;
+	}
+	public int getReportId() {
+		return reportId;
+	}
+	public void setReportId(int reportId) {
+		this.reportId = reportId;
+	}
+	public int getWarrantyId() {
+		return warrantyId;
+	}
+	public void setWarrantyId(int warrantyId) {
+		this.warrantyId = warrantyId;
+	}
+	public String getReportPersonName() {
+		return reportPersonName;
+	}
+	public void setReportPersonName(String reportPersonName) {
+		this.reportPersonName = reportPersonName;
+	}
+	public String getReporPersontPhone() {
+		return reporPersontPhone;
+	}
+	public void setReporPersontPhone(String reporPersontPhone) {
+		this.reporPersontPhone = reporPersontPhone;
+	}
+	public Date getReportTime() {
+		return reportTime;
+	}
+	public void setReportTime(Date reportTime) {
+		this.reportTime = reportTime;
+	}
+	public String getReportReason() {
+		return reportReason;
+	}
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
+	}
+	public String getRoad() {
+		return road;
+	}
+	public void setRoad(String road) {
+		this.road = road;
+	}
+	public String getRoad_direction() {
+		return road_direction;
+	}
+	public void setRoad_direction(String road_direction) {
+		this.road_direction = road_direction;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getCaseStatus() {
+		return caseStatus;
+	}
+	public void setCaseStatus(int caseStatus) {
+		this.caseStatus = caseStatus;
+	}
+	@Override
+	public String toString() {
+		return "Report [reportId=" + reportId + ", warrantyId=" + warrantyId + ", reportPersonName=" + reportPersonName
+				+ ", reporPersontPhone=" + reporPersontPhone + ", reportTime=" + reportTime + ", reportReason="
+				+ reportReason + ", province=" + province + ", city=" + city + ", area=" + area + ", road=" + road
+				+ ", road_direction=" + road_direction + ", userId=" + userId + ", caseStatus=" + caseStatus + "]";
+	}
+	
+
+}

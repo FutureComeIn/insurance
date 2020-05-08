@@ -1,0 +1,140 @@
+//function loadUnCheck(indexPage){
+//	
+//	$("#content").empty();
+//	$.ajax({
+//		url:'http://localhost:8080/src/page/check/queryByUnCheck.do',
+//		type:'post',
+//		data:{
+//			'indexPage':indexPage
+//		},
+//		dataType:'json',
+//		success:function(data){
+//			//data = $.parseJSON(data);
+//			//控制输出
+//			//console.log(data);
+//			var contentHtml = "";
+//			for(var i=0; i < data.datas.length;i++){
+//				var rowHtml = "<tr><td>"+data.datas[i].reportId+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportPersonName+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportPersonPhone+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportTime+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportReason+"</td>";
+//				rowHtml += "<td>"+data.datas[i].province+"</td>";
+//				rowHtml += "<td>"+data.datas[i].city+"</td>";
+//				rowHtml += "<td>"+data.datas[i].area+"</td>";
+//				rowHtml += "<td>"+data.datas[i].road+"</td>";
+//				rowHtml += "<td>"+data.datas[i].road_direction+"</td>";
+//				rowHtml += "<td>"+data.datas[i].userName+"</td>";
+//				rowHtml += "<td>"+data.datas[i].caseStatus+"</td>";
+//				rowHtml += "<td><a href='add_check.jsp' class='btn btn-sm btn-primary'>我要勘察</a></td></tr>";
+//				//追加数据
+//				contentHtml += rowHtml;
+//			}
+//			$("#content").append(contentHtml);
+//		},
+//		error:function(){
+//			alert("查询失败");
+//		}
+//	})
+//}
+function ouradd(){
+				var tab=$("#sss");
+				var div=tab.parent();
+				var heig=div.css("height");
+				value=parseInt(heig.substr(0,heig.lastIndexOf("px")))+100;
+				heig=value+"px";
+				var tr="<tr class='other'><td id='textcenter' onclick='a()'>受损部件</td>"+
+				"<td><input type='text' class='form-control' id='inputwidth' name='carName'></td>"+
+				"<td id='textcenter'>受损数量</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>单价</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>小计金额</td><td>0</td></tr><tr><td id='textcenter'>维修地点</td>"
+				+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>受损图片</td><td><input type='file'/></td><td id='textcenter'  style='height: 42px;'>备注</td>"
+				+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td><img src='../../img/sign_add.png' onclick='ouradd();'/></td>"
+				+"<td><img src='../../img/sign_remove.png' onclick='oursub(this);'/></td></tr>";
+				tab.append($(tr));
+				div.css({"height":heig})
+}
+
+function otheradd(){
+	var tab=$("#other");
+	var div=tab.parent();
+	var heig=div.css("height");
+	value=parseInt(heig.substr(0,heig.lastIndexOf("px")))+100;
+	heig=value+"px";
+	var tr="<tr class='other'><td id='textcenter' onclick='a()'>受损部件</td>"+
+	"<td><input type='text' class='form-control' id='inputwidth' name='carName'></td>"+
+	"<td id='textcenter'>受损数量</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>单价</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>小计金额</td><td>0</td></tr><tr><td id='textcenter'>维修地点</td>"
+	+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>受损图片</td><td><input type='file'/></td><td id='textcenter'  style='height: 42px;'>备注</td>"
+	+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td><img src='../../img/sign_add.png' onclick='otheradd();'/></td>"
+	+"<td><img src='../../img/sign_remove.png' onclick='oursub(this);'/></td></tr>";
+	tab.append($(tr));
+	div.css({"height":heig})
+}
+
+function oursub(obj){
+	var td=$(obj).parent();
+	var tr2=td.parent();
+	var tr1=tr2.prev();
+	var cla=tr1.attr("class");
+	var carname=tr1.children().eq(1).children().val();
+	if(cla=="one"){
+		return false;
+	}
+	if(carname!=""){
+			if(window.confirm("你确定要删除已编辑的信息吗？")){
+				tr1.remove();
+				tr2.remove();
+			}else{
+				return false;
+			}
+		}
+	tr1.remove();
+	tr2.remove();
+}
+
+
+function onloadCarLossCase(assessmentId){
+	var assessmentId=1;
+	$("#caseinfo").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/dinsun/queryCaseInfoByHandleAndCurrentPage.do',
+		type:'post',
+		data:{
+			'assessmentId':assessmentId
+		},
+		dataType:'json',
+		success:function(data){
+			//控制输出
+			//console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].caseId+"</td>";
+				rowHtml += "<td>"+data.datas[i].reportReason+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+data.datas[i].address+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+data.datas[i].caseStatus+"</td>";
+				rowHtml += "<td><a href='../dinsun/begindinsun.jsp' class='btn btn-sm btn-primary'>定损</a></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#caseinfo").append(contentHtml);
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}
+
+
+function loadassessment(userId){
+	
+}

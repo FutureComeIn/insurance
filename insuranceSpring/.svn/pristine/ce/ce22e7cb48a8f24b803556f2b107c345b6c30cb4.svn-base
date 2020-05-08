@@ -1,0 +1,29 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.pojo.Part;
+
+public interface PartDao {
+	@Insert("insert into Part values(#{partId},#{carId},#{partName},#{partValue},#{partRemark})")
+	public Integer addPart(Part data);
+	
+	
+	@Update("")
+	public Integer updatePart(Part sp);
+	
+	@Delete("delete from Part where partId=#{partId}")
+	public Integer deletePart(Integer partId);
+	
+	
+	@Select("select * from Part")
+	public List<Part> queryPart();
+	
+	@Select("select * from Part where partId=#{partId}")
+	public List<Part> queryPartById(Integer partId);
+}

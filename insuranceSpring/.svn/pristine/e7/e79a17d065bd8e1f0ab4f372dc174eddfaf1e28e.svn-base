@@ -1,0 +1,88 @@
+$(function(){
+	//调用查询方法
+	query()
+	//按钮点击事件
+	$("#but1").click(function(){
+		//获取文本框的值
+		var informants=$("#informants").val();
+		//alert(informants);
+		var informants_tel=$("#informants_tel").val();
+		var danger_cause=$("#danger_cause").val();
+		var province =$("#province").val();
+		var city =$("#city").val();
+		var area=$("area").val();
+		var road =$("#road").val();
+		var reported_time =$("#reported_time").val();
+		var warranty_number=$("#warranty_number").val();
+		var case_state="未指派";
+           $.ajax({
+        	    url:"http://localhost:8080/addReport.do",
+        	    type:"post",
+        	    dataType:"Json",
+			    data: {
+			        	"informants":informants,
+			        	"informants_tel":informants_tel,
+			        	"danger_cause":danger_cause,
+			        	"province":province,
+			        	"city":city,
+			        	"road":road,
+			        	"reported_time":reported_time,
+			        	"road_direction":road_direction,
+			        	"case_state":"未指派",
+			        	"warranty_number":warranty_number
+			    },
+			    success:function(data){
+			    	alert(data.message);
+			    }
+        	   
+           })	
+           //跳转页面report_allquery
+           window.location.replace("report_allquery.jsp");
+           
+	})
+	
+	$("#but2").click(function(){
+		//调用取消方法
+		 query();
+		 //跳转页面report_allquery
+        window.location.replace("report_query.jsp");
+	})
+	
+})
+
+
+function query(){
+	//获取文本框的值
+	var warranty_number=$("#warranty_number").val();
+	
+	$.ajax({
+		url:"http://localhost:8080/loadWarranty.do",
+		type:"post",
+        dataType: "json",
+        data:{"warranty_number":warranty_number
+        	},
+        success: function(data) {
+            
+        	var tempHtml = "";
+        	for (var i = 0; i<data.datas.length; i++) {
+				var rowHtml ="<tr>";
+				rowHtml+="<td >"+data.datas[i].warrantyId+"</td>";
+				rowHtml+="<td >"+data.datas[i].policyholdersName+"</td>";
+				rowHtml+="<td >"+data.datas[i].recognizeeIdCard+"</td>";
+				rowHtml+="<td >"+data.datas[i].recognizeeName+"</td>";
+				rowHtml+="<td >"+data.datas[i].policyholderPhone+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceBeginTime+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceEndTime+"</td>";
+				rowHtml+="<td >"+data.datas[i].driverId+"</td>";
+				rowHtml+="<td >"+data.datas[i].sailId+"</td>";
+				rowHtml+="<td >"+data.datas[i].engineId+"</td></tr>";
+				contentHtml += rowHtml; 	
+        	});
+        	//把数据拼接到表格
+            $("#table").append(tempHtml);
+        } ,
+        	
+      });
+   
+  
+}

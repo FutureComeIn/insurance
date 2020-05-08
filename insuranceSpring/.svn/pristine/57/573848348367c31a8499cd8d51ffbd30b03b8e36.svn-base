@@ -1,0 +1,145 @@
+package com.dxm.insuranceSpring.pojo;
+
+import java.sql.Date;
+
+public class NuclearDamage {
+  private int nuclearDamageId;//核损编号
+  private  int assessmentId;//定损编号
+  private Date nuclearDamageTime;//核损时间
+  private int UserId;//核损人编号
+  private String UserName;//核损人姓名
+  private String nuclearDamageStatus;//核损状态
+public NuclearDamage(int nuclearDamageId, int assessmentId, Date nuclearDamageTime, int userId, String userName,
+		String nuclearDamageStatus) {
+	super();
+	this.nuclearDamageId = nuclearDamageId;
+	this.assessmentId = assessmentId;
+	this.nuclearDamageTime = nuclearDamageTime;
+	UserId = userId;
+	UserName = userName;
+	this.nuclearDamageStatus = nuclearDamageStatus;
+}
+
+
+
+
+
+
+public int getNuclearDamageId() {
+	return nuclearDamageId;
+}
+
+
+
+
+
+
+public void setNuclearDamageId(int nuclearDamageId) {
+	this.nuclearDamageId = nuclearDamageId;
+}
+
+
+
+
+
+
+public int getAssessmentId() {
+	return assessmentId;
+}
+
+
+
+
+
+
+public void setAssessmentId(int assessmentId) {
+	this.assessmentId = assessmentId;
+}
+
+
+
+
+
+
+public Date getNuclearDamageTime() {
+	return nuclearDamageTime;
+}
+
+
+
+
+
+
+public void setNuclearDamageTime(Date nuclearDamageTime) {
+	this.nuclearDamageTime = nuclearDamageTime;
+}
+
+
+
+
+
+
+public int getUserId() {
+	return UserId;
+}
+
+
+
+
+
+
+public void setUserId(int userId) {
+	UserId = userId;
+}
+
+
+
+
+
+
+public String getUserName() {
+	return UserName;
+}
+
+
+
+
+
+
+public void setUserName(String userName) {
+	UserName = userName;
+}
+
+
+
+
+
+
+public String getNuclearDamageStatus() {
+	return nuclearDamageStatus;
+}
+
+
+
+
+
+
+public void setNuclearDamageStatus(String nuclearDamageStatus) {
+	this.nuclearDamageStatus = nuclearDamageStatus;
+}
+
+
+
+
+
+
+@Override
+public String toString() {
+	return "NuclearDamage [nuclearDamageId=" + nuclearDamageId + ", assessmentId=" + assessmentId
+			+ ", nuclearDamageTime=" + nuclearDamageTime + ", UserId=" + UserId + ", UserName=" + UserName
+			+ ", nuclearDamageStatus=" + nuclearDamageStatus + "]";
+}
+  
+
+  
+}

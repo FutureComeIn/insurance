@@ -1,0 +1,69 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Case;
+import com.dxm.insuranceSpring.utils.CaseSqlUtils;
+
+/**
+ * 案件信息 Dao层接口
+ * @author Administrator
+ *
+ */
+public interface CaseDao {
+	/**
+	 * 添加案件信息
+	 * @param tcase
+	 * @return
+	 */
+	@Insert("insert into t_case values(#{caseId},#{reportId},#{reportReason},#{address},#{jieanId},#{checkId},"
+			+ "#{assessmentId},#{nuclearDamageId},#{settlementId},#{settleId},#{caseStatus})")
+	public Integer addCase(Case tcase);
+	
+	/**
+	 * 全查询案件信息
+	 * @param row
+	 * @return
+	 */
+	@Select("select * from t_case")
+	@ResultMap("com.dxm.insuranceSpring.mappers.CaseMap.caseBean")
+	public List<Case> queryByList(RowBounds row);
+	
+	/**
+	 * 返回全查询案件的分页
+	 * @return
+	 */
+	@Select("select count(1) from t_case ")
+	public Integer countCase();
+	
+	/**
+	 * 根据参数动态查询案件信息
+	 * @param row
+	 * @param tcase
+	 * @return
+	 */
+	@SelectProvider(type=CaseSqlUtils.class,method="selectWithParamSql")
+	public List<Case> queryByCaseInfoByTerm(Case tcase, RowBounds... row);
+	
+	/**
+	 * 动态查询案件信息分页
+	 * @return
+	 */
+	@SelectProvider(type=CaseSqlUtils.class,method="selectWithParamCountSql")
+	public Integer countCaseByTerm(Case tcase);
+	
+	/**
+	 * 动态修改案件信息
+	 * @param tcase
+	 * @return
+	 */
+	@UpdateProvider(type=CaseSqlUtils.class,method="updateCase")
+	public Integer updateCase(Case tcase);
+}

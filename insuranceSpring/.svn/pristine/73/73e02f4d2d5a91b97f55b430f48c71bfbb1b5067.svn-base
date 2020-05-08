@@ -1,0 +1,60 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.RoleDao;
+import com.dxm.insuranceSpring.pojo.Role;
+import com.dxm.insuranceSpring.services.IRoleServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.utils.Pages;
+
+@Service("iRoleServicesImpls")
+public class IRoleServicesImpls implements IRoleServices {
+	
+	@Autowired
+	RoleDao rdao;
+	
+
+	@Override
+	public APIRequest queryRoles() {
+		// TODO 遍历角色--数据接口开发
+		List<Role> rlist=rdao.queryRoles();
+		APIRequest<Role> api=new APIRequest<Role>();
+		if(rlist.size()>0) {
+			api.setDatas(rlist);
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+		}
+		return api;
+	}
+
+
+	@Override
+	public HashMap<String,Object> selectRoles(Integer indexPage) {
+		// TODO 遍历角色--正常web开发
+		Integer count=rdao.countRoles();
+		Pages page=new Pages(count);
+		page.setIndexPage(indexPage);
+		page.setPageSize(4);
+		RowBounds rb=new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Role> rlist=rdao.selectRoles(rb);
+		HashMap<String,Object> hm=new HashMap<String,Object>();
+		hm.put("rlist", rlist);
+		hm.put("page",page);
+		return hm;
+	}
+
+
+	@Override
+	public Integer addRole(String roleName) {
+		// TODO 添加角色
+		return rdao.insertRole(roleName);
+	}
+
+}

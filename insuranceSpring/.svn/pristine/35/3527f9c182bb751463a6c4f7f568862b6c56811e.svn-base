@@ -1,0 +1,38 @@
+$(function(){
+	//按钮点击事件
+	$("#but1").click(function(){
+		//调用修改方法
+		insurancedate();
+	});
+
+$("#but2").click(function(){
+	//alert(1);
+		 //跳转页面report_allquery
+        window.history.go(-1);
+	});
+
+})
+
+function insurancedate(){
+	//获取文本框的值
+	var warrantyId=$("#warrantyId").val();
+	var insuranceEndTime=$("insuranceEndTime").val();
+	$.ajax({
+		url:'http://localhost:8080/src/page/WarrantyInfo/updateWarranty.do',
+		type:"post",
+		dataType: "json",
+		data:{
+			'warrantyId':warrantyId,
+			'insuranceEndTime':insuranceEndTime
+		},
+        success:function(data) {
+           if(data.result){
+        	   window.location.href="http://localhost:8080/src/page/insurance_manage/Insurance_querying.jsp"
+           }
+           alert(data.message);
+        } ,
+        error:function(){
+    		alert("修改失败！");
+    	}
+      });
+}

@@ -1,0 +1,123 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.SettleClaimDao;
+import com.dxm.insuranceSpring.pojo.SettleClaim;
+import com.dxm.insuranceSpring.services.ISettleClaimServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Service("settleClaimServicelmpls")
+public class SettleClaimServicelmpls implements ISettleClaimServices{
+
+	@Resource
+	SettleClaimDao dao;
+	
+	@Override
+	public APIRequest AddSettleClaim() {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.AddSettleClaim()>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateSettleClaim(Integer caseId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateSettleClaim(caseId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("理赔失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest querySettleClaim() {
+		// TODO Auto-generated method stub
+		APIRequest<SettleClaim> api=new APIRequest<SettleClaim>();
+		List<SettleClaim> datas=dao.querySettleClaim();
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest querySettleClaimByStatus(Integer settleClaimstatus) {
+		// TODO Auto-generated method stub
+		APIRequest<SettleClaim> api=new APIRequest<SettleClaim>();
+		List<SettleClaim> datas=dao.querySettleClaimByStatus(settleClaimstatus);
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest querySettleClaimById(Integer userId) {
+		// TODO Auto-generated method stub
+		APIRequest<SettleClaim> api=new APIRequest<SettleClaim>();
+		//System.out.println("userId="+userId);
+		List<SettleClaim> datas=dao.querySettleClaimById(userId);
+		//System.out.println("datas="+datas);
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		
+		return api;
+	}
+
+	@Override
+	public APIRequest deleteSettleClaimBycaseId(Integer caesId) {
+		// TODO Auto-generated method stub
+		APIRequest api =new APIRequest();
+		if(dao.daleteSettleClaimBycaseId(caesId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("理赔失败");
+		}
+		return api;
+	}
+
+	@Override
+	public void querySettleClaimBycaseId(HttpServletRequest request, Integer caseId) {
+		// TODO Auto-generated method stub
+		List<SettleClaim> SettleClaimList=dao.querySettleClaimBycaseId(caseId);
+		if(SettleClaimList.size()>0){}
+		request.setAttribute("SettleClaimInfo",SettleClaimList.get(0));
+		   System.out.println("集合="+SettleClaimList);
+		   System.out.println("看看="+SettleClaimList.get(0));
+			}
+	}
+
+	
+
+	
+
+ 

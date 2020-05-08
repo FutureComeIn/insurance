@@ -1,0 +1,9 @@
+package com.dxm.insuranceSpring.services;
+
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface IRoleServices {
+	
+	//遍历角色
+	public APIRequest queryRoles();
+}

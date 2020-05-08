@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>添加保单</title>
+			<!-- Bootstrap -->
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link href="../insurance_manage/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+	<link href="../insurance_manage/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script src="../../js/autolnsurance/User_insure.js"></script>
+	<script src="js/dinsun.js"></script>
+	</head>
+	<style>
+
+		#inputwidth{
+			width: 230px;
+			height: 25px;
+		}
+		#textcenter{
+			text-align: right;
+		}
+		#spansize{
+			font-size: 15px;
+		}
+		#Exampleheading{
+			height: 25px;
+		}
+	</style>
+	
+	
+	<script type="text/javascript">
+		function a(){
+			alter(1);			
+		}
+	</script>
+	<body>
+	<table class="table table-bordered" align="center" style="width: 100%" id="myprospect">
+							<tr>
+								<th>报案编号</th>
+								<th>报案人</th>
+								<th>车牌号</th>
+								<th>联系电话</th>
+								<th>报案时间</th>
+								<th>出事地点 </th>
+								<th>出险原因</th>
+								<th>事故类型</th>
+								<th>案件状态</th>
+							</tr>
+								<tr>
+								<th>11</th>
+								<th>12</th>
+								<th>123</th>
+								<th>1234</th>
+								<th>12345</th>
+								<th>123456 </th>
+								<th>1234567</th>
+								<th>12345678</th>
+								<th>123456789</th>
+							</tr>
+						</table>
+		<div style="width: 100%">
+
+			<form style="width: 100%">
+				
+				<div style="width: 100%;height: 230px;" >
+					<div style="width: 50%;float: left;">
+						<table  class="table table-striped" >
+							<tr>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize">我方车损信息</span></label></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td id="textcenter">车主姓名</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+							</tr>
+							<tr>
+								<td id="textcenter"  style="height: 42px;">联系方式</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+							</tr>	
+							<tr style="height: 55px;">
+								<td id="textcenter">车牌号码</td>
+								<td><input type="text" class="form-control" id="inputwidth"name="policyholders.credentials_number"></td>
+							</tr>
+
+						</table>
+					</div>
+					<div style="width: 50%;float: right;">
+						<table  class="table table-striped" >
+							<tr>
+								<td style="width: 300px;"><label for="exampleInputEmail1" style="height: 20px;"><span class="label label-default"></span></label></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td id="textcenter" >车辆类型</td>
+								<td style="height: 42px;">
+									<select id="policyholdersaddress_shen"> 
+										<option value="兰博基尼">兰博基尼</option> 
+										<option value="DIVCSS5">DIVCSS5</option> 
+										<option value="DIVCSS5">DIVCSS5</option> 
+										<option value="DIVCSS5">DIVCSS5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td id="textcenter">联系电话</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.tel"></td>
+							</tr>
+							<tr>
+								<td id="textcenter">我方车损金额</td>
+								<td>
+									0
+								</td>
+							</tr>
+						</table>
+						</div>
+					</div>
+					<div style="width: 100%;height: 230px;" >
+						<table  class="table table-striped" id="sss">
+							<tr>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize">我方车损明细</span></label></td>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize"></span></label></td>
+							</tr>
+							<tr>
+								<td id="textcenter" onclick="a()">受损部件</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">受损数量</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">单价</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">小计金额</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td id="textcenter">维修地点</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">受损图片</td>
+								<td><input type="file"/></td>
+								<td id="textcenter"  style="height: 42px;">备注</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter" onclick="ouradd()"><button id="ouradd" onclick="ouradd()">+</button></td>
+								<td><button id="oursub" onclick="oursub();">-</button ></td>
+							</tr>	
+							
+						</table>
+					</div>
+				<div style="width: 100%;height: 230px;" >
+					<div style="width: 50%;float: left;">
+						<table  class="table table-striped" >
+							<tr>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize">对方车损信息</span></label></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td id="textcenter">车主姓名</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+							</tr>
+							<tr>
+								<td id="textcenter"  style="height: 42px;">联系方式</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+							</tr>	
+							<tr style="height: 55px;">
+								<td id="textcenter">车牌号码</td>
+								<td><input type="text" class="form-control" id="inputwidth"name="policyholders.credentials_number"></td>
+							</tr>
+
+						</table>
+					</div>
+					<div style="width: 50%;float: right;">
+						<table  class="table table-striped" >
+							<tr>
+								<td style="width: 300px;"><label for="exampleInputEmail1" style="height: 20px;"><span class="label label-default"></span></label></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td id="textcenter" >车辆类型</td>
+								<td style="height: 42px;">
+									<select id="policyholdersaddress_shen"> 
+										<option value="兰博基尼">兰博基尼</option> 
+										<option value="DIVCSS5">DIVCSS5</option> 
+										<option value="DIVCSS5">DIVCSS5</option> 
+										<option value="DIVCSS5">DIVCSS5</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td id="textcenter">联系电话</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.tel"></td>
+							</tr>
+							<tr>
+								<td id="textcenter">我方车损金额</td>
+								<td>
+									0
+								</td>
+							</tr>
+						</table>
+						
+					</div>
+					
+				</div>
+				<div style="width: 100%;height: 230px;" >
+						<table  class="table table-striped" >
+							<tr>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize">对方车损明细</span></label></td>
+								<td><label for="exampleInputEmail1" id="Exampleheading"> <span class="label label-default" id="spansize"></span></label></td>
+							</tr>
+							<tr>
+								<td id="textcenter">受损部件</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">受损数量</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">单价</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">小计金额</td>
+								<td>0</td>
+							</tr>
+							<tr>
+								<td id="textcenter">维修地点</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter">受损图片</td>
+								<td><input type="file"/></td>
+								<td id="textcenter"  style="height: 42px;">备注</td>
+								<td><input type="text" class="form-control" id="inputwidth" name="policyholders.policyholders_name"></td>
+								<td id="textcenter"><button id="otheradd">+</button></td>
+								<td><button>-</button id="othersub"></td>
+							</tr>	
+							
+						</table>
+					</div>
+				
+			</form>
+		</div>
+		
+		<div style="width: 100%;text-align: center;">
+			<button type="button" onclick="addinsuranceinfo()" style="width: 300px;" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
+ 					 提交
+			</button>
+		</div>	
+	</body>
+
+</html>
+
+
+

@@ -1,0 +1,22 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.services.IRoleServices;
+
+@Controller
+public class RoleControlls {
+	@Resource(name="iRoleServicesImpls")
+	IRoleServices services;
+	
+	@RequestMapping(value="showRoles.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String showRoles() {
+		return services.queryRoles().toString();
+	}
+
+}

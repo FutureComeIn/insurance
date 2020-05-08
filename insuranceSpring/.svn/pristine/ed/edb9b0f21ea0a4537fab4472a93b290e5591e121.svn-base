@@ -1,0 +1,43 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+import com.dxm.insuranceSpring.pojo.CarType;
+
+
+public interface CarTypeDao {
+	
+	@Insert("insert into t_carType values(#{carTypeId},#{carName},#{carBrand},#{carSpecificType},#{carValue})")
+	public Integer addCarType(CarType ct);
+	@Update("update t_carType set  carName=#{carName},carBrand=#{carBrand},carSpecificType=#{carSpecificType},carValue=#{carValue} where carTypeId=#{carTypeId}")
+	public Integer updateCarTypeByid(CarType ct);
+	
+	@Delete("delete from t_carType where carTypeId=#{id}")
+	public Integer deleteCarType(Integer id);
+	
+	@Select("select count(1) from t_carType")
+	public Integer countCarType();
+	
+	@Select("select * from t_carType")
+	public List<CarType> queryCarType(RowBounds row);
+	
+	@Select("select * from t_carType where carTypeId=#{id}")
+	public List<CarType> queryCarTypeById(Integer id);
+	
+	@Select("select * from t_carType where carTypeId=#{id}")
+	public CarType queryWarrantyCarTypeById(Integer carId);
+	@Select("select * from t_carType where carName=#{carTypeName}")
+	public List<CarType> queryCarTypeByName(String carTypeName);
+	
+	@Select("select * from t_carType where carName  like '%${value}%'")
+	public List<CarType> queryCarInfoTypeByCarName(String carName );
+     //queryCarTypeFroPart
+	@Select("select * from t_carType")
+	public ArrayList<CarType> queryCarTypeFroPart();
+}

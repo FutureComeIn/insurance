@@ -1,0 +1,87 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.NuclearDamageDao;
+import com.dxm.insuranceSpring.pojo.NuclearDamage;
+import com.dxm.insuranceSpring.services.INuclearDamageServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Service("nuclearDamageServicelmpls")
+public class NuclearDamageServicelmpls implements INuclearDamageServices{
+
+	@Resource 
+	NuclearDamageDao dao;
+	
+	@Override
+	public APIRequest addNuclearDamage(NuclearDamage ncd) {
+		// TODO Auto-generated method stub
+		APIRequest  api=new APIRequest();
+		if(dao.addNuclearDamage(ncd)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest queryNuclearDamage() {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		List<NuclearDamage> datas=dao.queryNuclearDamage();
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+		
+	}
+
+	
+
+
+	@Override
+	public APIRequest queryNuclearDamageByStatus(String nuclearDamageStatus) {
+		// TODO Auto-generated method stub
+				APIRequest<NuclearDamage> api=new APIRequest<NuclearDamage>();
+				List<NuclearDamage> datas=dao.queryNuclearDamageByStatus(nuclearDamageStatus);
+				if(datas.size()>0) {
+					api.setResult(true);
+					api.setDatas(datas);			
+				}else {
+					api.setResult(false);
+					api.setMessage("信息不存在");
+				}
+				return api;
+	}
+
+	
+
+
+	@Override
+	public APIRequest updateNuclearDamage() {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateNuclearDamageStatus()>0) {
+			api.setResult(true);
+			}else {
+				api.setResult(false);
+				api.setMessage("核损失败");
+			}
+		return api;
+	}
+
+	
+
+	
+
+}

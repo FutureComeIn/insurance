@@ -1,0 +1,109 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+   
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+   
+    <!-- iCheck -->
+   
+	
+    <!-- bootstrap-progressbar 
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap 
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker 
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style 
+    <link href="../../../build/css/custom.min.css" rel="stylesheet">
+    -->
+    <style type="text/css">
+    
+    form{
+    	margin-left: 30%;
+    }
+    
+    table{
+    	margin-top:20px ;
+    }
+    
+}
+    	</style>
+		<title></title>
+	</head>
+	<body style="background: #F7F7F7;">
+		
+		<!-- page content -->
+	<div id="top">
+		<div class="col-md-4"></div>
+		<div id="menu1" class="col-md-4">
+			案件编号：<input type="text" id="caseId" />
+		</div>
+		<div class="col-md-4" id="add_employees">
+			<button type="button" class="btn btn-primary btn-small"
+				id="reset_but">重置</button>
+			<button type="button" class="btn btn-primary btn-small"
+				id="select_but">查询</button>
+		</div>
+	</div>
+		
+		
+		<table class="table table-bordered text-center outer" id="table">
+                    <tr>
+	                     <th>案件编号</th>
+	                	 <th>报案编号</th>
+	                	 <th>报案人</th>
+	                	 <th>案件所在省</th>
+	                	 <th>案件所在市</th>
+	                	 <th>案件所在路段</th>
+	                	 <th>路段方向</th>
+	                	 <th>接案员</th>
+	                	 <th>勘察员</th>
+	                	 <th>定损员</th>
+	                	 <th>核损员</th>
+	                	 <th>理赔员</th>
+	                	 <th>案件状态</th>
+	                	 <th>操作</th>
+                    </tr>
+                    <tr>
+	                     <td>1</td>
+	                	 <td>1</td>
+	                	 <td>tmf</td>
+	                	 <td>湖南</td>
+	                	 <td>长沙</td>
+	                	 <td>岳麓区</td>
+	                	 <td>左侧</td>
+	                	 <td>2</td>
+	                	 <td>3</td>
+	                	 <td>4</td>
+	                	 <td>2</td>
+	                	 <td>2</td>
+	                	 <td>未结案</td>
+	                	 <td>
+	                	 	<button class="btn btn-sm btn-primary">删除</button>
+	                	 	<button class="btn btn-sm btn-primary">结案</button>
+	                	 </td>
+                    </tr>
+                     
+        </table>
+        <ul class="pagination">
+			<li><a href="#" id="jian">&laquo;</a></li>
+			<li><a href="#" id="">当前页</a></li>
+			<li><a href="#" id="firstpage"></a></li>
+			<li><a href="#" id="">总页数</a></li>
+			<li><a href="#" id="lastpage"></a></li>
+			<li><a href="#" id="jia">&raquo;</a></li>
+		</ul>
+	</body>
+	<script src="../../js/jquery-1.8.3.js"></script>
+	<script src="../../js/report/AllReportQuery.js"></script>
+</html>

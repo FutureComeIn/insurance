@@ -1,0 +1,357 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.PolicyholdersDao;
+import com.dxm.insuranceSpring.dao.RecognizeeDao;
+import com.dxm.insuranceSpring.dao.WarrantyDao;
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Policyholders;
+import com.dxm.insuranceSpring.pojo.Recognizee;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.services.IWarrantyServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.utils.Pages;
+/**
+ * 实现保单services
+ * @author qianjun
+ *
+ */
+@Service("warrantyServicesImpl")
+public class WarrantyServicesImpl implements IWarrantyServices {
+	@Resource
+	WarrantyDao dao;
+	@Resource
+	PolicyholdersDao pdao;
+	@Resource
+	RecognizeeDao rdao;
+	@Override
+	/**
+	 * 根据保单编号查询保单
+	 */
+	public APIRequest queryById(Integer warrantyId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		List<Warranty> wy=dao.queryById(warrantyId);
+		if(wy.size()>0) {
+			api.setResult(true);
+			api.setSingerData(wy.get(0));
+		}else {
+			api.setResult(false);
+			api.setMessage("查找失败");
+		}
+		return api;
+	}
+	/**
+	 * 修改保单信息
+	 */
+	@Override
+	public APIRequest update(Warranty wa) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateWarranty(wa)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+	/**
+	 *续保业务
+	 */
+	@Override
+	public APIRequest xubao(Integer warrantyId, String years) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateDate(warrantyId,years)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+	/**
+	 * 继续投保业务
+	 */
+	@Override
+	public APIRequest jixutoubao(Warranty wa) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.addWarranty(wa)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("继续投保失败");
+		}
+		return api;
+	}
+	/**
+	 * 添加保单
+	 */
+	@Override
+	public APIRequest add(Warranty wa) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.addWarranty(wa)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+	/**
+	 * 分页查询保单信息
+	 */
+	@Override
+	public APIRequest queryAll(Integer indexpage) {
+		// TODO Auto-generated method stub
+		if(indexpage==null) {
+			indexpage=1;
+		}
+		int rowcount  = dao.count();
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexpage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Warranty> data = dao.queryAll(rb);
+		
+		APIRequest<Warranty> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+	/**
+	 * 添加投保人
+	 */
+	@Override
+	public APIRequest addPolicyHolder(Policyholders pc) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(pdao.add(pc)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+	//修改投保人信息
+	@Override
+	public APIRequest updatePolicyHolder(Policyholders pc) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(pdao.update(pc)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+	
+	/**
+	 * 删除投保人信息
+	 */
+	@Override
+	public APIRequest deletePolicyHolder(Integer policyholdersId) {
+		// TODO Auto-generated method stub
+		APIRequest<Policyholders> api=new APIRequest();
+		if(pdao.delete(policyholdersId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("删除失败");
+		}
+		return api;
+	}
+	/**
+	 * 添加被保人信息
+	 */
+	@Override
+	public APIRequest addRecognizee(Recognizee rg) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(rdao.addRecognizee(rg)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+	/**
+	 * 修改被保人信息
+	 */
+	@Override
+	public APIRequest updateRecognizee(Recognizee rg) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(rdao.updateRecognizee(rg)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+	
+	/**
+	 * 删除被保人信息
+	 */
+	@Override
+	public APIRequest deleteRecognizee(Integer RecognizeeId) {
+		// TODO Auto-generated method stub
+		APIRequest<Policyholders> api=new APIRequest();
+		if(rdao.deleteRecognizee(RecognizeeId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("删除失败");
+		}
+		return api;
+	}
+	/**
+	 * 分页查询投保人信息
+	 */
+	@Override
+	public APIRequest queryPolicyHolder(Integer indexpage) {
+		// TODO Auto-generated method stub
+		if(indexpage==null) {
+			indexpage=1;
+		}
+		int rowcount  = pdao.count();
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexpage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Policyholders> data = pdao.query(rb);
+		
+		APIRequest<Policyholders> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+	/**
+	 * 分页查询被保人信息
+	 */
+	@Override
+	public APIRequest queryRecognizee(Integer indexpage) {
+		// TODO Auto-generated method stub
+		if(indexpage==null) {
+			indexpage=1;
+		}
+		int rowcount  = rdao.count();
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexpage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Recognizee> data = rdao.queryRecognizee(rb);
+		
+		APIRequest<Recognizee> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+	
+	/**
+	 * 按条件查询保单信息
+	 */
+	@Override
+	public APIRequest queryByInfo(Warranty wa, Integer indexpage) {
+		// TODO Auto-generated method stub
+		Integer count=dao.count();
+		Pages page=new Pages(count);
+		page.setIndexPage(indexpage);
+		RowBounds row=new RowBounds(page.getBeginRow(),page.getPageSize());
+		
+		List<Warranty> data=dao.queryByInfo(wa,row);
+		APIRequest<Warranty> api=new APIRequest<>();
+		if(data.size() > 0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起,当前没有数据");
+		}
+		return api;
+	}
+	
+	/**
+	 * 按条件查询被保人信息
+	 */
+	@Override
+	public APIRequest queryRecognizeeByInfo(Recognizee rg, Integer indexpage) {
+		// TODO Auto-generated method stub
+		Integer count=rdao.count();
+		Pages page=new Pages(count);
+		page.setIndexPage(indexpage);
+		RowBounds row=new RowBounds(page.getBeginRow(),page.getPageSize());
+		
+		List<Recognizee> data=rdao.queryRecognizeeByInfo(rg, row);
+		APIRequest<Recognizee> api=new APIRequest<>();
+		if(data.size() > 0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起,当前没有数据");
+		}
+		return api;
+	}
+	
+	/**
+	 * 按条件查询投保人信息
+	 */
+	@Override
+	public APIRequest queryPolicyHolderByInfo(Policyholders pc, Integer indexpage) {
+		// TODO Auto-generated method stub
+		Integer count=rdao.count();
+		Pages page=new Pages(count);
+		page.setIndexPage(indexpage);
+		RowBounds row=new RowBounds(page.getBeginRow(),page.getPageSize());
+		
+		List<Policyholders> data=pdao.queryByInfo(pc,row);
+		APIRequest<Policyholders> api=new APIRequest<>();
+		if(data.size() > 0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起,当前没有数据");
+		}
+		return api;
+	}
+}

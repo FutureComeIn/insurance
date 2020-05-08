@@ -1,0 +1,186 @@
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+		<link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<!-- NProgress -->
+		<link href="../../../vendors/nprogress/nprogress.css" rel="stylesheet">
+		<!-- iCheck -->
+		<link href="../../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+		<!-- bootstrap-progressbar -->
+		<link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+		<!-- JQVMap -->
+		<link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+		<!-- bootstrap-daterangepicker -->
+		<link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+		<!-- Custom Theme Style -->
+		<link href="../../../build/css/custom.min.css" rel="stylesheet">
+		<style type="text/css">
+
+		</style>
+		<script src="../../../src/js/jquery-1.8.3.js"></script>
+	</head>
+	
+
+	<body style="background: #F7F7F7;">
+		<!--
+                	作者：offline
+                	时间：2017-10-24
+                	描述：内容开始
+                -->
+     <input type="hidden" value="" id="get_reported_number">
+     <input type="hidden" id="case_stateinfo" value="核损中"/>
+		<div id="body">
+		<div class="table" id="count">
+						<table class="table table-bordered" align="center" style="width: 100%" id="myprospect">
+							<tr>
+								<th>报案编号</th>
+								<th>报案人</th>
+								<th>车牌号</th>
+								<th>联系电话</th>
+								<th>报案时间</th>
+								<th>出事地点 </th>
+								<th>出险原因</th>
+								<th>事故类型</th>
+								<th>案件状态</th>
+							</tr>
+						</table>
+						</div>
+			<div class="table" id="count">
+						<table class="table table-bordered" align="center" style="width: 100%" id="prospect_table">
+				     	  	<thead>我方车损信息</thead>
+							<tr>
+								<th>报案编号</th>
+								<th>姓名</th>
+								<th>联系电话</th>
+								<th>事故时间</th>
+								<th>出事地点 </th>
+								<th>车辆类型</th>
+								<th>金额</th>
+							</tr>
+							
+						</table>
+					</div>
+			</div>
+			  <div class="table" id="count">
+						<table class="table table-bordered" align="center" style="width: 100%" id="prospect_table">
+							<tr>
+								<th>部件编号</th>
+								<th>部件名称</th>
+								<th>单价</th>
+								<th>数量</th>
+								<th>维修地点</th>
+								<th>小计</th>
+								<th>操作</th>
+							</tr>
+							<tr>
+								<th>sA01</th>
+								<th>车窗</th>
+								<th><input type="text" value="1000"/></th>
+								<th><input type="text" value="1"/></th>
+								<th>天天汽修</th>
+								<th>1000</th>
+								<th>
+									<button type="button" onclick="update()" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#upd-UserInfo">
+									 修改
+									</button>
+									<button type="button" onclick="del()" class="btn btn-danger btn-xs">
+									删除
+									</button>
+								</th>
+							</tr>
+							
+						</table>
+					</div>
+			 <div class="table" id="count">
+						<table class="table table-bordered" align="center" style="width: 100%" id="prospect_table">
+				     	  	<thead>对方车损信息</thead>
+							<tr>
+								<th>报案编号</th>
+								<th>姓名</th>
+								<th>联系电话</th>
+								<th>事故时间</th>
+								<th>出事地点 </th>
+								<th>车辆类型</th>
+								<th>金额</th>
+							</tr>
+						</table>
+					</div>
+			</div>
+		  <div class="table" id="count">
+		  	
+						<table class="table table-bordered" align="center" style="width: 100%" id="prospect_table">
+								<tr>
+								<th>部件编号</th>
+								<th>部件名称</th>
+								<th>单价</th>
+								<th>数量</th>
+								<th>维修地点</th>
+								<th>小计</th>
+								<th>操作</th>
+							</tr>
+							<tr>
+								<th>CH03</th>
+								<th>轮胎</th>
+								<th><input type="text" value="300"/></th>
+								<th><input type="text" value="2"/></th>
+								<th>天天汽修</th>
+								<th>600</th>
+								<th>
+									<button type="button" onclick="update();" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#upd-UserInfo">
+									 修改
+									</button>
+									<button type="button" onclick="del();" class="btn btn-danger btn-xs">
+									删除
+									</button>
+								</th>
+							</tr>
+						</table>
+					</div>
+			</div>
+			<div id="" align="center">
+				<button type="button" class="btn btn-primary btn-small" id="reset_but" onclick="dinsun();">
+										 定损
+									</button>
+        			<button type="button" class="btn btn-primary btn-small" id="reset_but" onclick="back();">
+										 返回
+									</button>
+			</div>
+				
+									
+		</div>
+		<script type="text/javascript">
+			function dinsun(){
+				window.location.href="dinsuninfo.jsp";
+			}
+			function back(){
+				window.history.go(-1);
+			}
+			
+		
+			function update(){
+				if(window.confirm("你确定要修改吗？")){
+					
+				}
+			}
+			function del(){
+				if(window.confirm("你确定要删除吗？")){
+					
+				}
+			}
+		</script>
+		<!--
+                	作者：offline
+                	时间：2017-10-24
+                	描述：内容结束
+                -->
+</body>
+</html>

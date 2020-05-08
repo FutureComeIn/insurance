@@ -1,0 +1,101 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.CarTypeDao;
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.services.ICarTypeServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+@Service("carTypeServicesImpls")
+public class CarTypeServicesImpls implements ICarTypeServices{
+	@Resource
+	CarTypeDao dao;
+	@Override
+	public APIRequest addCarType(CarType ct) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.addCarType(ct)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateCarType(CarType ct) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateCarType(ct)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest deleteCarType(Integer id) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.deleteCarType(id)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("删除失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest<CarType> queryCarType() {
+		// TODO Auto-generated method stub
+		APIRequest<CarType> api=new APIRequest<CarType>();
+		List<CarType> datas=dao.queryCarType();
+		if(datas.size()>0) {
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest queryCarTypeById(Integer id) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		List<CarType> cartype=dao.queryCarTypeById(id);
+		if(cartype.size()>0) {
+			api.setResult(true);
+			api.setSingerData(cartype.get(0));
+		}else {
+			api.setResult(false);
+			api.setMessage("查找失败");
+		}
+		return api; 
+	}
+
+	@Override
+	public APIRequest queryCarInfoTypeByCarName(String carName) {
+		APIRequest api=new APIRequest();
+		List<CarType> cartype=dao.queryCarInfoTypeByCarName(carName);
+		if(cartype.size()>0) {
+			api.setResult(true);
+			api.setSingerData(cartype.get(0));
+		}else {
+			api.setResult(false);
+			api.setMessage("查找失败");
+		}
+		return api; 
+	}
+
+	
+}

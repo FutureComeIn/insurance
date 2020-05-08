@@ -1,0 +1,222 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.AdverseCarDamage;
+import com.dxm.insuranceSpring.pojo.AdverseCarDamageDetails;
+import com.dxm.insuranceSpring.pojo.Assessment;
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Case;
+import com.dxm.insuranceSpring.pojo.MyCarDamage;
+import com.dxm.insuranceSpring.pojo.MyCarDamageDetails;
+import com.dxm.insuranceSpring.services.ICarLossServices;
+import com.dxm.insuranceSpring.services.ICaseServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+/**
+ * 车损控制层
+ * @author 王威
+ *
+ */
+@Controller
+@RequestMapping("src/page/dinsun")
+public class CarlossControls {
+	@Resource(name="carLossServicesImpls")
+	ICarLossServices services;
+	@Resource(name="caseServicesImpls")
+	ICaseServices caseservice;
+	
+	@RequestMapping(value="/queryAssessmentById.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryAssessmentById(Integer id) {
+		APIRequest<Assessment> api = services.queryAssessmentById(id);
+		return api.toString();
+	}
+	
+	/**
+	 * 根据查询条件（案件信息，当前页面）查询案件信息
+	 * @param ca
+	 * @param indexPage
+	 * @return
+	 */
+	@RequestMapping(value="/queryCaseInfoByHandleAndCurrentPage.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryCaseInfoByHandleAndCurrentPage(Case ca,Integer indexPage) {
+		APIRequest<Case> api =services.queryCaseInfoByHandleAndCurrentPage(ca, 1);
+		return api.toString();
+	}
+	
+	/**
+	 * 根据案件编号查找定损的案件信息以及购买险种信息
+	 * @param caseId
+	 * @return
+	 */
+	@RequestMapping(value="/queryMyHandleCaseByCaseId.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryMyHandleCaseByCaseId(HttpServletRequest request,Case ca) {
+		APIRequest api=services.queryMyHandleCaseByCaseId(ca);
+		request.setAttribute("api", api);
+		return "";
+	}
+	
+	
+	/**
+	 *根据案件编号 查询所有的定损信息以及详情
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/queryAllCarLossInfoByCaseId.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryAllCarLossInfoByCaseId(Integer caseid) {
+		APIRequest<Assessment> api=services.queryAllCarLossInfoByCaseId(caseid);
+		return api.toString();
+	} 
+	/**
+	 * 添加我方车损所有信息
+	 * @param mcd
+	 * @param carDamageDetails
+	 * @return
+	 */
+	@RequestMapping(value="/addMyCarLossAllInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addMyCarLossAllInfo(MyCarDamage mcd,MyCarDamageDetails...carDamageDetails) {
+		APIRequest api=services.addMyCarLossAllInfo(mcd, carDamageDetails);
+		return api.toString();
+	}
+	
+	/**
+	 *  添加对方车损所有信息
+	 * @param acd
+	 * @param carDamageDetails
+	 * @return
+	 */
+	@RequestMapping(value="/addAdverseCarLossAllInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addAdverseCarLossAllInfo(AdverseCarDamage acd,AdverseCarDamageDetails...carDamageDetails) {
+		APIRequest api=services.addAdverseCarLossAllInfo(acd, carDamageDetails);
+		return api.toString();
+	}
+	
+	/**
+	 * 添加定损信息
+	 * @param at
+	 * @return
+	 */
+	@RequestMapping(value="/addCarLossAllInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addCarLossAllInfo(Assessment at) {
+		APIRequest api=services.addCarLossAllInfo(at);
+		return api.toString();
+	}
+	
+	/**
+	 * 更新定损信息
+	 * @param at
+	 * @return
+	 */
+	@RequestMapping(value="/updateAssessment.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateAssessment(Assessment at) {
+		APIRequest api=services.updateAssessment(at);
+		return api.toString();
+	}
+	
+	/**
+	 * 更新我方车损信息
+	 * @param mcd
+	 * @return
+	 */
+	@RequestMapping(value="/updateMyCarDamage.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateMyCarDamage(MyCarDamage mcd) {
+		APIRequest api=services.updateMyCarDamage(mcd);
+		return api.toString();
+	}
+	
+	/**
+	 * 更新我方车损详情
+	 * @param mcdd
+	 * @return
+	 */
+	@RequestMapping(value="/updateMyCarDamageDetails.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateMyCarDamageDetails(MyCarDamageDetails mcdd) {
+		APIRequest api=services.updateMyCarDamageDetails(mcdd);
+		return api.toString();
+	}
+	
+	/**
+	 * 删除我方车损详情
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/deleteMyCarDamageDetails.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteMyCarDamageDetails(Integer id) {
+		APIRequest api=services.deleteMyCarDamageDetails(id);
+		return api.toString();
+	}
+	
+	/**
+	 * 更新对方车损信息
+	 * @param acd
+	 * @return
+	 */
+	@RequestMapping(value="/updateAdverseCarDamage.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateAdverseCarDamage(AdverseCarDamage acd) {
+		APIRequest api=services.updateAdverseCarDamage(acd);
+		return api.toString();
+	}
+	
+	/**
+	 * 更新对方车损详情
+	 * @param acdd
+	 * @return
+	 */
+	@RequestMapping(value="/updateAdverseCarDamageDetails.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateAdverseCarDamageDetails(AdverseCarDamageDetails acdd) {
+		APIRequest api=services.updateAdverseCarDamageDetails(acdd);
+		return api.toString();
+	}
+	
+	/**
+	 * 删除对方车损详情
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value="/deleteAdverseCarDamageDetails.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteAdverseCarDamageDetails(Integer id) {
+		APIRequest api=services.deleteAdverseCarDamageDetails(id);
+		return api.toString();
+	}
+	
+	
+	/**
+	 * 根据车辆类型名模糊查询车辆信息
+	 * @param carName
+	 * @return
+	 */
+	@RequestMapping(value="/queryCarTypeByCarName.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryCarTypeByCarName(String carName){
+		APIRequest<CarType> api=services.queryCarTypeByCarName(carName);
+		return api.toString();
+	}
+	
+	//public APIRequest
+	
+	/**
+	 * 根据定损编号查找定损所有详情
+	 * @param id
+	 * @return
+	 */
+	
+}

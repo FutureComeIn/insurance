@@ -1,0 +1,17 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import com.dxm.insuranceSpring.pojo.NuclearDamage;
+
+public interface NuclearDamageDao {
+	//添加理赔
+	public boolean addNuclearDamage();
+	
+	//修改理赔状态
+	public List<NuclearDamage> updateNulearDamage();
+	
+	
+}
+
+

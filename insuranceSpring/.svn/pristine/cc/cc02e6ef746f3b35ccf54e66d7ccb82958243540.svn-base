@@ -1,0 +1,62 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.SettleClaim;
+import com.dxm.insuranceSpring.services.ISettleClaimServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+public class SettleClaimControls {
+
+	@Resource(name="settleClaimServicelmpls")
+	ISettleClaimServices service;
+	/**
+	 * 添加理赔信息
+	 * @return
+	 */
+	@RequestMapping(value="/addSettleClaim.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addSettleClaim() {
+		APIRequest api=new APIRequest();
+		System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	/**
+	 * 修改理赔状态
+	 */
+	@RequestMapping(value="/updateSettleClaim.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateSettleClaim() {
+		APIRequest api=new APIRequest();
+		System.out.println(api.getDatas().size());
+		return api.toString();	
+	}
+	/**
+	 * 查看理赔信息
+	 */
+	@RequestMapping(value="/querySettleClaim.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String querySettleClaim() {
+		APIRequest<SettleClaim> api=new APIRequest();
+		System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	
+	/**
+	 * 查看已理赔的信息
+	 */
+	@RequestMapping(value="/querySettleClaimByStatus.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String querySettleClaimByStatus(String status) {
+		APIRequest<SettleClaim> api=new APIRequest();
+		System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	
+	
+}

@@ -1,0 +1,34 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.pojo.InsuranceType;
+import com.dxm.insuranceSpring.pojo.Part;
+
+
+public interface InsuranceTypeDao {
+	@Insert("insert into InsuranceType values(#{insuranceTypeId},#{insuranceTypeName},#{insuranceTerm},#{insuranceTypeRemark},#{insuranceTypeSize})")
+	public Integer addInsuranceType(InsuranceType data);
+	
+	
+	@Update("")
+	public Integer updateInsuranceType(InsuranceType sp);
+	
+	@Delete("delete from InsuranceType where insuranceTypeId=#{insuranceTypeId}")
+	public Integer deleteInsuranceType(Integer insuranceTypeId);
+	
+	
+	@Select("select * from InsuranceType")
+	public List<InsuranceType> queryPart();
+	//根据报案编号查询保单编号
+	@Select("select * from  InsuranceType u  INNER JOIN Report r on  u.insuranceTypeId = r.warrantyId where reportId =#{reportId};")
+	public List<InsuranceType> queryPartByreportId();
+	
+	@Select("select * from InsuranceType where insuranceTypeId=#{insuranceTypeId}")
+	public List<InsuranceType> queryInsuranceTypeById(Integer insuranceTypeId);
+}

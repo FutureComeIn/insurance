@@ -1,0 +1,49 @@
+function queryCarloss(){
+	$("#queryCarloss").empty();
+	alert("111");
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryNuclearDamage.do',
+		type:'post',
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				if(data.datas[i].nuclearDamageStatus=0){
+					data.datas[i].nuclearDamageStatus="未核损"
+				}else{
+					data.datas[i].nuclearDamageStatus="已核损"
+				}
+				
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].nuclearDamageId+"</td>";
+				rowHtml+="<td >"+data.datas[i].assessmentId+"</td>";
+				rowHtml+="<td >"+data.datas[i].nuclearDamageTime+"</td>";
+				rowHtml+="<td >"+data.datas[i].userName+"</td>";
+				rowHtml+="<td >"+data.datas[i].nuclearDamageStatus+"</td>";			
+				rowHtml+="<td><a href='hesun_info.jsp'><button  type='button' class='btn btn-info' style='height: 35px;' onclick="addNuclearDamage()">开始核损&nbsp;</button></a>"
+				
+				
+				rowHtml+=""
+				contentHtml += rowHtml;	
+				
+				/*<div style="text-align:center;"> 
+				<ul class="pagination">
+					<li><a href="#" id="jian">&laquo;</a></li>
+					<li><a href="#" id="">当前页</a></li>
+					<li><a href="#" id="firstpage"></a></li>
+					<li><a href="#" id="">总页数</a></li>
+					<li><a href="#" id="lastpage"></a></li>
+					<li><a href="#" id="jia">&raquo;</a></li>
+				</ul>
+</div>*/
+			}
+			$("#queryCarloss").append(contentHtml);
+			alert("666");
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("未能开始核损");
+		}
+	})
+}   

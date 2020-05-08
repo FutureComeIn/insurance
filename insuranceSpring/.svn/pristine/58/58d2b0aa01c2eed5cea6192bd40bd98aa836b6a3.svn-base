@@ -1,0 +1,45 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.services.IWarrantyServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+public class WarrantyControls {
+	@Resource(name="warrantyServicesImpl")
+	IWarrantyServices service;
+	@RequestMapping(value="/addWarranty.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String addWarranty(Warranty wa){
+		APIRequest<Warranty> api=service.add(wa);
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/queryWarranty.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryWarranty(Integer indexpage) {
+		APIRequest<Warranty> api=service.queryAll(indexpage);
+		//System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/queryWarrantyByInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryWarrantyByInfo(Warranty wa,Integer indexpage) {
+		APIRequest<Warranty> api = service.queryByInfo(wa, indexpage);
+		return api.toString();
+	}
+	
+	@RequestMapping(value="/updateWarranty.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateWarranty(Warranty wa){
+		APIRequest<Warranty> api=service.update(wa);
+		return api.toString();
+	}
+}

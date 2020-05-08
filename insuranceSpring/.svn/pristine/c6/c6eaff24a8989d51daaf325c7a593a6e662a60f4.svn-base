@@ -1,0 +1,142 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.swing.plaf.synth.SynthSplitPaneUI;
+
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.springframework.stereotype.Service;
+
+
+import com.dxm.insuranceSpring.aspectj.Logaspect;
+import com.dxm.insuranceSpring.dao.AssessmentDao;
+import com.dxm.insuranceSpring.dao.NuclearDamageDao;
+import com.dxm.insuranceSpring.dao.SettleClaimDao;
+import com.dxm.insuranceSpring.pojo.Assessment;
+import com.dxm.insuranceSpring.pojo.NuclearDamage;
+import com.dxm.insuranceSpring.services.INuclearDamageServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Service("nuclearDamageServicelmpls")
+public class NuclearDamageServicelmpls implements INuclearDamageServices{
+
+	@Resource 
+	NuclearDamageDao dao;
+	@Resource
+	AssessmentDao adao;
+	
+	
+	
+	@Override
+	@Logaspect(operationName="添加核损信息")
+	public APIRequest addNuclearDamage(NuclearDamage ncd) {
+		// TODO Auto-generated method stub
+		APIRequest  api=new APIRequest();
+		if(dao.addNuclearDamage(ncd)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest queryNuclearDamage(Integer UserId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		
+		List<NuclearDamage> datas=dao.queryNuclearDamage(UserId);
+		System.out.println("userid:"+UserId);
+		System.out.println("user:"+datas.size());
+		if(datas.size()>0) {
+			
+			api.setResult(true);
+			api.setDatas(datas);
+		}else {
+			api.setResult(false);
+			api.setMessage("查询失败");
+		}
+		return api;
+		
+	}
+
+	
+
+
+	@Override
+	public APIRequest queryNuclearDamageByStatus(String nuclearDamageStatus) {
+		// TODO Auto-generated method stub
+				APIRequest<NuclearDamage> api=new APIRequest<NuclearDamage>();
+				List<NuclearDamage> datas=new ArrayList();
+				 datas=dao.queryNuclearDamageByStatus(nuclearDamageStatus);
+				if(datas.size()>0) {
+					api.setResult(true);
+					api.setDatas(datas);			
+				}else {
+					api.setResult(false);
+					api.setMessage("信息不存在");
+				}
+				return api;
+	}
+
+	
+
+
+	@Override
+	public APIRequest updateNuclearDamage(Integer NuclearDamageid) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		//System.out.println("servicelmps="+NuclearDamageid);
+		//System.out.println("servicelmps="+dao.updateNuclearDamageStatus(NuclearDamageid));
+		
+		if(dao.updateNuclearDamageStatus(NuclearDamageid)>0) {
+			api.setResult(true);
+			}else {
+				api.setResult(false);
+				api.setMessage("核损失败");
+			}
+				//System.out.println("api="+api);
+		return api;
+	}
+
+	@Override
+	public APIRequest deleteNuclearDamage(Integer nuclearDamageId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		//System.out.println("impls="+dao.deleteNuclearDamageBycaseId(nuclearDamageId));
+		if(dao.deleteNuclearDamageBycaseId(nuclearDamageId)>0) {
+			//System.out.println("impls="+dao.deleteNuclearDamageBycaseId(NuclearDamageId));
+			api.setResult(true);
+					
+		}else {
+			api.setResult(false);
+			api.setMessage("删除失败");
+		}
+		return api;
+	}
+
+	@Override
+	public void queryNuclearDamageByNuclearDamageId(HttpServletRequest request, Integer nuclearDamageId) {
+		// TODO Auto-generated method stub
+	List<NuclearDamage> NuclearDamageList=dao.queryNuclearDamageByNuclearDamageId(nuclearDamageId);
+	if(NuclearDamageList.size()>0){
+		System.out.println("status:"+NuclearDamageList.get(0).getNuclearDamageStatus());
+		request.setAttribute("NuclearDamageInfo",NuclearDamageList.get(0));
+		
+	                 }
+//System.out.println("assessmentid:"+NuclearDamageList.get(0).getAssessmentId());
+	List<Assessment> AssessmentList= adao.queryAssessmentById(NuclearDamageList.get(0).getAssessmentId());
+	
+	if(AssessmentList.size()>0) {
+	
+		request.setAttribute("AssessmentInfo",AssessmentList.get(0));
+	                   }
+		}
+
+
+	
+
+}

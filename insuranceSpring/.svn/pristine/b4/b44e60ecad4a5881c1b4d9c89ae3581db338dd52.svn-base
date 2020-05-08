@@ -1,0 +1,51 @@
+package com.dxm.insuranceSpring.aspectj;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.LogDao;
+import com.dxm.insuranceSpring.pojo.Log;
+import com.dxm.insuranceSpring.utils.Pages;
+
+@Service("iLogServicesImpls")
+public class ILogServicesImpls implements ILogService {
+	
+	@Autowired
+	LogDao ldao;
+
+	@Override
+	@Logaspect(operationName="添加日志")
+	public Integer addLog(Log log) {
+		// TODO 添加日志
+		return ldao.insertLog(log);
+	}
+
+	@Override
+	@Logaspect(operationName="遍历日志")
+	public HashMap<String, Object> queryLog(Integer indexPage,Log log) {
+		// TODO 遍历日志
+		Integer count=ldao.countLog(log);
+		Pages page=new Pages(count);
+		page.setIndexPage(indexPage);
+		page.setPageSize(8);
+		System.out.println("page="+page);
+		RowBounds rb=new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Log> loglist=ldao.selectLog(rb,log);
+		HashMap<String,Object> hm=new HashMap<String,Object>();
+		hm.put("loglist",loglist);
+		hm.put("page",page);
+		return hm;
+	}
+
+	@Override
+	@Logaspect(operationName="删除日志")
+	public Integer deleteLog(Integer logId) {
+		// TODO 删除日志
+		return ldao.deleteLog(logId);
+	}
+
+}

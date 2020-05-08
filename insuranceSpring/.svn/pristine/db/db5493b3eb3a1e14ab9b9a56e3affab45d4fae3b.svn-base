@@ -1,0 +1,22 @@
+package com.dxm.insuranceSpring.aspectj;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.LogDao;
+import com.dxm.insuranceSpring.pojo.Log;
+
+@Service("iLogServicesImpls")
+public class ILogServicesImpls implements ILogService {
+	
+	@Autowired
+	LogDao ldao;
+
+	@Override
+	@Logaspect(operationName="添加日志")
+	public Integer addLog(Log log) {
+		// TODO 添加日志
+		return ldao.insertLog(log);
+	}
+
+}

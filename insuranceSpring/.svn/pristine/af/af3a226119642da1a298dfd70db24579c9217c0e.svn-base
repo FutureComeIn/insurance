@@ -1,0 +1,28 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Case;
+
+/**
+ * 案件信息 Dao层接口
+ * @author Administrator
+ *
+ */
+public interface CaseDao {
+	@Insert("insert into t_case(reportId,reportReason,province,city,road,road_direction,jieanId,checkId,assessmentId,nuclearDamageId,settlementId,settleId,caseStatus) "
+			+ "values(#{reportId},#{reportReason},#{province},#{city},#{road},#{road_direction},#{jieanId},#{checkId},"
+			+ "#{assessmentId},#{nuclearDamageId},#{settlementId},#{settleId},#{caseStatus})")
+	public Integer addCase(Case caset);
+	
+	
+	@Select("select * from t_case")
+	public List<Case> queryByList(RowBounds row);
+	
+	@Select("select count(1) from t_case ")
+	public Integer countCase();
+}

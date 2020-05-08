@@ -1,0 +1,141 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>修改员工信息</title>
+<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+   
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+   
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+   
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+	<style type="text/css">
+    	#form-user{
+    		margin:0px auto;
+    	}
+    </style>
+ 
+     <!-- jQuery -->
+    <script src="../../../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="../../js/yxwjs/address.js"></script>
+    <script src="../../js/yxwjs/user.js"></script>
+    <script type="text/javascript">
+	    $(function(){
+			var sex=$("#sexHidden").val();
+			$("#sex").val(sex);
+		})
+		
+		//在address.js里面的allCity()后面执行
+		function showAddress(){
+			var hprovince=$("#hprovince").val();
+	    	var hcity=$("#hcity").val();
+	    	$("#province").val(hprovince); 
+	    	//重新加载出赋了省份后的城市
+	    	changeCity();
+	    	$("#city").val(hcity);
+		}
+    </script>
+  </head>
+
+  <body style="background: #F7F7F7;" onload="showAddress()">
+	 <div id="form-user" class="add_info" style="height:700px;width:900px;text-algin:center">
+		<div class="form-group col-md-12" style="font: 微软雅黑;">
+	 	 	<h3>修改员工信息：</h3>	
+	 	 </div>
+	
+		 <form method="post" action="updateInfo.do?userId=${userinfo.userId }" name="uform">
+		 	 <table cellpadding="16" width="100%">
+			 	<tr>
+			 		<td>
+			 			<label>姓名</label><br/>
+			  			<input value="${userinfo.userName }" type="text" name="userName" id="userName" class="form-control employeesName"  placeholder="请输入姓名">
+			 		</td>
+			 		<td width="40">&nbsp;</td>
+			 		<td>
+			 			<label>身份证</label><br/>
+			  			<input value="${userinfo.cardId }"type="text" name="cardId" id="cardId" class="form-control employeesName" placeholder="请输入身份证号">
+			 		</td>
+			 		<td width="40">&nbsp;</td>
+			 		<td>
+			 			<label>性别</label><br/>
+						<select name="sex" id="sex" class="form-control">
+							  <option>男</option>
+							  <option>女</option>
+						</select>
+			 		</td>
+			 	</tr>
+			 	<tr>
+			 		<td>
+			 			<label>年龄</label><br/>
+			  			<input value="${userinfo.age }"type="text" name="age" id="age" class="form-control employeesName" placeholder="请输入年龄">
+			 		</td>
+			 		<td width="40">&nbsp;</td>
+			 		<td>
+			 			<label>联系方式</label><br/>
+				 		<input value="${userinfo.tel }" type="text" name="tel" id="tel" class="form-control employeesName" placeholder="请输入联系方式">
+			 		</td>
+			 		<td width="40">&nbsp;</td>
+			 		<td>
+			 			<label>email</label><br/>
+				 		<input value="${userinfo.email }" type="text" name="email" id="email" class="form-control employeesName" placeholder="请输入邮箱">
+			 		</td>
+			 	</tr>
+			 	<tr>
+			 		<td>
+			 			<label>联系地址</label><br/>
+						  <select class="form-control" name="province" id="province" onchange="changeCity();">
+						  </select>
+			 		</td>
+			 		<td width="40">&nbsp;</td>
+			 		<td>
+			 			<label>地区</label><br/>
+						  <select class="form-control" name="city" id="city" >
+						  </select>
+			 		</td>
+			 		<td colspan="2">&nbsp;</td>
+			 	</tr>
+				<tr>
+					<td>
+						<label>已拥有职位:</label><br/>
+						<select id="roles" name="roles" multiple style="width:260px;height:400px">
+							<c:forEach items="${roles }" var="role">
+								<option value="${role.roleId }">${role.roleName }</option>
+							</c:forEach>
+						</select>
+					</td>
+					<td width="40">&nbsp;</td>
+					<td align="center">
+						<button type="button" class="btn btn-primary" onclick="removeRole(${userinfo.userId})">&gt;</button><br><br> <!-- 大于号 -->
+						<button type="button" class="btn btn-primary" onclick="addRole(${userinfo.userId})">&lt;</button> <!-- 小于号 -->
+					</td>
+					<td width="40">&nbsp;</td>
+					<td>
+						<label>未拥有职位:</label><br/>
+						<select id="unroles" name="unroles" multiple style="width:260px;height:400px">
+							<c:forEach items="${unroles }" var="unrole">
+								<option value="${unrole.roleId }">${unrole.roleName }</option>
+							</c:forEach>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5" align="center">
+					<button type="button" id="userOperationButton" class="btn btn-primary">修改</button>
+					</td>
+				</tr>
+			</table>
+			<input type="hidden" value="${userinfo.sex }" id="sexHidden" />
+		 	<input type="hidden" value="${userinfo.province }" id="hprovince" />
+		 	<input type="hidden" value="${userinfo.city }" id="hcity" />				
+		 </form>			
+	</div>
+  </body>
+</html>

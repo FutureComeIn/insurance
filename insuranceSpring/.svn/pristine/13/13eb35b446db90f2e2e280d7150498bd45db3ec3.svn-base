@@ -1,0 +1,29 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.annotations.Select;
+
+import com.dxm.insuranceSpring.pojo.t_recognizee;
+
+
+public interface t_recognizeeDao {
+	@Insert("insert into t_recognizee values(#{recognizeeId},#{recognizeeName},#{sex},#{cardId},#{tel},#{addressShen},#{addressShi},#{email},#{bankNumber},#{driveId},#{vehicleLicenseId},#{engineId})")
+	public Integer addRecognizee(t_recognizee re);
+	@Update("update from t_recognizee set recognizeeName=#{recognizeeName} where recognizeeId=#{recognizeeId}")
+	public Integer updateRecognizee(t_recognizee re);
+	
+	@Delete("delete from t_recognizee where recognizeeId=#{recognizeeId}")
+	public Integer deleteRecognizee(Integer id);
+	
+	
+	@Select("select * from t_recognizee")
+	public List<t_recognizee> queryRecognizee();
+	
+	@Select("select * from t_recognizee where recognizeeId=#{recognizeeId} or recognizeeName=#{recognizeeName} or cardId=#{cardId}")
+	public List<Object> queryRecognizeeById(HashMap<String, String> map);
+}

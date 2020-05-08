@@ -1,0 +1,86 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.User;
+
+
+public class SqlUtils {
+	 //方法中的关键字是区分大小写的  SQL SELECT WHERE
+    //该方法会根据传递过来的map中的参数内容  动态构建sql语句
+	 public String selectCountUser(User user) {
+	        return new SQL() {
+	            {
+	                SELECT("count(*)");
+	                FROM("T_USER");
+	                if(user.getLeaveStatus()!=null) {
+	                	 WHERE("leaveStatus=#{leaveStatus}");
+	                }else {
+	                	WHERE("leaveStatus=0");
+	                }
+	                if (user.getAge()!=null) {
+	                    WHERE("age<#{age}");
+	                }
+	                if(user.getAccount()!= null&&!"".equals(user.getAccount())){
+	                	WHERE("account like #{account}");
+	                }
+	            }
+	            
+	        }.toString();
+	    }	
+    public String selectWhitParamSql(User user) {
+        return new SQL() {
+            {
+                SELECT("*");
+                FROM("T_USER");
+                if(user.getLeaveStatus()!=null) {
+                	 WHERE("leaveStatus=#{leaveStatus}");
+                }else {
+                	WHERE("leaveStatus=0");
+                }
+                if (user.getAge()!=null) {
+                    WHERE("age<#{age}");
+                }
+                if(user.getAccount()!= null&&!"".equals(user.getAccount())){
+                	WHERE("account like #{account}");
+                }
+            }
+            
+        }.toString();
+    }	
+    public String selectLog(final String logName,final String logTime) {
+    	return new SQL() {
+    		{
+    			SELECT("*");
+    			FROM("t_log");
+    			if(logName!=null) {
+    				WHERE("logName like #{logName}");
+    			}
+    			if(logTime!=null) {
+    				WHERE("logTime like #{logTime}");
+    			}
+    		}
+    	}.toString();
+    }
+    
+    public String updateWhitParamSql(final User param) {
+        return new SQL() {
+            {
+                UPDATE("t_user");
+                if (param.getUserId() > 0) {
+                    SET("id=#{id}");
+                }
+                if(param.getUserName() != null){
+                	SET("id=#{id}");
+                }
+                WHERE("id=#{id}");
+            }
+            
+        }.toString();
+    }
+   public static void main(String[] args) {
+	   User user=new User();
+	   user.setAccount("风");
+	   System.out.println(new SqlUtils().selectCountUser(user));
+   }
+}

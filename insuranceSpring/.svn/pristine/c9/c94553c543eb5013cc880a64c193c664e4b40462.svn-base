@@ -1,0 +1,228 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.Policyholders;
+import com.dxm.insuranceSpring.pojo.Recognizee;
+import com.dxm.insuranceSpring.pojo.Warranty;
+
+
+public class WarrantySqlUtils {
+	/**
+	 * 根据多个条件查询投保人信息
+	 * @param param
+	 * @return
+	 */
+	public String selectPolicyholders(final Policyholders param) {
+		return new SQL() {
+			{
+				SELECT("*");
+				FROM("t_policyholders");
+				if(param.getPolicyholdersId()!=null) {
+					WHERE("policyholdersId=#{policyholdersId}");
+				}
+				if(param.getPolicyholdersName()!=null) {
+					WHERE("policyholdersName=#{policyholdersName}");
+				}
+				if(param.getCardId()!=null) {
+					WHERE("cardId=#{cardId}");
+				}
+			}
+		}.toString();
+	}
+	/**
+	 * 修改投保人信息
+	 * @param param
+	 * @return
+	 */
+	public String updatePolicyholders(final Policyholders param){
+		return new SQL(){
+			{
+				UPDATE("t_policyholders");
+				if(param.getPolicyholdersId()!=null) {
+					SET("policyholdersId=#{policyholdersId}");
+				}
+				if(param.getPolicyholdersName()!=null) {
+					SET("policyholdersName=#{policyholdersName}");
+				}
+				if(param.getSex()!=null) {
+					SET("sex=#{sex}");
+				}
+				if(param.getCardId()!=null) {
+					SET("cardId=#{cardId}");
+				}
+				if(param.getTel()!=null) {
+					SET("tel=#{tel}");
+				}
+				if(param.getAddressShen()!=null) {
+					SET("addressShen=#{addressShen}");
+				}
+				if(param.getAddressShi()!=null) {
+					SET("addressShi=#{addressShi}");
+				}
+				if(param.getEmail()!=null) {
+					SET("email=#{eamil}");
+				}
+				WHERE("policyholdersId=#{policyholdersId}");
+			}
+		}.toString();
+	}
+	/**
+	 * 多个条件查询被保人信息
+	 * @param param
+	 * @return
+	 */
+	public String selectRecognizee(final Recognizee param) {
+		return new SQL() {
+			{
+				SELECT("*");
+				FROM("t_recognizee");
+				if(param.getRecognizeeId()!=null) {
+					WHERE("recognizeeId=#{recognizeeId}");
+				}
+				if(param.getRecognizeeName()!=null) {
+					WHERE("recognizeeName=#{recognizeeName}");
+				}
+				if(param.getCardId()!=null) {
+					WHERE("cardId=#{cardId}");
+				}
+			}
+		}.toString();
+	}
+	/**
+	 * 修改被保人信息
+	 * @param param
+	 * @return
+	 */
+	public String updateRecognizee(final Recognizee param){
+		return new SQL(){
+			{
+				UPDATE("t_recognizee");
+				if(param.getRecognizeeId()!=null) {
+					SET("recognizeeId=#{recognizeeId}");
+				}
+				if(param.getRecognizeeName()!=null) {
+					SET("recognizeeName=#{recognizeeName}");
+				}
+				if(param.getSex()!=null) {
+					SET("sex=#{sex}");
+				}
+				if(param.getCardId()!=null) {
+					SET("cardId=#{cardId}");
+				}
+				if(param.getTel()!=null) {
+					SET("tel=#{tel}");
+				}
+				if(param.getAddressShen()!=null) {
+					SET("addressShen=#{addressShen}");
+				}
+				if(param.getAddressShi()!=null) {
+					SET("addressShi=#{addressShi}");
+				}
+				if(param.getEmail()!=null) {
+					SET("email=#{eamil}");
+				}
+				if(param.getBankNumber()!=null) {
+					SET("bankNumber=#{bankNumber}");
+				}
+				if(param.getDriveId()!=null) {
+					SET("driveId=#{edriveId}");
+				}if(param.getVehicleLicenseId()!=null) {
+					SET("vehicleLicenseId=#{vehicleLicenseId}");
+				}
+				if(param.getEngineId()!=null) {
+					SET("engineId=#{engineId}");
+				}
+				WHERE("recognizeeId=#{recognizeeId}");
+			}
+		}.toString();
+	}
+	/**
+	 * 按多个条件查询保单信息
+	 * @param param
+	 * @return
+	 */
+	public String selectWarranty(final Warranty wa) {
+		return new SQL() {
+			{
+				SELECT("*");
+				FROM("t_warranty");
+				if(wa.getWarrantyId()!=null) {
+					WHERE("warrantyId=#{warrantyId}");
+				}
+				if(wa.getPolicyholderName()!=null) {
+					WHERE("policyholderName=#{policyholderName");
+				}
+				if(wa.getRecognizeeName()!=null) {
+					WHERE("recognizeeName=#{recognizeeName}");
+				}
+				if(wa.getRecognizeeIdCard()!=null) {
+					WHERE("recognizeeIdCard=#{recognizeeIdCard}");
+				}
+			}
+		}.toString();
+	}
+	public String updateWarranty(final Warranty wa){
+		return new SQL(){
+			{
+				UPDATE("t_warranty");
+				if(wa.getWarrantyId()!=null){
+					SET("warrantyId=#{warrantyId}");
+				}
+				if(wa.getPolicyholderName()!=null){
+					SET("policyholderName=#{policyholderName}");
+				}
+				if(wa.getPolicyholderPhone()!=null){
+					SET("policyholderPhone=#{policyholderPhone}");
+				}
+				if(wa.getRecognizeeName()!=null){
+					SET("recognizeeName=#{recognizeeName}");
+				}
+				if(wa.getRecognizeeIdCard()!=null){
+					SET("recognizeeIdCard=#{recognizeeIdCard}");
+			    }
+				if(wa.getInsuranceBeginTime()!=null){
+					SET("insuranceBeginTime=#{insuranceBeginTime}");
+			    }
+			    if(wa.getInsuranceEndTime()!=null){
+					SET("insuranceEndTime=#{insuranceEndTime}");
+				}
+				if(wa.getUserId()!=null){
+					SET("userId=#{userId}");
+				}
+				if(wa.getUsername()!=null){
+					SET("username=#{username}");
+				}
+				if(wa.getCarTypeId()!=null){
+					SET("carTypeId=#{carTypeId}");
+				}
+				if(wa.getCarTypeName()!=null){
+					SET("carTypeName=#{carTypeName}");
+				}
+				if(wa.getInsurancePrice()!=null){
+					SET("insurancePrice=#{insurancePrice}");
+				}
+				if(wa.getWarrantyPrice()!=null){
+					SET("warrantyPrice=#{warrantyPrice}");
+				}
+				if(wa.getSigningDate()!=null){
+					SET("signingDate=#{signingDate}");
+				}
+				if(wa.getPaymentDate()!=null){
+					SET("paymentDate=#{paymentDate}");
+				}
+				if(wa.getSailId()!=null){
+					SET("sailId=#{sailId}");
+				}
+				if(wa.getDriverId()!=null){
+					SET("driverId=#{driverId}");
+				}
+				if(wa.getEngineId()!=null){
+					SET("engineId=#{engineId}");
+				}
+				WHERE("warrantyId=#{warrantyId}");
+			}
+		}.toString();
+	}
+	
+}

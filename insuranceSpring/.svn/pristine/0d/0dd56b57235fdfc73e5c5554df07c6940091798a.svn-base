@@ -1,0 +1,37 @@
+package com.dxm.insuranceSpring.dao;
+
+
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Assessment;
+
+/**
+ * 定损dao接口
+ * @author 王威
+ *
+ */
+public interface AssessmentDao {
+	
+	@Select("select * from t_assessment where assessmentId=#{id}")
+	public List<Assessment> queryAssessmentById(Integer id);
+	
+	@Select("select * from t_assessment")
+	public List<Assessment> queryAssessment(RowBounds rb);
+	
+	@Select("select count(*) from t_assessment")
+	public Integer queryAssessmentCount();
+	
+	@Insert("insert into t_assessment values(#{assessmentId},#{myCarDamageId},#{adverseCarDamageId},#{assessmentTime},#{totalPrice},#{remark},#{UserId},#{assessmentPerson},#{status})")
+	public Integer addAssessment(Assessment at) ;
+	
+	@Update("")
+	public Integer updateAssessment(Assessment at);
+	
+	
+}

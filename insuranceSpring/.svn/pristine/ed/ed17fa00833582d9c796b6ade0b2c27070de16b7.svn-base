@@ -1,0 +1,33 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.Assessment;
+import com.dxm.insuranceSpring.pojo.Check;
+import com.dxm.insuranceSpring.services.ICarLossServices;
+import com.dxm.insuranceSpring.services.ICheckServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+/**
+ * 车损控制层
+ * @author 王威
+ *
+ */
+@Controller
+@RequestMapping("src/page/dinsun")
+public class CarlossControls {
+	@Resource(name="carLossServicesImpls")
+	ICarLossServices services;
+	
+	@RequestMapping(value="/queryAssessmentById.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryAssessmentById(Integer id) {
+		APIRequest<Assessment> api = services.queryAssessmentById(1);
+		return api.toString();
+	}
+	
+}

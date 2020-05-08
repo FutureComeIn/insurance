@@ -1,0 +1,48 @@
+//加载数据
+function queryAllreportDetails(){
+	//获取文本框的值
+	var reportId=2;
+	//alert(1);
+	$("#allreportDetailsInfo").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/report_wb/loadUnHandleReportDetails.do',
+		type:'post',
+	    dataType : 'json',
+	    data:{
+			"reportId":reportId
+		},
+		success : function(data) {
+			//data=$.parseJSON(data);
+			//alert(data.datas.length);
+			var contentHtml ="";
+			for (var i = 0; i<data.datas.length; i++) {
+				var rowHtml ="<tr>";
+				rowHtml+="<td >"+data.datas[i].reportId+"</td>";
+				if(data.datas[i].warranty!=null){
+					rowHtml+="<td >"+data.datas[i].warranty.policyholdersName+"</td>";
+					rowHtml+="<td >"+data.datas[i].warranty.recognizeeName+"</td>";
+					rowHtml+="<td >"+data.datas[i].warranty.sailId+"</td>";
+				}else{
+					rowHtml+="<td ></td>"
+				}
+				rowHtml+="<td >"+data.datas[i].reportPersonName+"</td>";
+				rowHtml+="<td >"+data.datas[i].reporPersontPhone+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportReason+"</td>";
+				rowHtml+="<td >"+data.datas[i].province+"</td>";
+				rowHtml += "<td>"+data.datas[i].city+"</td>";
+				rowHtml += "<td>"+data.datas[i].area+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportTime+"</td>";
+				rowHtml+="</tr>";
+			    contentHtml += rowHtml;
+				}
+			//alert(contentHtml);
+			$("#allreportDetailsInfo").append(contentHtml);
+				
+				//initPageBar(data.singerData,"loadRole");
+			},
+		error : function() {
+			alert("查找失败!");
+			}
+		})
+	}   
+

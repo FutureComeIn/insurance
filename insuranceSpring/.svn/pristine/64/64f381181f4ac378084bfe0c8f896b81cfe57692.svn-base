@@ -1,0 +1,33 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+
+import com.dxm.insuranceSpring.pojo.CarType;
+
+/**
+ * 
+ * 车辆类型dao接口
+ * @author 王威
+ *
+ */
+public interface CarTypeDao {
+	
+	@Insert("insert into t_carType values(#{carTypeId},#{carName},#{carBrand},#{carSpecificType},#{carValue})")
+	public Integer addCarType(CarType ct);
+	
+	public Integer updateCarType(CarType ct);
+	
+	@Delete("delete from t_carType where carTypeId=#{id}")
+	public Integer deleteCarType(Integer id);
+	
+	
+	@Select("select * from t_carType")
+	public List<CarType> queryCarType();
+	
+	@Select("select * from t_carType where carTypeId=#{id}")
+	public List<CarType> queryCarTypeById(Integer id);
+}

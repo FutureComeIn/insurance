@@ -1,0 +1,97 @@
+package com.dxm.insuranceSpring.pojo;
+
+public class MyCarDamageDetails {
+	private Integer myCarDamageDetailsId;//	我方车损信息明细编号
+	private Integer myCarDamageId;//	我方车损编号
+	private Integer damagePartId;//	受损零件编号
+	private String damagePartName;//	受损零件名称
+	private Integer amount;//	车损零件数量
+	private Integer price;//	零件标价
+	private String damageExtend	;//受损程度
+	private String damageImg;//	车损图片
+	public String getDamageExtend() {
+		return damageExtend;
+	}
+	public void setDamageExtend(String damageExtend) {
+		this.damageExtend = damageExtend;
+	}
+	private String place;//	维修地点
+	private String remark;//	备注
+	public Integer getMyCarDamageDetailsId() {
+		return myCarDamageDetailsId;
+	}
+	public void setMyCarDamageDetailsId(Integer myCarDamageDetailsId) {
+		this.myCarDamageDetailsId = myCarDamageDetailsId;
+	}
+	public Integer getMyCarDamageId() {
+		return myCarDamageId;
+	}
+	public void setMyCarDamageId(Integer myCarDamageId) {
+		this.myCarDamageId = myCarDamageId;
+	}
+	public Integer getDamagePartId() {
+		return damagePartId;
+	}
+	public void setDamagePartId(Integer damagePartId) {
+		this.damagePartId = damagePartId;
+	}
+	public String getDamagePartName() {
+		return damagePartName;
+	}
+	public void setDamagePartName(String damagePartName) {
+		this.damagePartName = damagePartName;
+	}
+	public Integer getAmount() {
+		return amount;
+	}
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	public String getDamageImg() {
+		return damageImg;
+	}
+	public void setDamageImg(String damageImg) {
+		this.damageImg = damageImg;
+	}
+	public String getPlace() {
+		return place;
+	}
+	public void setPlace(String place) {
+		this.place = place;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public MyCarDamageDetails() {
+		super();
+	}
+	public MyCarDamageDetails(Integer myCarDamageDetailsId, Integer myCarDamageId, Integer damagePartId,
+			String damagePartName, Integer amount, Integer price, String damageImg, String place, String remark) {
+		super();
+		this.myCarDamageDetailsId = myCarDamageDetailsId;
+		this.myCarDamageId = myCarDamageId;
+		this.damagePartId = damagePartId;
+		this.damagePartName = damagePartName;
+		this.amount = amount;
+		this.price = price;
+		this.damageImg = damageImg;
+		this.place = place;
+		this.remark = remark;
+	}
+	@Override
+	public String toString() {
+		return "MyCarDamageDetails [myCarDamageDetailsId=" + myCarDamageDetailsId + ", myCarDamageId=" + myCarDamageId
+				+ ", damagePartId=" + damagePartId + ", damagePartName=" + damagePartName + ", amount=" + amount
+				+ ", price=" + price + ", damageImg=" + damageImg + ", place=" + place + ", remark=" + remark + "]";
+	}
+	
+}

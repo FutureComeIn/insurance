@@ -1,0 +1,65 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import com.dxm.insuranceSpring.pojo.Part;
+
+import com.dxm.insuranceSpring.services.IPartServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+public class PartConrols {
+	@Resource(name="PartServicesImpls")
+	IPartServices service;
+	
+	
+	@RequestMapping(value="/addPart.do",produces="application/json;charset=utf-8")
+	@ResponseBody         
+	
+	//添加零件信息
+	
+	public String addCarType(Part ct) {
+		APIRequest api=service.addPart(ct);
+		return api.toString();
+			
+	}
+	
+	
+	//查询所有零件信息
+	@RequestMapping(value="/loadPartInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryPart() {
+		APIRequest<Part> api=service.queryPart();
+		System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	//删除零件信息
+	@RequestMapping(value="/deletePartInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String deleteCarType(Integer id) {
+		APIRequest api=service.deletePart(id);
+		return api.toString();
+	}
+	//更新零件信息
+	@RequestMapping(value="/updatePartInfo.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updatePartType(Part ct) {
+		APIRequest api=service.updatePart(ct);  
+		return api.toString();
+	}
+	//更新某个零件的信息
+	@RequestMapping(value="/toupdatePartType.do")
+	public String toupdatePartType(Integer id,HttpServletRequest request) {
+		APIRequest api=service.queryPartById(id);
+		request.setAttribute("api", api);
+		System.out.println(api.getSingerData().toString());
+		return "src/page/section_dwl/PartInfoUpdate";
+	}
+	
+}

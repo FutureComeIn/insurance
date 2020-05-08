@@ -1,0 +1,87 @@
+package com.dxm.insuranceSpring.pojo;
+
+public class AdverseCarDamage {
+	private Integer adverseCarDamageId;//对方车损编号
+	private Integer caseId;//案件编号
+	private String name;//对方姓名
+	private String tel;//联系方式
+	private Integer carTypeId;//车辆类型编号
+	private String carType;//车辆类型
+	private Integer carNumber;//车牌号
+	private String damageExtend;//受损程度
+	private Integer price;//价格
+	public AdverseCarDamage(Integer adverseCarDamageId, Integer caseId, String name, String tel, Integer carTypeId,
+			String carType, Integer carNumber, String damageExtend, Integer price) {
+		super();
+		this.adverseCarDamageId = adverseCarDamageId;
+		this.caseId = caseId;
+		this.name = name;
+		this.tel = tel;
+		this.carTypeId = carTypeId;
+		this.carType = carType;
+		this.carNumber = carNumber;
+		this.damageExtend = damageExtend;
+		this.price = price;
+	}
+	public Integer getAdverseCarDamageId() {
+		return adverseCarDamageId;
+	}
+	public void setAdverseCarDamageId(Integer adverseCarDamageId) {
+		this.adverseCarDamageId = adverseCarDamageId;
+	}
+	public Integer getCaseId() {
+		return caseId;
+	}
+	public void setCaseId(Integer caseId) {
+		this.caseId = caseId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public Integer getCarTypeId() {
+		return carTypeId;
+	}
+	public void setCarTypeId(Integer carTypeId) {
+		this.carTypeId = carTypeId;
+	}
+	public String getCarType() {
+		return carType;
+	}
+	public void setCarType(String carType) {
+		this.carType = carType;
+	}
+	public Integer getCarNumber() {
+		return carNumber;
+	}
+	public void setCarNumber(Integer carNumber) {
+		this.carNumber = carNumber;
+	}
+	public String getDamageExtend() {
+		return damageExtend;
+	}
+	public void setDamageExtend(String damageExtend) {
+		this.damageExtend = damageExtend;
+	}
+	public Integer getPrice() {
+		return price;
+	}
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+	@Override
+	public String toString() {
+		return "AdverseCarDamage [adverseCarDamageId=" + adverseCarDamageId + ", caseId=" + caseId + ", name=" + name
+				+ ", tel=" + tel + ", carTypeId=" + carTypeId + ", carType=" + carType + ", carNumber=" + carNumber
+				+ ", damageExtend=" + damageExtend + ", price=" + price + "]";
+	}
+	
+}

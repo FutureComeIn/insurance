@@ -1,0 +1,89 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../../../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	
+    <!-- bootstrap-progressbar -->
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+<!-- Custom Theme Style -->
+    
+    <style type="text/css">
+    #fom1{
+    	margin-left:180px ;
+    }
+    	
+    	nav{
+    		margin-left:100px ;
+    		margin-left:500px ;
+    	}
+    	#fanhui{
+    	margin-left:60% ;
+    	}
+    	</style>
+	</head>
+	<body style="background: #F7F7F7;">
+	  <form class="form-inline" id="fom1" style="text-align: center;">
+	  	
+	  <div class="form-group">
+	    <label for="exampleInputName2">报案编号</label>
+	    <input type="text" class="form-control" id="jiean" placeholder="10086">
+	  </div>
+  
+ 
+	  <span class="btn btn-default" id="but1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	</span>
+	<a href="../report_wb/report_myquery.jsp" id="fanhui">返回</a>
+	</form><br /><br />
+
+<table class="table table-bordered" id="table">
+                <tr>
+                	 <th>报案编号</th>
+                	 <th>投保人</th>
+                	 <th>被保人</th>
+                	 <th>车牌号</th>
+                	 <th>报案人</th>
+                	 <th>报案人电话</th>
+                	 <th>出险原因</th>
+                	 <th>出险地点</th>
+                	 <th>出险日期</th>
+                </tr>
+				<tr>
+                	 <td>0001</td>
+                	 <td>张大大</td>
+                	 <td>张大大</td>
+                	 <td>湘A3174</td>
+                	 <td>张大大</td>
+                	 <td>18576458962</td>
+                	 <td>酒驾</td>
+                	 <td>人民立交桥</td>
+                	 <td>2018/6/25</td>
+                </tr>
+                 
+        </table>
+       <div id="page">
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">首页</button>
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">上一页</button>
+			1/1
+			<button class="btn btn-sm btn-primary" style="margin-right:20px;margin-left:20px">下一页</button>
+			<button class="btn btn-sm btn-primary" style="margin-right:20px">尾页</button>
+		</div>
+	</body>
+	<script src="../../js/jquery-1.8.3.js"></script>
+	<script src="../../js/report/MyReportQuery.js"></script>
+</html>

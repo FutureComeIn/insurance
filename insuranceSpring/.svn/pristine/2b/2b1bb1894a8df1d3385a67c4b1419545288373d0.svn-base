@@ -1,0 +1,61 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.Check;
+
+public class CheckSqlUtils {
+	//方法中的关键字区分大小写 SQL WHERE SELECT
+	/**
+	 * 动态更新方法
+	 * @param param
+	 * @return
+	 */
+	public String updateWithParamSql(final Check param){
+		return new SQL(){
+			{
+				UPDATE("t_check");
+				if(param.getReportId()!=null && param.getReportId()>0) {
+					SET("reportId=#{reportId}");
+				}
+				if(param.getCheckPersonId()!=null && param.getReportId()>0) {
+					SET("checkPersonId=#{checkPersonId}");
+				}
+				if(param.getCheckName()!=null) {
+					SET("checkName=#{checkName}");
+				}
+				if(param.getCheckAddress()!=null) {
+					SET("checkAddress=#{checkAddress}");
+				}
+				if(param.getCheckTime()!=null) {
+					SET("checktime=#{checktime}");
+				}
+				if(param.getMydriverName()!=null) {
+					SET("mydrivername=#{mydrivername}");
+				}
+				if(param.getOppositeDriverName()!=null) {
+					SET("oppositedrivername=#{oppositedrivername}");
+				}
+				if(param.getMydriverTel()!=null) {
+					SET("mydrivertel=#{mydrivertel}");
+				}
+				if(param.getOppositeDriverTel()!=null) {
+					SET("oppositedrivertel=#{oppositedrivertel}");
+				}
+				if(param.getMyVehicleLicense()!=null) {
+					SET("myVehicleLicense=#{myVehicleLicense}");
+				}
+				if(param.getOppositeVehicleLicense()!=null) {
+					SET("oppositeVehicleLicense=#{oppositeVehicleLicense}");
+				}
+				if(param.getMyLicense()!=null) {
+					SET("myLicense=#{myLicense}");
+				}
+				if(param.getOppositeLicense()!=null) {
+					SET("oppositeLicense=#{oppositeLicense}");
+				}
+				WHERE("checkId=#{checkId}");
+			}
+		}.toString();
+	}
+}

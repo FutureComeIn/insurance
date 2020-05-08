@@ -1,0 +1,13 @@
+package com.dxm.insuranceSpring.services;
+
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.pojo.StandardPrice;
+
+public interface IStandardPriceServices {
+	public APIRequest addIStandardPrice(StandardPrice sp);
+	public APIRequest updateIStandardPrice(StandardPrice sp);
+	public APIRequest deleteIStandardPrice(Integer standardPriceId);
+	public APIRequest<StandardPrice> queryIStandardPrice();
+	public APIRequest queryIStandardPriceById(Integer standardPriceId);
+}

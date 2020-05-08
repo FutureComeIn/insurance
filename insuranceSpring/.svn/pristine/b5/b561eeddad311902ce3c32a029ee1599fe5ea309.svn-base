@@ -1,0 +1,85 @@
+//分页属性
+var page=1;
+var pageNum=1;
+var pages=1;
+$(function(){
+ //调用查询方法
+	query(page);
+	//按钮点击事件重新调用查询方法
+$("#but1").click(function(){
+ query(page);
+})
+
+//分页下一页
+$("#jia").click(function(){
+	pageNum = Number(pageNum)+1;
+	if(pageNum > pages){
+		alert("没有下一页");
+		pageNum=pages;
+	} else {
+		page = Number(page)+1;
+		query(page);
+	}
+	
+})
+
+//分页上一页
+$("#jian").click(function(){
+	pageNum=Number(pageNum)-1;
+	if(pageNum<1){
+		alert("没有上一页");
+		pageNum=1;
+	}else{
+		page = Number(page)-1;
+		query(page);
+	}
+	
+})
+
+});
+
+
+//加载数据
+function warrantyonloads(page){
+		//alert(1);
+			$("#reportInfo").empty();
+			$.ajax({
+				url:'http://localhost:8080/loadWarranty.do',
+				type:'post',
+			    dataType : 'json',
+			    data:{
+					"page":page
+				},
+				success : function(data) {
+					//data=$.parseJSON(data);
+					//alert(data.datas.length);
+					var contentHtml ="";
+					for (var i = 0; i<data.datas.length; i++) {
+						var rowHtml ="<tr>";
+						rowHtml+="<td >"+data.datas[i].warrantyId+"</td>";
+						rowHtml+="<td >"+data.datas[i].policyholdersName+"</td>";
+						rowHtml+="<td >"+data.datas[i].recognizeeIdCard+"</td>";
+						rowHtml+="<td >"+data.datas[i].recognizeeName+"</td>";
+						rowHtml+="<td >"+data.datas[i].policyholderPhone+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceBeginTime+"</td>";
+						rowHtml+="<td >"+data.datas[i].insuranceEndTime+"</td>";
+						rowHtml+="<td >"+data.datas[i].driverId+"</td>";
+						rowHtml+="<td >"+data.datas[i].sailId+"</td>";
+						rowHtml+="<td >"+data.datas[i].engineId+"</td>";
+						rowHtml+="<td><a href='http://localhost:8080/addReport.do?id="+data.datas[i].warrantyId+"' >";
+						rowHtml+="<button class='btn btn-sm btn-primary'>报案</button></a></td></tr>";
+						contentHtml += rowHtml;
+						}
+				//alert(contentHtml);
+				$("#reportInfo").append(contentHtml);
+					
+					//initPageBar(data.singerData,"loadRole");
+				},
+			error : function() {
+				alert("查找失败!");
+				}
+			})
+		}   
+		
+
+		    

@@ -1,0 +1,35 @@
+function NuclearDamageonloads(){
+	$("#tbody").empty();
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryNuclearDamage.do',
+		type:'post',
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].nuclearDamageId+"</td>";
+				rowHtml+="<td >"+data.datas[i].assessmentId+"</td>";
+				rowHtml+="<td >"+data.datas[i].nuclearDamageTime+"</td>";
+				rowHtml+="<td >"+data.datas[i].userId+"</td>";
+				rowHtml+="<td >"+data.datas[i].userName+"</td>";
+				if(data.datas[i].nuclearDamageStatus==0){
+					rowHtml+="<td >未核损</td>";
+				}else{
+					rowHtml+="<td >已核损</td>";
+				}
+				rowHtml+="<td ><a href='hesun_info.jsp'><button type='button' class='btn btn-warning' style='height: 35px;'>继续审核&nbsp;</button></a></td></tr>";
+				contentHtml += rowHtml;	
+			}
+			$("#tbody").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   

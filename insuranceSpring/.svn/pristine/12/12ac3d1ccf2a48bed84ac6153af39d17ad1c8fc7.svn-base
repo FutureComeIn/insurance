@@ -1,0 +1,93 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>已勘察案件</title>
+		<!-- Bootstrap -->
+		<link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<style type="text/css">
+			table td,
+			th {
+				vertical-align: middle;
+				text-align: center;
+			}
+			
+			#top {
+				margin-bottom: 10px;
+				margin-top: 10px;
+			}
+			
+			#top,#page {
+				text-align: center;
+			}
+		</style>
+		<script src="../../js/jquery-1.8.3.js"></script>
+		<script type="text/javascript" src="../../js/check/checked.js"></script>
+	</head>
+
+	<body style="background: #F7F7F7;" onload="loadChecked(1);">
+
+		<!-- 右边内容 
+        			所有东西全写在下边这个div里
+        -->
+		<!-- page content -->
+		<div id="top">
+			<div class="form-inline">
+				<div class="form-group">
+					<p class="form-control-static" style="font-size: 16px;" >勘察编号</p>
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control img-rounded" id="checkId" placeholder="请输入勘察编号">
+				</div>
+				<span class="btn btn-default" onclick="search(1);"><span  class="glyphicon glyphicon-search" style="height:18px;width:25px;"></span></span>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			</div>
+		</div>
+
+		<!-- /page content -->
+		<!--
+                    	作者：offline
+                    	时间：2017-11-19
+                    	描述：列表开始
+                    -->
+		<table class="table table-bordered"  id="table">
+				<thead>
+					<tr>
+						<th>勘察编号</th>
+						<th>勘察员</th>
+						<th>勘察地点</th>
+						<th>勘察时间</th>
+						<th>我方车主姓名</th>
+						<th>对方车主姓名</th>
+						<th>我方车主电话</th>
+						<th>对方车主电话</th>
+						<th>我方车主行驶证</th>
+						<th>对方车主行驶证</th>
+						<th>我方车主驾驶证</th>
+						<th>对方车主驾驶证</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="content">
+				</tbody>
+			</table>
+		<div id="page">
+			<!--  
+				<button class="btn btn-sm btn-primary" style="margin-right:20px">首页</button>
+				<button class="btn btn-sm btn-primary" style="margin-right:20px">上一页</button>
+				1/1
+				<button class="btn btn-sm btn-primary" style="margin-right:20px;margin-left:20px">下一页</button>
+				<button class="btn btn-sm btn-primary" style="margin-right:20px">尾页</button>
+			-->
+		</div>
+		<!-- jQuery -->
+		<script src="../../../vendors/jquery/dist/jquery.min.js"></script>
+		
+	</body>
+
+</html>

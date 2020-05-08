@@ -1,0 +1,29 @@
+package com.dxm.insuranceSpring.utils;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class PathUtils {
+
+	public static String datapath;
+	
+	public static String getPath(HttpServletRequest request,String dirName,String fileName) {
+		String path = request.getServletContext().getRealPath("/")  + dirName + "/";
+		
+		File file = new File(path);
+		if(!file.exists()) {
+			file.mkdir();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	    String fix = fileName.substring(fileName.lastIndexOf("."),fileName.length());
+	    String datastr = sdf.format(new Date());
+	    String fname = datastr + fix;
+	    datapath = dirName+ "/" + fname;
+		return path + fname;
+	}
+	
+}

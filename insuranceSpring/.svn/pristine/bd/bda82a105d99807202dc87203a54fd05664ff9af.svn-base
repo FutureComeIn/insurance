@@ -1,0 +1,61 @@
+package com.dxm.insuranceSpring.pojo;
+/**
+ * 车辆类型实体类
+ * @author 王威
+ *
+ */
+public class CarType {
+	private Integer carTypeId;
+	private String carName;
+	private String carBrand;
+	private String carSpecificType;
+	private Integer carValue;
+	
+	@Override
+	public String toString() {
+		return "CarType [carTypeId=" + carTypeId + ", carName=" + carName + ", carBrand=" + carBrand
+				+ ", carSpecificType=" + carSpecificType + ", carValue=" + carValue + "]";
+	}
+	public CarType() {
+		super();
+	}
+	public CarType(Integer carTypeId, String carName, String carBrand, String carSpecificType, Integer carValue) {
+		super();
+		this.carTypeId = carTypeId;
+		this.carName = carName;
+		this.carBrand = carBrand;
+		this.carSpecificType = carSpecificType;
+		this.carValue = carValue;
+	}
+	public Integer getCarTypeId() {
+		return carTypeId;
+	}
+	public void setCarTypeId(Integer carTypeId) {
+		this.carTypeId = carTypeId;
+	}
+	public String getCarName() {
+		return carName;
+	}
+	public void setCarName(String carName) {
+		this.carName = carName;
+	}
+	public String getCarBrand() {
+		return carBrand;
+	}
+	public void setCarBrand(String carBrand) {
+		this.carBrand = carBrand;
+	}
+	public String getCarSpecificType() {
+		return carSpecificType;
+	}
+	public void setCarSpecificType(String carSpecificType) {
+		this.carSpecificType = carSpecificType;
+	}
+	public Integer getCarValue() {
+		return carValue;
+	}
+	public void setCarValue(Integer carValue) {
+		this.carValue = carValue;
+	}
+	
+}

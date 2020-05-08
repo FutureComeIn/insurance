@@ -1,0 +1,145 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.session.RowBounds;
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.utils.ReportSqlUtils;
+
+/**
+ * 报案信息Dao层接口
+ * @author 熊珍
+ *
+ */
+public interface ReportDao {
+    /**
+      * 通过搜索保单编号、车牌号、身份证号码、发送机号动态查询保单信息
+     * @param warranty
+     * @return
+     */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectWarrantySql")
+	public List<Warranty> queryWarranty(Warranty warranty,RowBounds rb);
+	
+	/**
+	 * 根据保单编号查询保单信息详情
+	 * @return
+	 */
+	@Select("select * from t_warranty where warrantyId=#{warrantyId}")
+	public List<Warranty> queryWarrantyDetilsById(Integer warrantyId);
+	
+	/**
+	 * 动态查询用户报案查询保单信息分页
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectWarrantyCountSql")
+	public Integer countWarranty(Warranty warranty);
+	
+	/**
+	  * 添加报案信息
+	 * @param report
+	 * @return
+	 */
+	@Insert("insert into t_report values(#{reportId},#{warrantyId},#{reportPersonName},#{reporPersontPhone},#{reportTime},#{reportReason},#{province},#{city},#{area},#{road},#{road_direction},#{userId},#{userName},0)")
+	public Integer addReport(Report report);
+	
+	/**
+	 * 动态查询所有的报案信息
+	 * @param reportId
+	 * @param row
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectReportSql")
+	@ResultMap("com.dxm.insuranceSpring.mappers.reportMap.reportBean")
+	public List<Report> queryAllReport(Report report,RowBounds rb);
+	
+	/**
+	 * 根据报案编号查询所有的报案信息详情
+	 * @return
+	 */
+	@Select("select * from t_report where reportId=#{reportId}")
+	@ResultMap("com.dxm.insuranceSpring.mappers.reportMap.reportBean")
+	public List<Report> queryAllReportDetils(Integer reportId);
+	
+	
+	/**
+	 * 查询所有报案信息分页
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectReportCountSql")
+	public Integer countReport(Report report);
+	
+	/**
+	 * 动态修改报案信息
+	 * @param report
+	 * @return
+	 */
+	@UpdateProvider(type=ReportSqlUtils.class,method="updateReport")
+	public Integer updateReport(Report report);
+	
+	/**
+	 * 调度管理查询（未指派案件查询）
+	 * @param row
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectUnHandleReportSql")
+	@ResultMap("com.dxm.insuranceSpring.mappers.reportMap.reportBean")
+	public List<Report> queryUnHandleReport(Report report,RowBounds rb);
+	
+	/**
+	 * 未指派案件分页
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectUnHandleReportCountSql")
+	public Integer countUnHandleReport(Report report);
+	
+	/**
+	 * 点处理按钮
+	 * 修改报案信息中的案件状态
+	 * 1表示未勘察
+	 * @return
+	 */
+	@Update("update t_report set caseStatus=1 where reportId=#{reportId}")
+	public Integer updateReportStatus(Integer reportId);
+	
+	/**
+	 * 我处理的案件查询（未勘察案件查询）
+	 * @param row
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectHandleReportSql")
+	@ResultMap("com.dxm.insuranceSpring.mappers.reportMap.reportBean")
+	public List<Report> queryHandleReport(Report report,RowBounds rb);
+	
+	/**
+	 * 我处理的案件查询查看详情（未勘察案件查询）
+	 * @param row
+	 * @return
+	 */
+	@Select("select * from t_report where caseStatus=1 and reportId=#{reportId}")
+	@ResultMap("com.dxm.insuranceSpring.mappers.reportMap.reportBean")
+	public List<Report> queryHandleReportDetails(Integer reportId);
+	
+	/**
+	 * 未勘察案件分页
+	 * @return
+	 */
+	@SelectProvider(type=ReportSqlUtils.class,method="selectHandleReportCountSql")
+	public Integer countHandleReport(Report report);
+	
+	/**
+	 * 根据案件编号修改案件状态,1表示未勘察
+	 * 2表示勘察
+	 * @param report
+	 * @return
+	 */
+	@Update("update t_report set caseStatus=2 where reportId=#{reportId}")
+	public Integer updateReportStatusByReportId(Integer reportId);
+	
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxm.insuranceSpring.mappers.CaseMap">
+
+<!-- 案件和报案 一对一 -->
+<resultMap type="com.dxm.insuranceSpring.pojo.Case" id="caseBean">
+	    <id column="caseId" property="caseId" javaType="java.lang.Integer"/>
+		<result column="reportId" property="reportId" javaType="java.lang.Integer"/>
+		<result column="reportReason" property="reportReason" javaType="java.lang.String"/>
+		<result column="address" property="address" javaType="java.lang.String"/>
+		<result column="jieanId" property="jieanId" javaType="java.lang.Integer"/>
+		<result column="checkId" property="checkId" javaType="java.lang.Integer"/>
+		<result column="assessmentId" property="assessmentId" javaType="java.lang.Integer"/>
+		<result column="nuclearDamageId" property="nuclearDamageId" javaType="java.lang.Integer"/>
+		<result column="settleclaimId" property="settleclaimId" javaType="java.lang.Integer"/>
+		<result column="settleId" property="settleId" javaType="java.lang.Integer"/>
+		<association property="reportCase" select="selectReportByCase" column="reportId" javaType="com.dxm.insuranceSpring.pojo.Report"/>
+		<association property="jieanUser" select="selectjieanUser" column="jieanId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+		<association property="checkUser" select="selectcheckUser" column="checkId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+		<association property="assessmentUser" select="selectassessmentUser" column="assessmentId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+		<association property="nuclearDamageUser" select="selectnuclearDamageUser" column="nuclearDamageId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+		<association property="settlementUser" select="selectsettlementUser" column="settleclaimId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+		<association property="settleUser" select="selectsettleUser" column="settleId" javaType="com.dxm.insuranceSpring.pojo.User"/>
+</resultMap>
+<!-- Report -->
+<select id="selectReportByCase" resultType="com.dxm.insuranceSpring.pojo.Report">
+	select * from t_report where reportId=#{id}
+</select>
+<select id="selectjieanUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{jieanId}
+</select>
+<select id="selectcheckUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{checkId}
+</select>
+<select id="selectassessmentUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{assessmentId}
+</select>
+<select id="selectnuclearDamageUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{nuclearDamageId}
+</select>
+<select id="selectsettlementUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{settleclaimId}
+</select>
+<select id="selectsettleUser" resultType="com.dxm.insuranceSpring.pojo.User">
+	select userName from t_user where userId=#{settleId}
+</select>
+</mapper>

@@ -1,0 +1,111 @@
+function loadChecked(indexPage){
+	$("#content").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/check/queryByChecked.do',
+		type:'post',
+		data:{
+			'indexPage':indexPage
+		},
+		dataType:'json',
+		success:function(data){
+			//data = $.parseJSON(data);
+			//控制输出
+			console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].checkId+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkName+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkAddress+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkTime+"</td>";
+				rowHtml += "<td>"+data.datas[i].mydriverName+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeDriverName+"</td>";
+				rowHtml += "<td>"+data.datas[i].mydriverTel+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeDriverTel+"</td>";
+				rowHtml += "<td>"+data.datas[i].myVehicleLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeVehicleLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].myLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeLicense+"</td>";
+				rowHtml += "<td><a href='check_details.jsp?checkId="+data.datas[i].checkId+"' class='btn btn-sm btn-primary'>查看详情</a></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#content").append(contentHtml);
+			page(data.singerData,"loadChecked");
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}
+function search(indexPage){
+	var checkId = $("#checkId").val();
+	var checkAddress = $("#checkAddress").val();
+	var checkName = $("#checkName").val();
+	//alert(checkId);
+	$("#content").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/check/queryByChecked.do',
+		type:'post',
+		data:{
+			'indexPage':indexPage,
+			'checkId':checkId,
+			'checkAddress':checkAddress,
+			'checkName':checkName
+		},
+		dataType:'json',
+		success:function(data){
+			//data = $.parseJSON(data);
+			//控制输出
+			console.log(data);
+			var contentHtml = "";
+			if(data.result){
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].checkId+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkName+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkAddress+"</td>";
+				rowHtml += "<td>"+data.datas[i].checkTime+"</td>";
+				rowHtml += "<td>"+data.datas[i].mydriverName+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeDriverName+"</td>";
+				rowHtml += "<td>"+data.datas[i].mydriverTel+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeDriverTel+"</td>";
+				rowHtml += "<td>"+data.datas[i].myVehicleLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeVehicleLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].myLicense+"</td>";
+				rowHtml += "<td>"+data.datas[i].oppositeLicense+"</td>";
+				rowHtml += "<td><a href='check_details.jsp?checkId="+data.datas[i].checkId+"' class='btn btn-sm btn-primary'>查看详情</a></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+				$("#content").append(contentHtml);
+				page(data.singerData,"search");
+			}
+			else
+			{
+				$("#page").empty();
+				alert(data.message);
+			}
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}
+function page(page,method){
+	$("#page").empty();
+	var pagehtml = "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(\"1\")'>首页</button>";
+	if(page.indexPage == 1){
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px'>上一页</button>";
+	}else{
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(\""+(page.indexPage - 1)+"\")'>上一页</button>";
+	}
+	
+	pagehtml += page.indexPage + "/" + page.pageCount;
+	
+	if(page.indexPage == page.pageCount){
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px;margin-left:20px'>下一页</button>";
+	}else{
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px;margin-left:20px' onclick='"+method+"(\""+(page.indexPage + 1)+"\")'>下一页</button>";
+	}
+	pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(\""+page.pageCount+"\")'>尾页</button>";
+	$("#page").append(pagehtml);
+}

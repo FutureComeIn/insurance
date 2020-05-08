@@ -1,0 +1,72 @@
+package com.dxm.insuranceSpring.utils;
+
+public class Pages {
+
+	
+	public Pages() {
+		
+	}
+	
+	public Pages(Integer rowCount) {
+		this.rowCount = rowCount;
+		this.pageSize = 5;
+		this.indexPage = 1;
+	}
+	
+	//�ܼ�¼��
+	private Integer rowCount;
+	//��ҳ��
+	private Integer pageCount;
+	//ÿҳ��С
+	private Integer pageSize;
+	//��ǰҳ��
+	private Integer indexPage;
+	//��ʼ��
+	private Integer beginRow;
+	//������
+	private Integer endRow;
+	public Integer getRowCount() {
+		return rowCount;
+	}
+
+	
+
+	public Integer getPageCount() {
+		return getRowCount() % pageSize == 0 ? getRowCount() / pageSize : getRowCount() / pageSize + 1;
+	}
+
+	
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public Integer getIndexPage() {
+		return indexPage;
+	}
+
+	public void setIndexPage(Integer indexPage) {
+		this.indexPage = indexPage;
+	}
+
+	public Integer getBeginRow() {
+		return (getIndexPage() - 1) * getPageSize();
+	}
+
+	
+
+	public Integer getEndRow() {
+		return  getIndexPage() * getPageSize()-1;
+	}
+
+	
+	
+	
+	
+	
+	
+}

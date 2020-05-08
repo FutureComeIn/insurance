@@ -1,0 +1,34 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.RoleDao;
+import com.dxm.insuranceSpring.pojo.Role;
+import com.dxm.insuranceSpring.services.IRoleServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Service("iRoleServicesImpls")
+public class IRoleServicesImpls implements IRoleServices {
+	
+	@Autowired
+	RoleDao rdao;
+	
+
+	@Override
+	public APIRequest queryRoles() {
+		// TODO 遍历角色
+		List<Role> rlist=rdao.queryRoles();
+		APIRequest<Role> api=new APIRequest<Role>();
+		if(rlist.size()>0) {
+			api.setDatas(rlist);
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+		}
+		return api;
+	}
+
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxm.insuranceSpring.mappers.CaseMap">
+
+<!-- 案件和报案 一对一 -->
+<resultMap type="com.dxm.insuranceSpring.pojo.Case" id="caseBean">
+	    <id column="caseId" property="caseId" javaType="java.lang.Integer"/>
+		<result column="reportId" property="reportId" javaType="java.lang.Integer"/>
+		<result column="reportReason" property="reportReason" javaType="java.lang.String"/>
+		<result column="address" property="address" javaType="java.lang.String"/>
+		<result column="jieanId" property="jieanId" javaType="java.lang.Integer"/>
+		<result column="checkId" property="checkId" javaType="java.lang.Integer"/>
+		<result column="assessmentId" property="assessmentId" javaType="java.lang.Integer"/>
+		<result column="nuclearDamageId" property="nuclearDamageId" javaType="java.lang.Integer"/>
+		<result column="settlementId" property="settlementId" javaType="java.lang.Integer"/>
+		<result column="settleId" property="settleId" javaType="java.lang.Integer"/>
+		<association property="reportCase" select="selectReportByCase" column="reportId" javaType="com.dxm.insuranceSpring.pojo.Report"/>
+</resultMap>
+<!-- Report -->
+<select id="selectReportByCase" resultType="com.dxm.insuranceSpring.pojo.Report">
+	select reportPersonName from t_report where reportId=#{id}
+</select>
+
+</mapper>

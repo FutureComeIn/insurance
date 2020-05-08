@@ -1,0 +1,21 @@
+function chesunadd(data1,data2,data3,data4,data5,id,loss_pic){
+	$.ajax({
+		url:"http://localhost:8080/src/page/hesun/addNuclearDamage.do ",
+		type:"post",
+		data:{'condition_info_name':data1,
+			  'loss_number':data2,
+			  'loss_assessment_price':data3,
+			  'maintenance_point':data4,
+			  'loss_assessment_sum':data5,
+			  'reported_number':id,
+			  'loss_picture':loss_pic
+		},
+		dataType : "json",
+		success : function(data) {
+			
+		},
+		error : function() {
+			alert("添加失败!");
+		}
+	})
+};

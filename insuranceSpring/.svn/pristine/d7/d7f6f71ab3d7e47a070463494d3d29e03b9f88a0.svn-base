@@ -1,0 +1,71 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.pojo.Role;
+import com.dxm.insuranceSpring.pojo.User;
+import com.dxm.insuranceSpring.utils.SqlUtils;
+
+/**
+ * 员工Dao
+ * @author yxw
+ *
+ */
+@Service
+public interface UserDao {
+	
+	//查询总行数
+	@SelectProvider(type=SqlUtils.class,method="selectCountUser")
+	public Integer selectCountUser(User user);
+	
+	//带条件查询所有在职或离职员工
+	//增改删也有对应的@InsertProvider、@UpdateProvider、@DeleteProvider
+	@SelectProvider(type=SqlUtils.class,method="selectWhitParamSql")
+	public List<User> queryUsers(User user,RowBounds rb); 
+	
+	@Select("select *from t_role where roleid in(select roleid from t_userrole where userid=#{userid})")
+	public List<Role> queryRoleByUid(Integer uid); //根据员工id查询其角色
+	
+	@Insert("insert into t_user values(0,#{userName},#{cardId},#{workTime},#{sex},#{age},#{tel},#{province},#{city},#{email},0,#{img},#{account},'123456')")
+	public Integer insertUser(User user); //添加员工
+	@Select("select userId from t_user where cardId=#{cardId}")
+	public Integer selectUserIdBycardId(String cardId);//根据身份证查id
+	@Insert("insert into t_userrole values(#{userid},#{roleid})") //同时添加用户角色
+	public Integer insertUserRole(@Param("userid")Integer userId,@Param("roleid")Integer roleId);
+	
+	//修改员工信息
+	@UpdateProvider(type=SqlUtils.class,method="updateUser")
+	public Integer updateUser(User user);
+	
+	//员工离职或复职
+	@Update("update t_user set leaveStatus=#{leaveStatus} where userid=#{userid}")
+	public Integer updateLeaveState(@Param("leaveStatus")Integer leaveStatus,@Param("userid")Integer uid);
+	
+	@Select("select *from t_user where userid=#{userid}")
+	public User queryUserById(Integer uid); //根据id查询员工
+	@Select("select *from t_role where roleid in(select roleid from t_userrole where userid=#{userid})")
+	public List<Role> queryHaveRole(Integer uid);//查询已拥有角色
+	@Select("select *from t_role where roleid not in(select roleid from t_userrole where userid=#{userid})")
+	public List<Role> queryUnhaveRole(Integer uid);//查询未拥有角色
+	
+	 //给员工添加一至多个角色
+	@Insert("insert into t_userrole values(#{userid},#{roleid})")
+	public Integer addRoleToUser(@Param("userid")Integer userid,@Param("roleid")Integer roleid);
+	//给员工移除一至多个角色
+	@Delete("delete from t_userrole where userid=#{userid} and roleid in(${roleid})")
+	public Integer removeRoleToUser(@Param("userid")Integer userid,@Param("roleid")String roleid);
+
+	//根据昵称和密码查询员工
+	@Select("select *from t_user where account=#{account} and password=#{password}")
+	public User selectUserByAccount(@Param("account")String account,@Param("password")String password);
+}

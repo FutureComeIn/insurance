@@ -1,0 +1,54 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Recognizee;
+import com.dxm.insuranceSpring.utils.WarrantySqlUtils;
+
+public interface RecognizeeDao {
+	/**
+	 * 添加被保人信息
+	 * @param re
+	 * @return
+	 */
+	@Insert("insert into t_recognizee values(#{recognizeeId},#{recognizeeName},#{sex},#{cardId},#{tel},#{addressShen},#{addressShi},#{email},#{bankNumber},#{driveId},#{vehicleLicenseId},#{engineId})")
+	public Integer addRecognizee(Recognizee re);
+	/**
+	 * 修改被保人信息
+	 * @param re
+	 * @return
+	 */
+	@UpdateProvider(type=WarrantySqlUtils.class,method="updateRecognizee")
+	public Integer updateRecognizee(Recognizee re);
+	/**
+	 * 删除被保人信息
+	 * @param id
+	 * @return
+	 */
+	@Delete("delete from t_recognizee where recognizeeId=#{recognizeeId}")
+	public Integer deleteRecognizee(Integer id);
+	
+	/**
+	 * 分页查询所有被保人信息
+	 * @param row
+	 * @return
+	 */
+	@Select("select * from t_recognizee")
+	public List<Recognizee> queryRecognizee(RowBounds row);
+	/**
+	 * 统计所有被保人数量
+	 * @return
+	 */
+	@Select("select count(1) from t_recognizee")
+	public Integer count();
+	/**
+	 * 按多个条件查找被保人信息
+	 * @param rg
+	 * @return
+	 */
+	@SelectProvider(type=WarrantySqlUtils.class,method="selectRecognizee")
+	public List<Recognizee> queryRecognizeeById(Recognizee rg);
+}

@@ -1,0 +1,61 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.Check;
+
+public class CheckSqlUtils {
+	//方法中的关键字区分大小写 SQL WHERE SELECT
+	/**
+	 * 动态更新方法
+	 * @param param
+	 * @return
+	 */
+	public String updateWithParamSql(final Check param){
+		return new SQL(){
+			{
+				UPDATE("t_user");
+				if(param.getReportId()!=null) {
+					SET("reportId=#{reportId}");
+				}
+				if(param.getCheckPersonId()!=null) {
+					SET("reportId=#{reportId}");
+				}
+				if(param.getCheckName()!=null) {
+					SET("checkName=#{checkName}");
+				}
+				if(param.getCheckAddress()!=null) {
+					SET("checkAddress=#{checkAddress}");
+				}
+				if(param.getCheckTime()!=null) {
+					SET("checktime=#{checktime}");
+				}
+				if(param.getMydriverName()!=null) {
+					SET("checkId=#{checkId}");
+				}
+				if(param.getOppositeDriverName()!=null) {
+					SET("assessmentId=#{assessmentId}");
+				}
+				if(param.getMydriverTel()!=null) {
+					SET("nuclearDamageId=#{nuclearDamageId}");
+				}
+				if(param.getOppositeDriverTel()!=null) {
+					SET("settlementId=#{settlementId}");
+				}
+				if(param.getMyVehicleLicense()!=null) {
+					SET("settleId=#{settleId}");
+				}
+				if(param.getOppositeVehicleLicense()!=null) {
+					SET("caseStatus=#{caseStatus}");
+				}
+				if(param.getMyLicense()!=null) {
+					SET("settleId=#{settleId}");
+				}
+				if(param.getOppositeLicense()!=null) {
+					SET("caseStatus=#{caseStatus}");
+				}
+				WHERE("checkId=#{checkId}");
+			}
+		}.toString();
+	}
+}

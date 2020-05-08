@@ -1,0 +1,193 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.CheckDao;
+import com.dxm.insuranceSpring.dao.CheckDetailsDao;
+import com.dxm.insuranceSpring.dao.ReportDao;
+import com.dxm.insuranceSpring.pojo.Check;
+import com.dxm.insuranceSpring.pojo.CheckDetails;
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.services.ICheckServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.utils.Pages;
+
+/**
+ * 勘察模块实现
+ * @author Administrator
+ *
+ */
+@Service("checkServicesImpls")
+public class CheckServicesImpls implements ICheckServices{
+	@Resource
+	CheckDao checkDao;
+	@Resource
+	CheckDetailsDao cdDao;
+	@Resource
+	ReportDao reportDao;
+
+	@Override
+	public APIRequest addCheck(Check check) {
+		// TODO Auto-generated method stub
+		int count = checkDao.addCheck(check);
+		APIRequest api =new APIRequest<>();
+		if(count>0) {
+			api.setResult(true);
+			api.setSingerData(count);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest<Report> queryByUnCheck( Integer indexPage) {
+		// TODO Auto-generated method 
+		if(indexPage == null) {
+			indexPage = 1;
+		}
+		Integer count = reportDao.countHandleReport();
+		Pages page = new Pages(count);
+		page.setIndexPage(indexPage);
+		page.setPageSize(8);
+		RowBounds row = new RowBounds(page.getBeginRow(), page.getPageSize());
+		List<Report> data = reportDao.queryHandleReport(row);
+		
+		APIRequest<Report> api = new APIRequest<Report>();
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据!");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest<Check> queryByChecked( Integer indexPage) {
+		// TODO Auto-generated method stub
+		if(indexPage == null) {
+			indexPage = 1;
+		}
+		Integer count = checkDao.countChecked();
+		Pages page = new Pages(count);
+		page.setIndexPage(indexPage);
+		page.setPageSize(8);
+		RowBounds row = new RowBounds(page.getBeginRow(), page.getPageSize());
+		List<Check> data = checkDao.queryChecked(row);
+		APIRequest<Check> api = new APIRequest<Check>();
+		if(data.size() > 0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起,当前没有数据");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest updateReportCaseStatus(Integer reportId) {
+		// TODO Auto-generated method stub
+		int count = reportDao.updateReportStatusByReportId(reportId);
+		APIRequest api =new APIRequest<>();
+		if(count>0) {
+			api.setResult(true);
+			api.setSingerData(count);
+		}else {
+			api.setResult(false);
+			api.setMessage("修改失败");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest updateCheckByParam(Check check) {
+		// TODO Auto-generated method stub
+//		check = new Check();
+//		check.setCheckId(1);
+//		check.setCheckName("王威");
+//		System.out.println(check.getCheckId());
+		int count = checkDao.updateCheck(check);
+//		System.out.println(count);
+		APIRequest api =new APIRequest<>();
+		if(count>0) {
+			api.setResult(true);
+			api.setSingerData(count);
+		}else {
+			api.setResult(false);
+			api.setMessage("修改失败");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest addCheckDetails(CheckDetails cd) {
+		// TODO Auto-generated method stub
+		int count = cdDao.add(cd);
+		APIRequest api =new APIRequest<>();
+		if(count>0) {
+			api.setResult(true);
+			api.setSingerData(count);
+		}else {
+			api.setResult(false);
+			api.setMessage("修改失败");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest<CheckDetails> queryCdByCheckId(Integer checkId) {
+		// TODO Auto-generated method stub
+		List<CheckDetails> data = cdDao.queryByCheckId(checkId);
+		APIRequest<CheckDetails> api = new APIRequest<CheckDetails>();
+		if(data.size() > 0) {
+			api.setResult(true);
+			api.setDatas(data);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起,当前没有数据");
+		}
+		return api;
+	}
+	
+	@Override
+	public APIRequest updateCheckDetails(String checkRemark, Integer checkDetailsId) {
+		// TODO Auto-generated method stub
+		int count = cdDao.updateCdRemark(checkRemark, checkDetailsId);
+		APIRequest api =new APIRequest<>();
+		if(count>0) {
+			api.setResult(true);
+			api.setSingerData(count);
+		}else {
+			api.setResult(false);
+			api.setMessage("修改失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest<Report> queryByUnCheckById(Integer reportId) {
+		// TODO Auto-generated method stub
+		List<Report> data = reportDao.queryAllReportDetils(reportId);
+		APIRequest<Report> api = new APIRequest<Report>();
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据!");
+		}
+		return api;
+	}
+}

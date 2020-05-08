@@ -1,0 +1,50 @@
+package com.dxm.insuranceSpring.controls;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dxm.insuranceSpring.pojo.User;
+
+
+@Controller
+public class LoginControls {
+	
+	//登录
+	@RequestMapping("/login.do")
+	public String login(HttpServletRequest request,User user) {
+//		HttpSession session = request.getSession();
+//		System.out.println("sessionid："+session.getId());
+//		Cookie[] cs = request.getCookies();
+//		for (Cookie cookie : cs) {
+//			System.out.println("cookie:"+cookie.getName());
+//			System.out.println("cookie-value:"+cookie.getValue());
+//		}
+//		Cookie c = new Cookie("aaaa", "admin");
+//		response.addCookie(c);
+		
+		//自己的登陆交给shiro完成
+		//他需要一组TOKEN
+		try {
+			UsernamePasswordToken token = new UsernamePasswordToken(user.getAccount(),user.getPassword());
+			//SecurityManager则管理所有用户的安全操作,它是Shiro框架的核心
+			SecurityUtils.getSubject().login(token);
+			System.out.println("登陆成功");
+			return "src/page/welcome/index";	
+		} catch (Exception e) {
+			System.out.println("登陆失败");
+			return "src/page/welcome/login";
+		}
+	}
+	
+	//退出登录
+	@RequestMapping("/loginout.do")
+	public String loginout() {
+		SecurityUtils.getSubject().logout();
+		return "src/page/welcome/login";
+	}
+}

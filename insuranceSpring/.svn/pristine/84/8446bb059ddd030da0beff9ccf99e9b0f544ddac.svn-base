@@ -1,0 +1,238 @@
+
+
+//报案
+function baoan(caseId){
+	alert("用户id："+caseId);
+	$("#baoan").empty();
+	var indexPage = 1;
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/case/queryByCaseByTerm.do',
+		type:'post',
+		data:{'caseId':caseId,
+			  'indexPage':indexPage
+		},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].caseId+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportId+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportReason+"</td>";
+				rowHtml+="<td >"+data.datas[i].address+"</td>";
+				rowHtml+="<td >"+data.datas[i].jieanId+"</td>";
+				rowHtml+="<td >"+data.datas[i].checkId+"</td>";
+				rowHtml+="<td >"+data.datas[i].assessmentId+"</td>";
+				
+				
+				contentHtml += rowHtml;	
+			}
+			$("#baoan").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   
+
+
+
+
+//勘察情况
+function kancha(reportId){
+	
+	alert("勘察id："+reportId);
+	$("#kancha").empty();
+	
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/check/queryCheckByReportId.do',
+		type:'post',
+		data:{"reportId":reportId},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.singerData.checkId+"</td>";
+				rowHtml+="<td >"+data.singerData.checkName+"</td>";
+				rowHtml+="<td >"+data.singerData.checkAddress+"</td>";
+				rowHtml+="<td >"+data.singerData.checkTime+"</td>";
+				rowHtml+="<td >"+data.singerData.mydrivername+"</td>";
+				rowHtml+="<td >"+data.singerData.oppositedrivername+"</td>";
+				rowHtml+="<td >"+data.singerData.mydrivertel+"</td>";
+				rowHtml+="<td >"+data.singerData.oppositedrivertel+"</td>";
+				rowHtml+="<td >"+data.singerData.myVehicleLicense+"</td>";
+				rowHtml+="<td >"+data.singerData.oppositeVehicleLicense+"</td>";
+				rowHtml+="<td >"+data.singerData.myLicense+"</td>";
+				rowHtml+="<td >"+data.singerData.oppositeLicense+"</td>";
+				contentHtml += rowHtml;	
+			$("#kancha").append(contentHtml);
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   
+//我方定损
+function dinsun(assessmentId){
+	
+	alert("我方+定损id："+assessmentId);
+	$("#dinsun").empty();
+	
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryAll.do',
+		type:'post',
+		data:{"assessmentId":assessmentId},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].myCarDamageDetailsId+"</td>";
+				rowHtml+="<td >"+data.datas[i].myCarDamageId+"</td>";
+				rowHtml+="<td >"+data.datas[i].damagePartId+"</td>";
+				rowHtml+="<td >"+data.datas[i].damagePartName+"</td>";
+				rowHtml+="<td >"+data.datas[i].amount+"</td>";
+				rowHtml+="<td >"+data.datas[i].price+"</td>";
+				rowHtml+="<td >"+data.datas[i].damageExtend+"</td>";
+				rowHtml+="<td >"+data.datas[i].damageImg+"</td>";
+				rowHtml+="<td >"+data.datas[i].place+"</td>";
+				rowHtml+="<td >"+data.datas[i].remark+"</td>";
+				contentHtml += rowHtml;	
+			}
+			$("#dinsun").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   
+
+//对方定损
+function dinsun_duifang(assessmentId){
+	
+	alert("定损id："+assessmentId);
+	$("#dinsun_duifang").empty();
+	
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryAll.do',
+		type:'post',
+		data:{"UserId":UserId},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].adverseCarDamageDetailsId+"</td>";
+				rowHtml+="<td >"+data.datas[i].adverseCarDamageId+"</td>";
+				rowHtml+="<td >"+data.datas[i].damagePartId+"</td>";
+				rowHtml+="<td >"+data.datas[i].damagePartName+"</td>";
+				rowHtml+="<td >"+data.datas[i].amount+"</td>";
+				rowHtml+="<td >"+data.datas[i].price+"</td>";
+				rowHtml+="<td >"+data.datas[i].damageExtend+"</td>";
+				rowHtml+="<td >"+data.datas[i].damageImg+"</td>";
+				rowHtml+="<td >"+data.datas[i].place+"</td>";
+				rowHtml+="<td >"+data.datas[i].remark+"</td>";
+				
+				
+				contentHtml += rowHtml;	
+			}
+			$("#dinsun_duifang").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}    
+
+//标准定价表
+function biaozhun(caseID){
+	
+	alert("用户id："+caseID);
+	$("#biaozhun").empty();
+	
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryinsuranceType.do',
+		type:'post',
+		data:{"caseID":caseID},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].insuranceTypeId+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceTypeName+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceTerm+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceTypeRemark+"</td>";
+				rowHtml+="<td >"+data.datas[i].insuranceTypeSize+"</td>";
+				
+				
+				contentHtml += rowHtml;	
+			}
+			$("#biaozhun").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   
+
+//保单
+function baodan(warrantyId){
+	
+	alert("用户id："+warrantyId);
+	$("#baodan").empty();
+	
+	
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/queryWarrantyById.do',
+		type:'post',
+		data:{"warrantyId":warrantyId},
+		dataType : 'json',
+		success : function(data) {
+			//data=$.parseJSON(data);
+			console.log(data);
+			var contentHtml ="";
+			for (var i = 0; i < data.datas.length; i++) {
+				var rowHtml = "<tr>";
+				rowHtml+="<td >"+data.datas[i].warrantyId+"</td>";
+				rowHtml+="<td >"+data.datas[i].policyholdersName+"</td>";
+				rowHtml+="<td >"+data.datas[i].policyholderPhone+"</td>";
+				rowHtml+="<td >"+data.datas[i].recognizeeName+"</td>";
+				rowHtml+="<td >"+data.datas[i].recognizeeCarId+"</td>";
+				
+				
+				contentHtml += rowHtml;	
+			}
+			$("#baodan").append(contentHtml);
+			
+			//initPageBar(data.singerData,"loadRole");
+		},
+		error : function() {
+			alert("查找失败!");
+		}
+	})
+}   

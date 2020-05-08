@@ -1,0 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>日志管理</title>
+	<!-- Bootstrap -->
+	<link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+   
+    <!-- jQuery -->
+    <script src="../../../vendors/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+    	function deleteLog(){
+    		if(confirm("您确定删除吗")){
+    			alert("ok");
+    		}
+    	}
+    	function skipPage(indexPage){
+			window.location.href="queryLog.do?indexPage="+indexPage; 
+   		}
+    </script>
+  </head>
+
+  <body style="background: #F7F7F7;">
+	<center>		
+        <div id="top" style="margin-bottom: 20px">
+            <h3>日志管理</h3>
+     	</div>
+     	<form action="../../../queryLog.do" method="post">
+     	<div style="margin-bottom: 20px">
+     		
+     			操作人:<input type="text" name="logName"/> &nbsp;&nbsp;
+     			操作时间:<input type="text" name="logTime"/> &nbsp;&nbsp;
+     			<input type="submit" value="搜索"/>
+     		
+     	</div>
+        <div id="table" align="center" style="width: 700px">
+			<table class="table table-bordered" id="roles_lzw">
+		 		<tr class="">
+		 			<td class="active">日志编号</td>
+		 			<td class="active">操作人</td>
+		 			<td class="active">操作内容</td>
+		 			<td class="active">操作时间</td>
+		 			<td class="active">耗时(ms)</td>
+		 			<td class="active">操作</td>
+		 		</tr>	
+		 		<c:forEach items="${loglist }" var="log">
+		 		<tr class="">
+		 			<td class="active">${log.logId }</td>
+		 			<td class="active">${log.logName }</td>
+		 			<td class="active">${log.logContent }</td>
+		 			<td class="active">${log.logTime }</td>
+		 			<td class="active">${log.consumeTime }</td>
+		 			<td class="active">
+		 			    <button type="button" class="btn btn-primary" onclick="deleteLog(${log.logId})">
+		 				删除</button>
+		 			</td>
+		 		</tr>
+		 		</c:forEach>
+			</table>
+			<div>
+				<button onclick="skipPage(1)" class="btn btn-sm btn-primary" style="margin-right:20px">首页</button>
+			    <button onclick="skipPage('${page.indexPage>1?page.indexPage-1:1}')" class="btn btn-sm btn-primary" style="margin-right:20px">上一页</button>
+			    ${page.indexPage }/${page.pageCount }
+				<button onclick="skipPage('${page.indexPage<page.pageCount?page.indexPage+1:page.pageCount}')" class="btn btn-sm btn-primary" style="margin-right:20px;margin-left:20px">下一页</button>
+				<button onclick="skipPage('${page.pageCount}')" class="btn btn-sm btn-primary" style="margin-right:20px">尾页</button>
+			</div>
+			
+		</div>
+		</form>
+	</center> 
+    
+  </body>
+</html>

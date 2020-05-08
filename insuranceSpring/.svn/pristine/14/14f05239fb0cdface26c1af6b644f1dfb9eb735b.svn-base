@@ -1,0 +1,64 @@
+package com.dxm.insuranceSpring.pojo;
+  //标准定价表
+/**
+ * 标准定价表实体类
+ * @author zf
+ *
+ */
+public class standardPrice {
+	private int standardPriceId;  //标准定价编号	Int
+	private int 	insuranceTypeId;  //险种编号	Int
+	private int 	warrantyId;  ///保单编号	Int
+	private int standardPrice;  //标准金额	Int
+	private String   standardPriceRe;  //	备注	varchar
+	@Override
+	public String toString() {
+		return "standardPrice [standardPriceId=" + standardPriceId + ", insuranceTypeId=" + insuranceTypeId
+				+ ", warrantyId=" + warrantyId + ", standardPrice=" + standardPrice + ", standardPriceRe="
+				+ standardPriceRe + "]";
+	}
+	public standardPrice(int standardPriceId, int insuranceTypeId, int warrantyId, int standardPrice,
+			String standardPriceRe) {
+		super();
+		this.standardPriceId = standardPriceId;
+		this.insuranceTypeId = insuranceTypeId;
+		this.warrantyId = warrantyId;
+		this.standardPrice = standardPrice;
+		this.standardPriceRe = standardPriceRe;
+	}
+	public standardPrice() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public int getStandardPriceId() {
+		return standardPriceId;
+	}
+	public void setStandardPriceId(int standardPriceId) {
+		this.standardPriceId = standardPriceId;
+	}
+	public int getInsuranceTypeId() {
+		return insuranceTypeId;
+	}
+	public void setInsuranceTypeId(int insuranceTypeId) {
+		this.insuranceTypeId = insuranceTypeId;
+	}
+	public int getWarrantyId() {
+		return warrantyId;
+	}
+	public void setWarrantyId(int warrantyId) {
+		this.warrantyId = warrantyId;
+	}
+	public int getStandardPrice() {
+		return standardPrice;
+	}
+	public void setStandardPrice(int standardPrice) {
+		this.standardPrice = standardPrice;
+	}
+	public String getStandardPriceRe() {
+		return standardPriceRe;
+	}
+	public void setStandardPriceRe(String standardPriceRe) {
+		this.standardPriceRe = standardPriceRe;
+	}
+
+}

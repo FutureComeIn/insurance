@@ -1,0 +1,60 @@
+package com.dxm.insuranceSpring.controls;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.dxm.insuranceSpring.pojo.NuclearDamage;
+import com.dxm.insuranceSpring.services.INuclearDamageServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+@RequestMapping("src/page/hesun")
+public class NuclearDamageControls {
+
+	@Resource (name="nuclearDamageServicelmpls")
+	INuclearDamageServices service;
+	
+	//添加
+	@RequestMapping(value="/addNuclearDamage.do " ,produces="application/json;charset=utf-8")
+	@ResponseBody	
+	public String addNuclearDamage(NuclearDamage ncd) {
+		APIRequest api=service.addNuclearDamage(ncd);
+		System.out.println(api.getDatas().size());
+		return api.toString();		
+	}
+	//查询
+	@RequestMapping(value="queryNuclearDamage.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryNuclearDamage() {
+		APIRequest<NuclearDamage> api=service.queryNuclearDamage();
+		System.out.println(api.getDatas().size());
+		return api.toString();		
+	}
+	//查询已审核
+	@RequestMapping(value="/queryNuclearDamageByStatus.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String queryNuclearDamageByStatus(String nuclearDamageStatus) {
+		APIRequest<NuclearDamage> api=service.queryNuclearDamageByStatus(nuclearDamageStatus);
+		System.out.println(api.getDatas().size());
+		return api.toString();
+	}
+	
+	
+	@RequestMapping(value="/updateNuclearDamage.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String updateNuclearDamage(Integer NuclearDamageid) {
+		//System.out.println("NuclearDamageid="+NuclearDamageid);
+		//System.out.println("错误"+NuclearDamageid);
+		APIRequest api=new APIRequest();
+	    api=service.updateNuclearDamage(NuclearDamageid);
+	//System.out.println(" api="+ api);
+	//System.out.println(" api.toString="+ api.toString());
+	   
+	   		return api.toString();
+	}
+
+}

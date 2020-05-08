@@ -1,0 +1,38 @@
+function loadUnCheckById(reportId){
+	$("#content").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/check/queryByUnCheckById.do',
+		type:'post',
+		data:{
+			'reportId':reportId
+		},
+		dataType:'json',
+		success:function(data){
+			//data = $.parseJSON(data);
+			//控制输出
+			//console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].reportId+"</td>";
+				rowHtml += "<td>"+data.datas[i].reportPersonName+"</td>";
+				rowHtml += "<td>"+data.datas[i].reporPersontPhone+"</td>";
+				rowHtml += "<td>"+data.datas[i].reportTime+"</td>";
+				rowHtml += "<td>"+data.datas[i].reportReason+"</td>";
+				rowHtml += "<td>"+data.datas[i].province+"</td>";
+				rowHtml += "<td>"+data.datas[i].city+"</td>";
+				rowHtml += "<td>"+data.datas[i].area+"</td>";
+				rowHtml += "<td>"+data.datas[i].road+"</td>";
+				rowHtml += "<td>"+data.datas[i].road_direction+"</td>";
+				rowHtml += "<td>"+data.datas[i].userName+"</td>";
+				rowHtml += "<td>勘察中</td>";
+				rowHtml += "<td><a class='btn btn-sm btn-primary'>勘察中</a></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#content").append(contentHtml);
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}

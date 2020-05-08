@@ -1,0 +1,45 @@
+function updateNuclearDamage(nuclearDamageid,nuclearDamagePrice,caseId){
+	var opt=$("input:radio:checked");
+	var optid=opt.val();
+	var optname=opt.attr("id");
+	alert("1:"+optid);
+	alert("2:"+optname);
+	alert("3:"+nuclearDamageid);
+	alert("5:"+nuclearDamagePrice);
+	alert("6:"+caseId);
+	
+	
+		if(optid==null){
+			return false;
+		}
+		$("#updateNuclearDamage")
+		window.location.href="http://localhost:8080/src/page/hesun/updateNuclearDamage.do?nuclearDamageId="+nuclearDamageid+"&settleclaimPrice="+nuclearDamagePrice+"&caseId="+caseId+"&userId="+optid+"&username="+optname;
+}   
+
+
+function loaduser1(roleid){
+	$("#usertable").empty();
+	alert(roleid);
+	$.ajax({
+		url:'http://localhost:8080/src/page/dinsun/queryUserByRoleId.do',
+		type:'post',
+		data:{
+			'roleid':roleid
+		},
+		dataType:'json',
+		success:function(data){
+			//控制输出
+			//console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td><input type='radio' name='options' id='"+data.datas[i].userName+"' calss='options' value='"+data.datas[i].userId+"'>"+data.datas[i].userName+"</td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#usertable").append(contentHtml);
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}

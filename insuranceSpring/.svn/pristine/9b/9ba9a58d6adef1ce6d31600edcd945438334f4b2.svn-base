@@ -1,0 +1,23 @@
+$(function(){
+//按钮点击事件
+	$("#but1").click(function(){
+		//调用修改方法
+		 query();
+		 //跳转页面Policy-holder.jsp
+        window.location.replace("Policy-holder.jsp");
+	})
+
+$("#but2").click(function(){
+		//调用取消方法
+		 //query();
+		 //跳转页面Policy-holder.jsp
+        window.location.replace("Policy-holder.jsp");
+	})
+$("#but3").click(function(){
+		//调用取消方法
+		 query();
+		 //跳转页面Policy-holder.jsp
+        window.location.replace("UpdateInsuranceInfo.jsp");
+	})
+
+});

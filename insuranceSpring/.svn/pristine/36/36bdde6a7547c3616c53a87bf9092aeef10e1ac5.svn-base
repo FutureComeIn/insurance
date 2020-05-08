@@ -1,0 +1,129 @@
+//$(document).ready(function(){
+//	$("adddinsun").click(function(){
+//		alert(1);
+//	})
+//})
+function adddinsun(){
+	var myCarDamageId=0;
+	var adverseDamageId=0;
+	var options = {
+			url : 'http://localhost:8080/src/page/dinsun/addMyCarDamage.do',
+			dataType:'json',
+			success : function(data) {
+				console.log(data);
+				//alert(data.singerData);
+				//if(data.singerData>0){
+					myCarDamageId=data.singerData;
+					addmycarlossdetais(myCarDamageId);
+					addadversecarloss(myCarDamageId)
+				//}
+				
+			},
+			error : function(){
+				alert("添加失败");
+			},
+			clearForm : false,
+			timeout : 100000
+	};
+	$("#mycarloss").ajaxSubmit(options); 
+	
+}
+
+
+function addmycarlossdetais(myCarDamageId){
+	var options = {
+			url : 'http://localhost:8080/src/page/dinsun/addMyCarDamageDetails.do',
+			dataType:'json',
+			data:{
+				'myCarDamageId':myCarDamageId
+			},
+			success : function(data) {
+				//console.log(data);
+				//alert(data);
+				if(data){
+					
+				}else{
+					alert("添加失败");
+					return false;
+				}
+				//myCarDamageId=data;
+				//alert(myCarDamageId);
+			},
+			error : function(){
+				//alert("error");
+			},
+			clearForm : false,
+			timeout : 100000
+	};
+	$("#mycarlossdetails").ajaxSubmit(options);
+}
+
+function addadversecarlossdetais(adverseCarDamageId){
+	var options = {
+			url : 'http://localhost:8080/src/page/dinsun/addMyCarDamageDetails.do',
+			dataType:'json',
+			data:{
+				'adverseCarDamageId':adverseCarDamageId
+			},
+			success : function(data) {
+				//console.log(data);
+				//alert(data);
+				if(data){
+					
+				}else{
+					alert("添加失败");
+					return false;
+				}
+				//myCarDamageId=data;
+				//alert(myCarDamageId);
+			},
+			error : function(){
+				//alert("error");
+			},
+			clearForm : false,
+			timeout : 100000
+	};
+	$("#adversecarlossdetails").ajaxSubmit(options);
+}
+
+
+function addadversecarloss(myCarDamageId){
+	var options = {
+			url : 'http://localhost:8080/src/page/dinsun/addAdverseCarDamage.do',
+			dataType:'json',
+			success : function(data) {
+				console.log(data);
+				if(data.singerData>0){
+					addadversecarlossdetais(data.singerData);
+					$.ajax({
+						url:'http://localhost:8080/src/page/dinsun/addAssessment.do',
+						async:true,
+						type:'post',
+						dataType:'json',
+						data:{
+							'adverseCarDamageId':myCarDamageId,
+							'myCarDamageId':data.singerData
+						},
+						success:function(data){
+							alert(data.singerData);
+							if(data.result){
+								window.location.href="http://localhost:8080/src/page/dinsun/queryToDinsunAllInfo.do?assessmentId="+data.singerData+"&caseId="+3;
+							}
+						},
+						error:function(){
+							alert("添加失败");
+						}
+					})
+					
+				}
+				
+			},
+			error : function(){
+				//alert("error");
+			},
+			clearForm : false,
+			timeout : 100000
+	};
+	//alert("options="+options);
+	$("#adversecarloss").ajaxSubmit(options);
+}

@@ -1,0 +1,233 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>添加勘察信息</title>
+<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="../../../vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="../../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+	
+    <!-- bootstrap-progressbar -->
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../../../build/css/custom.min.css" rel="stylesheet">
+    <style type="text/css">
+    		#matter input{width:140px; margin: 10px 50px 0px 0px;}	
+    		select{width: 174px;height: 25px;}
+    		.right_col table{width: 100%;}
+    		.right_col #pro_bg tr td{padding:3px 0px 3px 6px;}
+    		#table td,
+			th {
+				vertical-align: middle;
+				text-align: center;
+			}
+    </style>
+    <script src="../../../src/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="../../js/check/add_check.js"></script>
+    <%
+    	Integer reportId = Integer.parseInt(request.getParameter("reportId"));
+    %>
+  </head>
+  
+  
+  <body style="background: #F7F7F7;" onload="loadUnCheckById(<%=reportId%>);">
+        	<iframe name="frm" style="display:none"></iframe>
+        <!-- /top navigation -->
+        <!-- 右边内容 
+        			所有东西全写在下边这个div里
+        -->
+        <!-- page content -->
+        	<div id="add_pros">
+        		<h4>
+        			报案信息
+        		</h4>
+        	</div>
+        	<!--<input type="hidden" value="<%=request.getParameter("id") %>" id="parmeId">-->
+        	<table class="table table-bordered " id="table">
+	        	<thead>
+		        	<tr>
+						<th>报案编号</th>
+						<th>报案人姓名</th>
+						<th>报案人电话</th>
+						<th>报案时间</th>
+						<th>出险原因</th>
+						<th>出险地点所在省</th>
+						<th>出险地点所在市</th>
+						<th>出险地点所在区县</th>
+						<th>出险地点所在路段</th>
+						<th>路段方向</th>
+						<th>操作用户</th>
+						<th>案件状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody id="content">
+				</tbody>
+        	</table>
+        	
+		        	<div class="pand">
+		        		<h4>
+		        			勘察报告
+		        		</h4>
+		        	</div>
+	        		<input type="hidden" value="1" name="checkId" >
+		        	<table id="pro_bg" class="table table-bordered">
+		        		<tr class="count">
+		        			<td>勘察地点：<input type="text" id="checkAddress" name="checkAddress"/></td>
+		        			<td>勘察时间：<input type="date" id="checkTime" name="checkTime"/></td>
+		        		</tr>
+		        		<tr> 
+		        			<td colspan="3" >我方司机信息
+		        		</tr>
+		        		<tr>
+		        			<td colspan="3">
+		        				<div class="col-md-3">司机姓名<input type="text" id="mydrivername" name="mydrivername"/></div>
+		        				<div class="col-md-3">驾驶证<input type="text" id="myLicense" name="mydrivername"/></div>
+		        				<div class="col-md-3">行驶证<input type="text" id="myVehicleLicense" name="mydrivername"/></div>
+		        				<div class="col-md-3">联系电话<input type="text" id="mydriverTel" name="mydrivername"/></div>
+		        			</td>
+		        		</tr>
+		        		<tr> 
+		        			<td colspan="3" >对方司机信息
+		        		</tr>
+		        		<tr>
+		        			<td colspan="3">
+		        				<div class="col-md-3">司机姓名<input type="text" id="oppositeDriverName" name="oppositeDriverName"/></div>
+		        				<div class="col-md-3">驾驶证<input type="text" id="oppositeLicense" name="oppositeLicense"/></div>
+		        				<div class="col-md-3">行驶证<input type="text" id="oppositeVehicleLicense" name="oppositeVehicleLicense"/></div>
+		        				<div class="col-md-3">联系电话<input type="text" id="oppositeDriverTel" name="oppositeDriverTel"/></div>
+		        			</td>
+		        		</tr>
+		        		</table>
+		        		
+		        		
+		        		<div class="pand">
+		        			<h4>
+        						勘察图片
+        					</h4>
+        				</div>
+		        		  <!-- 图片 -->
+		        		<form action="http://localhost:8080/src/page/check/addCheckDetails.do" method="post" enctype="multipart/form-data">
+				        <table id="img" class="table table-bordered">
+				        <tr>
+				       		<td colspan="3" >
+				       			<div class="col-md-4">
+						        	<div class="col-md-4">事故照片1：<input type="file" name="upload"/></div>
+						        	<div class="col-md-4" style="margin-left:120px;">勘察备注1：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片2：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注2：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片3：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注3：<input type="text" name="checkRemark"/></div>
+					        	</div>
+				        	</td>
+				        </tr>
+				        <tr>
+				        	<td colspan="3" >
+				        		<div class="col-md-4">
+					        		<div class="col-md-4">事故照片4：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注4：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片5：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注5：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片6：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注6：<input type="text" name="checkRemark"/></div>
+				        		</div>
+				        	</td>
+				        </tr>
+				        <tr>
+				        	<td colspan="3" >
+				        	    <div class="col-md-4">
+					        		<div class="col-md-4">事故照片7：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注7：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片8：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注8：<input type="text" name="checkRemark"/></div>
+					        	</div>
+					        	<div class="col-md-4">
+					        		<div class="col-md-4">事故照片9：<input type="file" name="upload"/></div>
+					        		<div class="col-md-4" style="margin-left:120px;">勘察备注9：<input type="text" name="checkRemark"/></div>
+				        		</div>
+				        	</td>
+				        </tr>
+				        <tr>
+				        	<td colspan="3" >
+				        		<button type="submit" id="picUpoload">上传</button>
+				       		</td>
+				        </tr>
+		        		<tr style="text-align: center;">  
+		        			<td colspan="3">
+		        				<input type="submit" class="btn btn-primary btn-sm" value="保存" />
+		        				<input type="reset" class="btn btn-primary btn-sm" value="重置"/>
+		        			</td>
+		        		</tr>
+		        	</table>
+	        	</form>
+        <!-- footer content -->
+       
+        <!-- /footer content -->
+   
+
+    <!-- jQuery -->
+    <script src="../../../vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../../../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../../../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../../../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../../../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../../../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../../../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../../../vendors/Flot/jquery.flot.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../../../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../../../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../../../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../../../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../../../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../../../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../../../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../../../vendors/moment/min/moment.min.js"></script>
+    <script src="../../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../../build/js/custom.min.js"></script>
+    
+    <script src="../../../src/js/reconnaissance/addProspect.js"></script>
+  </body>
+</html>

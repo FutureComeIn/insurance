@@ -1,0 +1,53 @@
+package com.dxm.insuranceSpring.sqlutils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.AdverseCarDamageDetails;
+import com.dxm.insuranceSpring.pojo.MyCarDamageDetails;
+
+public class CarLossSqlUtils {
+	//方法中的关键字区分大小写 SQL WHERE SELECT
+	//该方法会根据传递过来的map中的参数内容,动态构建Sql语句
+	
+	/**
+	 * 动态修改MyCarDamageDetails
+	 * @param param
+	 * @return
+	 */
+	public String updateMyCarDamageDetails(final MyCarDamageDetails param) {
+		return new SQL() {
+			{
+				UPDATE("t_mycardamagedetails");
+				if(param.getAmount()!=null) {
+					SET("amount=#{amount}");
+				}
+				if(param.getPrice()!=null) {
+					SET("price=#{price}");
+				}
+				if(param.getDamageExtend()!=null) {
+					SET("address=#{address}");
+				}
+				WHERE("myCarDamageDetailsId=#{myCarDamageDetailsId}");
+			}
+		}.toString();
+	}
+	
+	public String updateAdverseCarDamageDetails(final AdverseCarDamageDetails param) {
+		return new SQL() {
+			{
+				UPDATE("t_adversecardamagedetails");
+				if(param.getAmount()!=null) {
+					SET("amount=#{amount}");
+				}
+				if(param.getPrice()!=null) {
+					SET("price=#{price}");
+				}
+				if(param.getDamageExtend()!=null) {
+					SET("address=#{address}");
+				}
+				WHERE("adverseCarDamageDetailsId=#{adverseCarDamageDetailsId}");
+			}
+		}.toString();
+	}
+	
+}

@@ -1,0 +1,36 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.pojo.Data;
+
+//   标准定价表 standardPrice
+
+/**
+ *  标准定价表 standardPrice
+ * @author zf
+ *
+ */
+public interface standardPrice {
+	@Insert("insert into t_data values(#{standardPriceId},#{insuranceTypeId},#{warrantyId},#{standardPrice},#{standardPriceRe})")
+	public Integer addStandardPric(standardPrice data);
+	
+	
+	@Update("")
+	public Integer updateStandardPric(standardPrice sp);
+	
+	@Delete("delete from standardPric where standardPriceId=#{standardPriceId}")
+	public Integer deleteStandardPric(Integer standardPriceId);
+	
+	
+	@Select("select * from standardPrice")
+	public List<standardPrice> queryStandardPric();
+	
+	@Select("select * from standardPric where standardPriceId=#{standardPriceId}")
+	public List<Data> queryStandardPricById(Integer standardPriceId);
+}

@@ -1,0 +1,71 @@
+function updateCarLossDetails(CarDamageDetailsId,CarDamageId,obj){
+	//alert(adverseCarDamageDetailsId);
+	var tr=$(obj).parent().parent();
+	var xiaoji=tr.children().eq(5).text();
+	var price=parseInt(tr.children().eq(2).children().eq(0).val());//详细价格
+	var oldprice=parseInt(tr.children().eq(2).children().eq(1).val());//修改前详细价格
+	var count=parseInt(tr.children().eq(3).children().eq(0).val());//详细数量
+	var oldcount=parseInt(tr.children().eq(3).children().eq(1).val());//修改前详细数量
+	var tab=tr.parent();
+	var div=tab.parent().parent();
+	var prevdiv=div.prev();
+	var previd=prevdiv.children().eq(0).attr("id");
+	alert(oldprice);
+	alert(oldcount);
+	//原始车损价格
+	var otherxiaoji=parseInt(prevdiv.children().eq(0).children().eq(1).children().eq(1).children().eq(5).text());
+	
+	if(price==""){
+		alert("定损价格未填");
+		return false;
+	}
+	if(count==""){
+		alert("定损数量未填");
+		return false;
+	}
+	if(price==oldprice&&count==oldcount){
+		return false;
+	}
+	if(previd=="adversecar"){
+		alert(previd);
+		
+		$.ajax({
+			url:'http://localhost:8080/src/page/dinsun/queryAssessmentByTerm.do',
+			type:'post',
+			data:{
+				'adverseCarDamageDetailsId':CarDamageDetailsId,
+				'adverseCarDamageId':CarDamageId,
+				'price':price,
+				'totalPrice':xiaoji
+				'userId':userId,
+				'indexPage':indexpage
+			},
+			dataType:'json',
+			success:function(data){
+//				//控制输出
+				console.log(data);
+				if(data.result){
+					tr.children().eq(2).children().eq(1).val(price);
+					tr.children().eq(3).children().eq(1).val(count);
+				}else{
+					tr.children().eq(2).children().eq(0).val(oldprice);
+					tr.children().eq(3).children().eq(0).val(oldcount);
+				}
+				alert(data.massege);
+				
+				}
+				
+			},
+			error:function(){
+				alert("更新失败");
+				tr.children().eq(2).children().eq(0).val(oldprice);
+				tr.children().eq(3).children().eq(0).val(oldcount);
+			}
+		})
+		
+	}
+	if(previd=="mycar"){
+		//alert(previd);
+	}
+
+}

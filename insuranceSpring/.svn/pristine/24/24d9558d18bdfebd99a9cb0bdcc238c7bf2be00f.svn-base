@@ -1,0 +1,24 @@
+package com.dxm.insuranceSpring.services;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface ISettleClaimServices {
+	//添加理赔信息
+		public APIRequest AddSettleClaim();
+		
+		//修改理赔信息
+		public APIRequest updateSettleClaim();
+		
+		//查看理赔信息
+		public APIRequest querySettleClaim();
+		
+		//查看已理赔信息
+		public APIRequest querySettleClaimByStatus();
+		
+		//查看未理赔信息
+		public APIRequest querySettleClaimByStatus1();
+}

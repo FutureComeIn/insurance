@@ -1,0 +1,31 @@
+package com.dxm.insuranceSpring.aspectj;
+
+import java.util.HashMap;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dxm.insuranceSpring.pojo.Log;
+import com.dxm.insuranceSpring.utils.SqlUtils;
+
+@Controller
+public class ILogControls {
+	@Resource(name="iLogServicesImpls")
+	ILogService service;
+	
+	@RequestMapping("/queryLog.do")
+	public String queryLog(HttpServletRequest request,Integer indexPage,Log log) {
+		System.out.println("log="+log);
+		System.out.println("sqllog="+new SqlUtils().selectCountLog(log));
+		if(indexPage==null) {
+			indexPage=1;
+		}
+		HashMap<String,Object> hm=service.queryLog(indexPage,log);
+		request.setAttribute("loglist",hm.get("loglist"));
+		request.setAttribute("page",hm.get("page"));
+		return "src/page/prospect_lyt/log_query";
+	}
+}

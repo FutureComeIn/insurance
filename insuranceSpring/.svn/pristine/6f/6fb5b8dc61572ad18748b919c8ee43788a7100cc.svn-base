@@ -1,0 +1,108 @@
+package com.dxm.insuranceSpring.pojo;
+
+
+import java.util.Date;
+
+public class Assessment {
+	private Integer assessmentId;//	定损编号
+	private Integer myCarDamageId;//	我方车损编号
+	private Integer adverseCarDamageId;//	对方车损编号
+	private Date assessmentTime;//	定损时间
+	private Integer totalPrice;//	金额合计
+	private String remark;//	备注
+	private Integer UserId;//	定损人编号
+	private String assessmentPerson;//	定损人
+	private String status;//定损状态
+	private MyCarDamage myCarDamageInfo;//我方车损信息
+	private AdverseCarDamage adverseCarDamageInfo;//对方车损信息
+	public MyCarDamage getMyCarDamageInfo() {
+		return myCarDamageInfo;
+	}
+	public void setMyCarDamageInfo(MyCarDamage myCarDamageInfo) {
+		this.myCarDamageInfo = myCarDamageInfo;
+	}
+	public AdverseCarDamage getAdverseCarDamageInfo() {
+		return adverseCarDamageInfo;
+	}
+	public void setAdverseCarDamageInfo(AdverseCarDamage adverseCarDamageInfo) {
+		this.adverseCarDamageInfo = adverseCarDamageInfo;
+	}
+	public Integer getAssessmentId() {
+		return assessmentId;
+	}
+	public void setAssessmentId(Integer assessmentId) {
+		this.assessmentId = assessmentId;
+	}
+	public Integer getMyCarDamageId() {
+		return myCarDamageId;
+	}
+	public void setMyCarDamageId(Integer myCarDamageId) {
+		this.myCarDamageId = myCarDamageId;
+	}
+	public Integer getAdverseCarDamageId() {
+		return adverseCarDamageId;
+	}
+	public void setAdverseCarDamageId(Integer adverseCarDamageId) {
+		this.adverseCarDamageId = adverseCarDamageId;
+	}
+	public Date getAssessmentTime() {
+		return assessmentTime;
+	}
+	public void setAssessmentTime(Date assessmentTime) {
+		this.assessmentTime = assessmentTime;
+	}
+	public Integer getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Integer totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public Integer getUserId() {
+		return UserId;
+	}
+	public void setUserId(Integer userId) {
+		UserId = userId;
+	}
+	public String getAssessmentPerson() {
+		return assessmentPerson;
+	}
+	public void setAssessmentPerson(String assessmentPerson) {
+		this.assessmentPerson = assessmentPerson;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public Assessment() {
+		super();
+	}
+	public Assessment(Integer assessmentId, Integer myCarDamageId, Integer adverseCarDamageId, Date assessmentTime,
+			Integer totalPrice, String remark, Integer userId, String assessmentPerson, String status) {
+		super();
+		this.assessmentId = assessmentId;
+		this.myCarDamageId = myCarDamageId;
+		this.adverseCarDamageId = adverseCarDamageId;
+		this.assessmentTime = assessmentTime;
+		this.totalPrice = totalPrice;
+		this.remark = remark;
+		UserId = userId;
+		this.assessmentPerson = assessmentPerson;
+		this.status = status;
+	}
+	@Override
+	public String toString() {
+		return "Assessment [assessmentId=" + assessmentId + ", myCarDamageId=" + myCarDamageId + ", adverseCarDamageId="
+				+ adverseCarDamageId + ", assessmentTime=" + assessmentTime + ", totalPrice=" + totalPrice + ", remark="
+				+ remark + ", UserId=" + UserId + ", assessmentPerson=" + assessmentPerson + ", status=" + status + "]";
+	}
+	
+	
+}

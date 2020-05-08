@@ -1,0 +1,40 @@
+package com.dxm.insuranceSpring.dao;
+
+
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.dxm.insuranceSpring.pojo.Assessment;
+
+/**
+ * 定损dao接口
+ * @author 王威
+ *
+ */
+public interface AssessmentDao {
+	
+	@Select("select * from t_assessment where assessmentId=#{id}")
+    @ResultMap("com.dxm.insuranceSpring.mappers.CarLossSqlMap.assessmentBean")
+	public List<Assessment> queryAssessmentById(Integer id);
+	
+	@Select("select * from t_assessment")
+	public List<Assessment> queryAssessment(RowBounds rb);
+	
+	@Select("select count(*) from t_assessment")
+	public Integer queryAssessmentCount();
+	
+	@Insert("insert into t_assessment values(#{assessmentId},#{caseId},#{myCarDamageId},#{adverseCarDamageId},#{assessmentTime},#{totalPrice},#{remark},#{UserId},#{assessmentPerson},#{status})")
+	public Integer addAssessment(Assessment at) ;
+	
+	@Update("update t_assessment set totalPrice=#{totalPrice} where assessmentId=#{assessmentId}")
+	public Integer updateAssessment(Assessment at);
+	
+	
+}

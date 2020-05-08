@@ -1,0 +1,26 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Right;
+
+public interface RightDao {
+	
+	@Select("select *from t_right")
+	public List<Right> queryRights(RowBounds rb);
+	
+	@Update("update t_right set rightname=#{rightname} where rightid=#{rightid}")
+	public Integer updateRight(Integer rightid);
+	
+	@Insert("insert into t_right values(0,#{rightname})")
+	public Integer insertRight(Integer rightid);
+	
+	@Delete("delete from t_right where rightid=#{rightid}")
+	public Integer deleteRight(Integer rightid);
+}

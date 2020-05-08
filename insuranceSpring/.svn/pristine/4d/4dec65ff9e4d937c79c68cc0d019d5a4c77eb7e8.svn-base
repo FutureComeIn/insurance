@@ -1,0 +1,9 @@
+package com.dxm.insuranceSpring.aspectj;
+
+import com.dxm.insuranceSpring.pojo.Log;
+
+public interface ILogService {
+	
+	public Integer addLog(Log log);
+	
+}

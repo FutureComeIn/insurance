@@ -1,0 +1,5 @@
+package com.dxm.insuranceSpring.services;
+
+public interface IRoleServices {
+
+}

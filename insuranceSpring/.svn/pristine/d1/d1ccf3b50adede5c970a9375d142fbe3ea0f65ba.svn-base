@@ -1,0 +1,19 @@
+package com.dxm.insuranceSpring.services;
+
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.utils.APIRequest;
+/**
+ * 报案信息Services
+ * @author 熊珍
+ *
+ */
+public interface IReportServices {
+	public APIRequest<Warranty> queryWarranty(Warranty warranty,Integer indexPage);
+	public APIRequest addReport(Report report);
+	public APIRequest<Report> queryAllReport(Integer reportId,Integer indexPage);
+	public APIRequest updateReport(Report report);
+	public APIRequest updateReportStatus(Integer reportId);
+	public APIRequest<Report> queryHandleReport(Integer indexPage);
+	public APIRequest updateReportStatusByReportId(Integer reportId);
+}

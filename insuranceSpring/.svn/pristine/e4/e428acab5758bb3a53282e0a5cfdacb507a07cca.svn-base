@@ -1,0 +1,79 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Check;
+import com.dxm.insuranceSpring.utils.CheckSqlUtils;
+
+/**
+ *  勘察信息 Dao层接口
+ * @author Administrator
+ *
+ */
+public interface CheckDao {
+//	/*
+//	 * 未勘察案件查询
+//	 */
+//	@Select("select * from t_reprot where caseStatus=1")
+//	public List<Report> queryUnCheck(RowBounds row);
+	
+	/**
+	 * 已勘察案件查询
+	 * 生成勘察信息
+	 * @param row
+	 * @return
+	 */
+	//@Select("select * from t_check")
+	@SelectProvider(type=CheckSqlUtils.class,method="selectCheckedWithParamSql")
+	public List<Check> queryChecked(Check check,RowBounds row);
+	
+	
+//	/**
+//	 * 未勘察案件分页
+//	 * @return
+//	 */
+//	@Select("select count(1) from t_reprot where caseStatus=1")
+//	public Integer countUnCheck();
+//	
+	/**
+	 * 已经勘察案件分页
+	 * @return
+	 */
+	//@Select("select count(1) from t_check")
+	@SelectProvider(type=CheckSqlUtils.class,method="selectCheckedWithParamCountSql")
+	public Integer countChecked(Check check);
+	
+	/**
+	 * 添加勘察信息
+	 * @return
+	 */
+	@Insert("insert into t_check values(#{checkId},#{reportId},#{checkPersonId},"
+			+ "#{checkName},#{checkAddress},#{checkTime},#{mydriverName},#{oppositeDriverName},#{mydriverTel},#{oppositeDriverTel},#{myLicense},"
+			+ "#{oppositeLicense},#{myVehicleLicense},#{oppositeVehicleLicense})")
+	public Integer addCheck(Check check);
+	
+//	/**
+//	 * 修改报案信息中的案件状态
+//	 * @return
+//	 */
+//	@Update("update t_report set caseStatus=2 where reportId=#{reportId}")
+//	public Integer updateReportStatus(Integer reportId);
+	
+	/**
+	 * 根据Id修改勘察信息
+	 * @param check
+	 * @return
+	 */
+	@UpdateProvider(type=CheckSqlUtils.class,method="updateWithParamSql")
+	public Integer updateCheck(Check check);
+	
+	@Select("select * from t_check where checkId=#{checkId}")
+	public Check queryCheckById(Integer checkId);
+}

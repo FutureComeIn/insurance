@@ -1,0 +1,79 @@
+package com.dxm.insuranceSpring.services;
+
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.utils.APIRequest;
+/**
+ * 报案信息Services
+ * @author 熊珍
+ *
+ */
+public interface IReportServices {
+	/**
+	 * 通过搜索保单编号、车牌号、身份证号码、发送机号查询保单信息
+	 * @param warranty
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Warranty> queryWarranty(Warranty warranty,Integer indexPage);
+	/**
+	 * 添加报案信息
+	 * @param report
+	 * @return
+	 */
+	public APIRequest addReport(Report report);
+	/**
+	 * 查询所有的报案信息
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Report> queryAllReport(Integer indexPage);
+	/**
+	 * 根据报案编号查询所有的报案信息详情
+	 * @param reportId
+	 * @return
+	 */
+	public APIRequest<Report> queryAllReportDetils(Integer reportId);
+	/**
+	 * 根据报案编号修改报案信息
+	 * @param report
+	 * @return
+	 */
+	public APIRequest updateReport(Report report);
+	/**
+	 * 调度管理查询（未指派案件查询）
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Report> queryUnHandleReport(Integer indexPage);
+	/**
+	 * 调度管理查询（未指派案件查询）详情
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Report> queryUnHandleReportDetails(Integer reportId);
+	/**
+	 * 修改报案信息中的案件状态
+	 * @param reportId
+	 * @return
+	 */
+	public APIRequest updateReportStatus(Integer reportId);
+	/**
+	 * 我处理的案件查询（未勘察案件查询）
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Report> queryHandleReport(Integer indexPage);
+	/**
+	 * 我处理的案件查询查看详情（未勘察案件查询）
+	 * @param reportId
+	 * @return
+	 */
+	public APIRequest<Report> queryHandleReportDetails(Integer reportId);
+	/**
+	 * 根据案件编号修改案件状态,1表示未勘察
+	 * @param reportId
+	 * @return
+	 */
+	public APIRequest updateReportStatusByReportId(Integer reportId);
+}

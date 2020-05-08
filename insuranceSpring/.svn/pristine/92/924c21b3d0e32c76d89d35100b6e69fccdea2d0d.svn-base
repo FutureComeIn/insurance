@@ -1,0 +1,32 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.pojo.SettleClaim;
+
+public interface SettleClaimDao {
+	
+	//添加理赔信息
+	@Insert("insert t_SettleClaim(settleclaimId,caseId,nuclearDamageId,settleclaimPrice,settleclaimTime,settleClaimstatus,userId,username) values(#{settleclaimId},#{caseId},#{nuclearDamageId},#{settleclaimPrice},#{settleclaimTime},#{settleClaimstatus},#{userId},#{username});")
+	public Integer AddSettleClaim();
+	
+	//修改理赔信息
+	@Update("update t_SettleClaim set settleClaimstatus='1'  where caseId=#{caseId}")
+	public Integer updateSettleClaim(Integer caseId);
+	
+	//查看理赔信息
+	@Select("select * from  t_SettleClaim ")
+	public List<SettleClaim> querySettleClaim();
+	
+	//根据理赔状态查看理赔信息
+	@Select("select * from t_SettleClaim where settleClaimstatus=#{settleClaimstatus}")
+	public List<SettleClaim> querySettleClainmByStatus(String status);
+	
+	//根据理赔编号查询理赔信息
+	@Select("select * from t_SettleClaim where settleClaimId =#{settleClaimId}")
+	public List<SettleClaim> querySettleClaimById(Integer settleClaimId);
+}

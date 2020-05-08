@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxm.insuranceSpring.mappers.PartMap">
+
+<!-- 保单和报案  一对多-->
+<resultMap type="com.dxm.insuranceSpring.pojo.Part" id="PartBean">
+	    <id column="carPartId" property="carPartId" javaType="java.lang.Integer"/>
+		<result column="carTypeId" property="carTypeId" javaType="java.lang.Integer"/>
+		<result column="carPartName" property="carPartName" javaType="java.lang.String"/>
+		<result column="carPartPrice" property="carPartPrice" javaType="java.lang.Integer"/>
+		<result column="carPartRemark" property="carPartRemark" javaType="java.lang.String"/>
+		<association property="carType" select="selectPartByCarTypeId" column="carTypeId" javaType="com.dxm.insuranceSpring.pojo.CarType"/>
+		
+</resultMap>
+<!-- Warranty -->
+<select id="selectPartByCarTypeId" resultType="com.dxm.insuranceSpring.pojo.CarType">
+    select *  from   t_cartype where carTypeId=#{carTypeId}
+</select>
+
+</mapper>

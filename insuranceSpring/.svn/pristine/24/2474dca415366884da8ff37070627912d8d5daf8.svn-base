@@ -1,0 +1,30 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.session.RowBounds;
+
+import com.dxm.insuranceSpring.pojo.Log;
+import com.dxm.insuranceSpring.utils.SqlUtils;
+
+public interface LogDao {
+	
+	@Select("select *from t_log order by logId desc")
+	public List<Log> queryLogs(RowBounds rb);//遍历日志
+	
+	@Insert("insert into t_log values(0,#{logName},#{logContent},#{logTime})")
+	public Integer insertLog(Log log); //添加日志
+	
+	@Delete("delete from t_log where logId=#{logId}")
+	public Integer deleteLog(Integer logId);//删除日志
+	
+	//带条件查询日志
+	@SelectProvider(type=SqlUtils.class,method="selectLog")
+	public List<Log> selectLogsWithcondition(@Param("logName")String logName,@Param("logTime")String logTime); 
+	
+}

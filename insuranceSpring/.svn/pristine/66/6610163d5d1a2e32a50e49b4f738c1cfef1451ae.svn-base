@@ -1,0 +1,93 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.pojo.Warranty;
+
+/**
+ * 报案信息Dao层接口
+ * @author 熊珍
+ *
+ */
+public interface ReportDao {
+    /**
+      * 通过搜索保单编号、车牌号、身份证号码查询保单信息
+     * @param warranty
+     * @return
+     */
+	@Select("select * from t_warranty where warrantyId=#{warrantyId} or sailId=#{sailId} or recognizeeCarId=#{recognizeeIdCard} or engineId=#{engineId}")
+	public List<Warranty> queryWarranty(Warranty warranty,RowBounds rb);
+	/**
+	 * 用户报案查询保单信息分页
+	 * @return
+	 */
+	@Select("select count(1) from t_warranty where warrantyId=#{warrantyId}")
+	public Integer countWarranty(Integer warrantyId);
+	
+	/**
+	  * 添加报案信息
+	 * @param report
+	 * @return
+	 */
+	@Insert("insert into t_report values(#{reportId},#{reportPersonName},#{reporPersontPhone},#{reportReason},"
+			+ "#{province},#{city},#{area}),#{road},#{reportTime},#{road_direction}")
+	public Integer addReport(Report report);
+	/**
+	 * 根据报案编号查询所有的报案信息
+	 * @param reportId
+	 * @param row
+	 * @return
+	 */
+	@Select("select * from t_report where reportId=#{reportId}")
+	public List<Report> queryAllReport(Integer reportId,RowBounds rb);
+	/**
+	 * 查询所有报案信息分页
+	 * @return
+	 */
+	@Select("select count(1) from t_reprot where reportId=#{reportId}")
+	public Integer countReport(Integer reportId);
+	/**
+	 * 根据报案编号修改报案信息
+	 * @param report
+	 * @return
+	 */
+	@Update("update t_report set reportPersonName=#{reportPersonName},"
+			+ "reporPersontPhone=#{reporPersontPhone},reportReason=#{reportReason},"
+			+ "province=#{province},city=#{city},area=#{area}),road=#{road},"
+			+ "road_direction=#{road_direction} where reportId=#{reportId}")
+	public Integer updateReport(Report report);
+	/**
+	 * 点处理按钮
+	 * 修改报案信息中的案件状态
+	 * 1表示未勘察
+	 * @return
+	 */
+	@Update("update t_report set caseStatus=1 where reportId=#{reportId}")
+	public Integer updateReportStatus(Integer reportId);
+	/**
+	 * 我处理的案件查询（未勘察案件查询）
+	 * @param row
+	 * @return
+	 */
+	@Select("select * from t_report where caseStatus=1")
+	public List<Report> queryHandleReport(RowBounds rb);
+	/**
+	 * 未勘察案件分页
+	 * @return
+	 */
+	@Select("select count(1) from t_report where caseStatus=1")
+	public Integer countHandleReport();
+	/**
+	 * 根据案件编号修改案件状态,1表示未勘察
+	 * @param report
+	 * @return
+	 */
+	@Update("update t_report set caseStatus=2 where reportId=#{reportId}")
+	public Integer updateReportStatusByReportId(Integer reportId);
+	
+}

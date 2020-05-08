@@ -1,0 +1,204 @@
+package com.dxm.insuranceSpring.controls;
+
+import java.util.HashMap;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.dxm.insuranceSpring.pojo.User;
+import com.dxm.insuranceSpring.services.IUserServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+@Controller
+@RequestMapping("/src/page/welcome/")
+public class UserControls {
+	@Resource(name="iUserServicesImpls")
+	IUserServices services;
+	
+	String message="";
+	String path="";
+	
+	/**
+	 * 进行文件上传需要主动绑定参数(即jsp文件上传界面<input type="file" name="upload"/>的upload)
+	 * 参数解析：MultipartFile upload的值为（如下：）
+	 * org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@5d87498a
+	 * @return
+	 */ 
+	@RequestMapping("/addUser.do")
+	public String addUser(HttpServletRequest request,User user,Integer roleid,@RequestParam("upload")MultipartFile upload) {
+		/*
+		System.out.println("UserControls="+upload);
+		org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@8eb24ab
+		*/
+		Integer count=services.insertUser(request,upload,user,roleid);
+		if(count>0) {
+			message="添加用户成功...";
+			path="showUsers.do";
+			//添加成功后获得用户id用作添加角色表
+			//System.out.println(user.getUserId()+"and\t"+Integer.parseInt(roleName));
+		}else {
+			message="添加用户失败...";
+		}
+		request.setAttribute("message", message);
+		request.setAttribute("path", path);
+		return "src/page/common/success";
+	}
+	
+	/**
+	 * 遍历员工
+	 * @param request
+	 * @param searchUser
+	 * @param indexPage
+	 * @return
+	 */
+	@RequestMapping("/showUsers.do")
+	public String showUsers(HttpServletRequest request,User searchUser,Integer indexPage) {
+		//System.out.println(searchUser.getUserId()+"\t"+searchUser.getAccount()+"\t"+searchUser.getLeaveStatus());
+		
+		//添加% %
+		if(searchUser.getAccount()!=null) {
+			searchUser.setAccount("%"+searchUser.getAccount()+"%");
+		}
+		HashMap<String,Object> hm=services.queryUsers(searchUser, indexPage);
+		//添加后再出去 % %后显示在搜索框上
+		if(searchUser.getAccount()!=null&&!"".equals(searchUser.getAccount())) {
+			searchUser.setAccount(searchUser.getAccount().substring(1,searchUser.getAccount().length()-1));
+		}
+		
+		request.setAttribute("ulist", hm.get("ulist"));
+		request.setAttribute("page",hm.get("page"));
+		request.setAttribute("searchUser", searchUser);
+		return "src/page/welcome/employees_query";
+	}
+	/**
+	 * 查询个人信息
+	 * @param request
+	 * @param uid
+	 * @return
+	 */
+	@RequestMapping("/showUserInfo.do")
+	public String queryUserInfo(HttpServletRequest request,Integer uid) {
+		HashMap<String,Object> hm=services.queryUserById(uid);
+		request.setAttribute("userinfo",hm.get("user"));
+		request.setAttribute("roles", hm.get("roles"));
+		request.setAttribute("unroles", hm.get("unroles"));
+		return "src/page/welcome/employees_upd";
+	}
+	/**
+	 * 修改个人信息
+	 * @param uid
+	 * @return
+	 */
+	@RequestMapping("/updateInfo.do")
+	public String updateInfo(HttpServletRequest request,User user) {
+		Integer count=services.updateByAdmin(user);
+		if(count>0) {
+			message="修改用户成功...";
+			path="showUsers.do";
+		}else {
+			message="修改用户失败";
+		}
+		request.setAttribute("message", message);
+		request.setAttribute("path", path);
+		return "src/page/common/success";
+	}
+	@RequestMapping("/updatePwd.do")
+	public String updatePwd(HttpServletRequest request,User user) {
+		Integer count=services.updateByAdmin(user);
+		request.setAttribute("flag","yes");
+		if(count>0) {
+			return "src/page/welcome/login";
+		}else {
+			return "index";
+		}
+	}
+	
+	/**
+	 * 添加角色到用户
+	 * @param uid
+	 * @param unroles
+	 * @return
+	 */
+	@RequestMapping(value="/addRoleToUser.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+										 //接收数组也要主动绑定参数
+	public String addRoleToUser(Integer userid,@RequestParam(value="unroles[]") Integer[] unroles) {
+		APIRequest api=services.addRoleToUser(userid, unroles);
+		return api.toString();
+	}
+	/**
+	 * 从用户移除角色
+	 * @param uid
+	 * @param unroles
+	 * @return
+	 */
+	@RequestMapping(value="/removeRoleToUser.do",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public String removeRoleToUser(Integer userid,@RequestParam(value="roles[]") Integer[] roles) {
+		System.out.println("roles="+roles.toString());
+		APIRequest api=services.removeRoleToUser(userid, roles);
+		return api.toString();
+	}
+	/**
+	 * 设置员工离职或复职
+	 * @param uid
+	 * @return
+	 */
+	@RequestMapping("/setLeaveStatus.do")
+	public String setLeaveStatus(HttpServletRequest request,Integer leaveStatus,Integer uid) {
+		System.out.println("user="+leaveStatus+"\t"+uid);
+		Integer count=services.updateLeaveState(leaveStatus, uid);
+		if(count>0) {
+			if(leaveStatus==1) {
+				message="员工离职成功";
+			}else {
+				message="员工复职成功";
+			}
+			path="showUsers.do";
+		}else {
+			message="修改失败";
+		}
+		request.setAttribute("message", message);
+		request.setAttribute("path", path);
+		return "src/page/common/success";
+	}
+	
+	/**
+	 * 用户修改个人信心
+	 * @param request
+	 * @param upload
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("/updateUser.do")
+	public String updateUser(HttpServletRequest request,User user,Integer flag,@RequestParam("upload")MultipartFile upload){
+		
+		//分析：img不管修改不修改都是null，所以使用一个 flag
+		System.out.println("flag="+flag);
+		Integer count=0;
+		if(flag==0) {//修改了图片
+			count=services.updateByUser(request,upload,user);
+		}else {  //未修改了图片
+			count=services.updateByAdmin(user);
+		}
+		if(count>0) {
+			message="修改用户成功...";
+			path="userInfo.jsp";
+			//重新查一遍，绑定到session
+			APIRequest<User> api=services.selectUserByAccount(user.getAccount(),user.getPassword());
+			request.getSession().setAttribute("loginUser",(User)api.getSingerData());
+		}else {
+			message="修改用户失败";
+		}
+		request.setAttribute("message", message);
+		request.setAttribute("path", path);
+		return "src/page/common/success";
+	}
+}
+
+

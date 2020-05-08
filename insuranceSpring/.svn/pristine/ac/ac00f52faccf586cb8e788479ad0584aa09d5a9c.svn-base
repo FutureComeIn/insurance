@@ -1,0 +1,17 @@
+package com.dxm.insuranceSpring.services;
+
+import java.util.HashMap;
+
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface IRoleServices {
+	
+	//遍历角色-数据接口开发
+	public APIRequest queryRoles();
+	
+	//遍历角色-正常web开发
+	public HashMap<String,Object> selectRoles(Integer indexPage);
+	
+	//添加角色
+	public Integer addRole(String roleName);
+}

@@ -1,0 +1,61 @@
+package com.dxm.insuranceSpring.pojo;
+//车辆零件表
+/**
+ * 车辆零件表实体类
+ * @author zf
+ *
+ */
+public class Part {
+	private int  partId;	//车辆零件编号	Int
+	private int carId;	//车辆编号	Int
+	private String partName;	//车辆零件名	varchar
+	private int 	partValue;	//市场价格	Int
+	private	String	   partRemark;	//零件备注	varchar
+	@Override
+	public String toString() {
+		return "Part [partId=" + partId + ", carId=" + carId + ", partName=" + partName + ", partValue=" + partValue
+				+ ", partRemark=" + partRemark + "]";
+	}
+	public Part(int partId, int carId, String partName, int partValue, String partRemark) {
+		super();
+		this.partId = partId;
+		this.carId = carId;
+		this.partName = partName;
+		this.partValue = partValue;
+		this.partRemark = partRemark;
+	}
+	public Part() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public int getPartId() {
+		return partId;
+	}
+	public void setPartId(int partId) {
+		this.partId = partId;
+	}
+	public int getCarId() {
+		return carId;
+	}
+	public void setCarId(int carId) {
+		this.carId = carId;
+	}
+	public String getPartName() {
+		return partName;
+	}
+	public void setPartName(String partName) {
+		this.partName = partName;
+	}
+	public int getPartValue() {
+		return partValue;
+	}
+	public void setPartValue(int partValue) {
+		this.partValue = partValue;
+	}
+	public String getPartRemark() {
+		return partRemark;
+	}
+	public void setPartRemark(String partRemark) {
+		this.partRemark = partRemark;
+	}
+}

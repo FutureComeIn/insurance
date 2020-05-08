@@ -1,0 +1,18 @@
+function deleteNuclearDamage(nuclearDamageid){
+	$("#deleteNuclearDamage").empty();
+	alert("进入删除js");
+	alert(nuclearDamageid);
+	$.ajax({
+		url:'http://localhost:8080/src/page/hesun/deleteNuclearDamage.do',
+		type:'post',
+		data:{"nuclearDamageId":nuclearDamageid },
+		dataType : 'json',
+		
+		success : function(data) {
+			alert("驳回成功!");
+		},
+		error : function() {
+			alert("驳回失败!");
+		}
+	})
+}   

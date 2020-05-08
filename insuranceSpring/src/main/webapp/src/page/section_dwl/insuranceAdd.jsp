@@ -1,0 +1,118 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%String path=request.getContextPath(); %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<!-- Bootstrap -->
+		<link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Font Awesome -->
+		<link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+		<!-- NProgress -->
+		<link href="../../../vendors/nprogress/nprogress.css" rel="stylesheet">
+		<!-- iCheck -->
+		<link href="../../../vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+		<!-- bootstrap-progressbar -->
+		<link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+		<!-- JQVMap -->
+		<link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+		<!-- bootstrap-daterangepicker -->
+		<link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+		<!-- Custom Theme Style -->
+		<link href="../../../build/css/custom.min.css" rel="stylesheet">
+		<style type="text/css">
+             #zg{float: right;}
+             #xg{float: right;}
+             tr td .text{
+             	width: 100px;
+             }
+		</style>
+		
+		<script language="javascript">
+        
+		    function check()
+		    {
+		    	
+			if(document.formUpdate.insuranceTypeName.value=="")
+			 {	
+			     alert("请填写险种名称");
+			     return false;
+			 }
+			if(document.formUpdate.insuranceTerm.value==""){
+			    alert("请填写投保年限");
+			    return false;
+			 }
+			if(document.formUpdate.insuranceTypeRemark.value==""){
+			    alert("请填写险种描述");
+			    return false;
+			}
+			if(document.formUpdate.insuranceTypeSize.value==""){
+			    alert("请填写投保金额");
+			    return false;
+			}
+			if(document.formUpdate.insuranceTypePrice.value==""){
+			    alert("请填写理赔金额");
+			    return false;
+			}
+		     document.formUpdate.submit();
+		   
+		   } 
+
+        </script>
+	</head>
+
+	<body style="background: #F7F7F7;" >
+	
+               <form action="<%=path %>/addInsuranceType.do" name="formUpdate" method="post" >
+			<div align="center">
+				
+				<table  border="1" style="border-collapse:collapse;" class="table table-bordered" valign="middle">
+					
+					<tr>
+						<td colspan="7">险种添加</td>
+					</tr>
+					<tr>
+			
+			      <td >险种名称</td>
+			      <td >投保年限</td>
+			      <td >险种描述</td>
+			      <td >投保金额</td>
+			      <td >理赔金额</td>
+				   
+					</tr>
+					
+					
+					
+					<tr class="tr addon">
+						<td><input name="insuranceTypeName" type="text" class='text'   /></td>
+						<td><input name="insuranceTerm" type="text" class='text'  /></td>
+					<!-- 	<td><input name="remark" type="text" class='text'  /></td> -->
+					 	<td>  <textarea rows="1" cols="2" name="insuranceTypeRemark"></textarea></td> 
+						<td><input name="insuranceTypeSize" type="text" class='text' /></td>
+						<td><input name="insuranceTypePrice" type="text" class='text' /></td>
+						
+					
+					<tr id="butt">
+					
+					    <td colspan="5" align="center">
+							<input id="bc" type="button" value="保存" onclick="check()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="reset" value="重置"> 
+						</td>
+				   </tr>
+				</table>
+				
+			</div>
+			</form>
+		
+				
+				<!-- Custom Theme Scripts -->
+				<script src="../../../build/js/custom.min.js"></script>
+				 <script type="text/javascript" src="../../js/jquery-1.8.3.js" ></script>
+				<script src="../../page/section_dwl/chesun1.js"></script> 
+				<script src="../../js/lose/chesunadd.js"></script>
+	</body>
+</html>

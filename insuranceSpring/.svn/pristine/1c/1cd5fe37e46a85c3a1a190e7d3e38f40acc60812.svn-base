@@ -1,0 +1,149 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.Case;
+
+public class CaseSqlUtils {
+	//方法中的关键字区分大小写 SQL WHERE SELECT
+	//该方法会根据传递过来的map中的参数内容,动态构建Sql语句
+	/**
+	 * 动态查询案件信息
+	 * @param param
+	 * @return
+	 */
+	public String selectWithParamSql(final Case param) {
+		return new SQL() {
+			{
+				SELECT("*");
+				FROM("t_case");
+				if(param.getCaseId()!=null) {
+					WHERE("caseId=#{caseId}");
+				}
+				if(param.getReportId()!=null) {
+					WHERE("reportId=#{reportId}");
+				}
+				if(param.getReportReason()!=null) {
+					WHERE("reportReason=#{reportReason}");
+				}
+				if(param.getAddress()!=null) {
+					WHERE("address=#{address}");
+				}
+				if(param.getJieanId()!=null) {
+					WHERE("jieanId=#{jieanId}");
+				}
+				if(param.getCheckId()!=null) {
+					WHERE("checkId=#{checkId}");
+				}
+				if(param.getAssessmentId()!=null) {
+					WHERE("assessmentId=#{assessmentId}");
+				}
+				if(param.getNuclearDamageId()!=null) {
+					WHERE("nuclearDamageId=#{nuclearDamageId}");
+				}
+				if(param.getSettlementId()!=null) {
+					WHERE("settlementId=#{settlementId}");
+				}
+				if(param.getSettleId()!=null) {
+					WHERE("settleId=#{settleId}");
+				}
+				if(param.getCaseStatus()!=null) {
+					WHERE("caseStatus=#{caseStatus}");
+				}
+			}
+		}.toString();
+	}
+	/**
+	 * 动态条件查询Sql分页
+	 * @param param
+	 * @return
+	 */
+	public String selectWithParamCountSql(final Case param) {
+		return new SQL() {
+			{
+				SELECT("count(1)");
+				FROM("t_case");
+				if(param.getCaseId()!=null) {
+					WHERE("caseId=#{caseId}");
+				}
+				if(param.getReportId()!=null) {
+					WHERE("reportId=#{reportId}");
+				}
+				if(param.getReportReason()!=null) {
+					WHERE("reportReason=#{reportReason}");
+				}
+				if(param.getAddress()!=null) {
+					WHERE("address=#{address}");
+				}
+				if(param.getJieanId()!=null) {
+					WHERE("jieanId=#{jieanId}");
+				}
+				if(param.getCheckId()!=null) {
+					WHERE("checkId=#{checkId}");
+				}
+				if(param.getAssessmentId()!=null) {
+					WHERE("assessmentId=#{assessmentId}");
+				}
+				if(param.getNuclearDamageId()!=null) {
+					WHERE("nuclearDamageId=#{nuclearDamageId}");
+				}
+				if(param.getSettlementId()!=null) {
+					WHERE("settlementId=#{settlementId}");
+				}
+				if(param.getSettleId()!=null) {
+					WHERE("settleId=#{settleId}");
+				}
+				if(param.getCaseStatus()!=null) {
+					WHERE("caseStatus=#{caseStatus}");
+				}
+			}
+		}.toString();
+	}
+	/**
+	 * 动态修改Case
+	 * @param param
+	 * @return
+	 */
+	public String updateCase(final Case param) {
+		return new SQL() {
+			{
+				UPDATE("t_case");
+				if(param.getCaseId()!=null) {
+					SET("caseId=#{caseId}");
+				}
+				if(param.getReportId()!=null) {
+					SET("reportId=#{reportId}");
+				}
+				if(param.getReportReason()!=null) {
+					SET("reportReason=#{reportReason}");
+				}
+				if(param.getAddress()!=null) {
+					SET("address=#{address}");
+				}
+				if(param.getJieanId()!=null) {
+					SET("jieanId=#{jieanId}");
+				}
+				if(param.getCheckId()!=null) {
+					SET("checkId=#{checkId}");
+				}
+				if(param.getAssessmentId()!=null) {
+					SET("assessmentId=#{assessmentId}");
+				}
+				if(param.getNuclearDamageId()!=null) {
+					SET("nuclearDamageId=#{nuclearDamageId}");
+				}
+				if(param.getSettlementId()!=null) {
+					SET("settlementId=#{settlementId}");
+				}
+				if(param.getSettleId()!=null) {
+					SET("settleId=#{settleId}");
+				}
+				if(param.getCaseStatus()!=null) {
+					SET("caseStatus=#{caseStatus}");
+				}
+				WHERE("caseId=#{caseId}");
+			}
+		}.toString();
+	}
+	
+}

@@ -1,0 +1,33 @@
+package com.dxm.insuranceSpring.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Data;
+
+/**
+ * 资料表
+ * @author zf
+ *
+ */
+public interface DataDao {
+	@Insert("insert into t_data values(#{dataId},#{specificList},#{specificInvoice},#{remark})")
+	public Integer addData(Data data);
+	@Update("select * from t_data")
+	public Integer updateData(Data ct);
+	
+	@Delete("delete from t_data where dataId=#{dataId}")
+	public Integer deleteData(Integer id);
+	
+	
+	@Select("select * from t_data")
+	public List<Data> queryData();
+	
+	@Select("select * from t_data where dataId=#{dataId}")
+	public List<Data> queryDataById(Integer id);
+}

@@ -1,0 +1,147 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.dxm.insuranceSpring.dao.UserDao;
+import com.dxm.insuranceSpring.pojo.Role;
+import com.dxm.insuranceSpring.pojo.User;
+import com.dxm.insuranceSpring.services.IUserServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.utils.Pages;
+import com.dxm.insuranceSpring.utils.PathUtils;
+
+
+@Service("iUserServicesImpls")
+public class IUserServicesImpls implements IUserServices {
+	
+	@Autowired
+	UserDao udao;
+	APIRequest<User> api=new APIRequest<User>();
+
+	@Override
+	public HashMap<String,Object> queryUsers(User user, Integer indexPage) {
+		// TODO 带条件查询所有在职或离职员工
+		if(indexPage==null) {
+			indexPage=1;
+		}
+		Integer rowCount=udao.selectCountUser(user);
+		Pages page=new Pages(rowCount);
+		page.setIndexPage(indexPage);
+		page.setPageSize(3);
+		RowBounds rb=new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<User> ulist=udao.queryUsers(user, rb);
+		
+		String rolenames="";
+		//查询出每个用户拥有的角色
+		for(User u : ulist) {
+			List<Role> rlist=udao.queryHaveRole(u.getUserId());
+			for(Role r : rlist) {
+				rolenames+=r.getRoleName()+" ";
+			}
+			u.setRolenames(rolenames);
+			rolenames="";
+		}
+		HashMap<String,Object> hm=new HashMap<String,Object>();
+		hm.put("ulist",ulist);
+		hm.put("page",page);
+		return hm;
+	}
+	@Override
+	public List<Role> queryRoleByUid(Integer uid) {
+		// TODO 根据员工id查询其角色
+		return null;
+	}
+
+	@Override
+	public Integer insertUser(HttpServletRequest request, MultipartFile mpfile,User user,Integer roleid) {
+		// TODO 添加员工
+		//获得上传的图片，存储地方的绝对路径
+		String path = PathUtils.getPath(request, "upload", mpfile.getOriginalFilename());
+		try {
+			mpfile.transferTo(new File(path));
+			user.setImg(PathUtils.datapath); //赋的是--》文件夹+图片名
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			user.setWorkTime(sdf.format(new Date()));
+			udao.insertUser(user);
+			Integer userid=udao.selectUserIdBycardId(user.getCardId());
+			//System.out.println("userid="+userid+"\troleid="+Integer.parseInt(roleid));
+			if(userid!=null) {
+				udao.insertUserRole(userid,roleid);
+			}else {
+				System.out.println("添加用户角色失败");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return 1;
+	}
+
+	@Override
+	public Integer updateByAdmin(User user) {
+		// TODO Admin修改员工信息
+		return null;
+	}
+
+	@Override
+	public Integer updateByUser(User user) {
+		// TODO User修改个人信息
+		return null;
+	}
+
+	@Override
+	public Integer updateLeaveState(Integer leaveStatus, Integer uid) {
+		// TODO 员工离职
+		return null;
+	}
+
+	@Override
+	public HashMap<String,Object> queryUserById(Integer uid) {
+		// TODO 根据id查询员工
+		User user=udao.queryUserById(uid);
+		List<Role> roles=udao.queryHaveRole(uid);
+		List<Role> unroles=udao.queryUnhaveRole(uid);
+		HashMap<String,Object> hm=new HashMap<String,Object>();
+		hm.put("user",user);
+		hm.put("roles",roles);
+		hm.put("unroles",unroles);
+		return hm;
+	}
+
+	@Override
+	public Integer addRoleToUser(Integer userid, Integer roleid) {
+		// TODO 给员工添加一至多个角色
+		return null;
+	}
+
+	@Override
+	public Integer removeRoleToUser(Integer userid, String roleid) {
+		// TODO 给员工移除一至多个角色
+		return null;
+	}
+
+	@Override
+	public APIRequest<User> selectUserByAccount(String account, String password) {
+		// TODO 根据昵称和密码查询员工
+		User user=udao.selectUserByAccount(account, password);
+		if(user!=null) {
+			api.setResult(true);
+			api.setSingerData(user);
+		}else {
+			api.setResult(false);
+		}
+		return api;
+	}
+
+}

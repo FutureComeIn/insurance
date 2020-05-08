@@ -1,0 +1,13 @@
+package com.dxm.insuranceSpring.services;
+
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Part;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface IPartServices {
+	public APIRequest addPart(Part ct);
+	public APIRequest updatePart(Part ct);
+	public APIRequest deletePart(Integer id);
+	public APIRequest<Part> queryPart();
+	public APIRequest queryPartById(Integer id);
+}

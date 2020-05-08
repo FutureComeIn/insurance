@@ -1,0 +1,155 @@
+package com.dxm.insuranceSpring.services.impls;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Service;
+
+import com.dxm.insuranceSpring.dao.ReportDao;
+import com.dxm.insuranceSpring.pojo.Report;
+import com.dxm.insuranceSpring.pojo.Warranty;
+import com.dxm.insuranceSpring.services.IReportServices;
+import com.dxm.insuranceSpring.utils.APIRequest;
+import com.dxm.insuranceSpring.utils.Pages;
+/**
+ * 实现报案信息Services
+ * @author 熊珍
+ *
+ */
+@Service("reportServicesImpls")
+public class ReportServicesImpls implements IReportServices{
+	@Resource
+	private ReportDao dao;
+	@Override
+	public APIRequest<Warranty> queryWarranty(Warranty warranty,Integer indexPage) {
+		// TODO Auto-generated method stub
+		if(indexPage==null) {
+			indexPage=1;
+		}
+		int rowcount  = dao.countWarranty(warranty.getWarrantyId());
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexPage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Warranty> data = dao.queryWarranty(warranty, rb);
+		System.out.println(data);
+		APIRequest<Warranty> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest addReport(Report report) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.addReport(report)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("添加失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest<Report> queryAllReport(Integer reportId, Integer indexPage) {
+		// TODO Auto-generated method stub
+		if(indexPage==null) {
+			indexPage=1;
+		}
+		int rowcount  = dao.countReport(reportId);
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexPage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Report> data = dao.queryAllReport(reportId, rb);
+		
+		APIRequest<Report> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateReport(Report report) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateReport(report)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateReportStatus(Integer reportId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateReportStatus(reportId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest<Report> queryHandleReport(Integer indexPage) {
+		// TODO Auto-generated method stub
+		if(indexPage==null) {
+			indexPage=1;
+		}
+		int rowcount  = dao.countHandleReport();
+		Pages page = new Pages(rowcount);
+		page.setIndexPage(indexPage);
+		
+		RowBounds rb = new RowBounds(page.getBeginRow(),page.getPageSize());
+		List<Report> data = dao.queryHandleReport(rb);
+		
+		APIRequest<Report> api = new APIRequest<>();
+		
+		if(data.size()>0) {
+			api.setResult(true);
+			api.setDatas(data);
+			api.setSingerData(page);
+		}else {
+			api.setResult(false);
+			api.setMessage("对不起，当前没有数据！");
+		}
+		return api;
+	}
+
+	@Override
+	public APIRequest updateReportStatusByReportId(Integer reportId) {
+		// TODO Auto-generated method stub
+		APIRequest api=new APIRequest();
+		if(dao.updateReportStatusByReportId(reportId)>0) {
+			api.setResult(true);
+		}else {
+			api.setResult(false);
+			api.setMessage("更新失败");
+		}
+		return api;
+	}
+	
+}

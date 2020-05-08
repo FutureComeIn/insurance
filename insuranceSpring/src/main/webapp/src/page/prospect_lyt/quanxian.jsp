@@ -1,0 +1,169 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>角色管理</title>
+	<!-- Bootstrap -->
+    <link href="../../../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../../../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <!-- bootstrap-progressbar 
+    <link href="../../../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap 
+    <link href="../../../vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker 
+    <link href="../../../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style 
+    <link href="../../../build/css/custom.min.css" rel="stylesheet">
+    -->
+    <style type="text/css">
+   		#top{
+   			margin-top:14px ;
+   		}
+		#user_name{
+			float:right;
+		}
+		#s1{
+			font-size: 30px;
+		}
+    </style>
+    <script type="text/javascript">
+    	function deleteRole(rid){
+    		if(confirm("您确定删除吗")){
+    			window.location.href="../../../deleteRole.do?rid="+rid;
+    		}
+    	}
+    	function showDetail(rid){
+    		window.location.href="../../../showRoleDetail.do?rid="+rid;
+    	}
+    	function skipPage(indexPage){
+			window.location.href="selectRoles.do?indexPage="+indexPage; 
+   		}
+    </script>
+  </head>
+
+  <body style="background: #F7F7F7;">
+		<center>		
+        <div id="top" style="margin-bottom: 20px">
+            	  <h2>角色管理</h2>
+     	</div>
+     	
+           <div id="table" align="center" style="width:500px">
+       
+           <input onclick="addFuntion()" style="margin-bottom: 15px" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myaddModal" value="添加角色"/>
+        
+           <input type="hidden" id="a" />
+			<table class="table table-bordered" id="roles_lzw" style="text-align:center" >
+		 		<tr>
+		 			<td><h3>角色编号</h3></td>
+		 			<td><h3>角色名称</h3></td>
+		 			<td><h3>操作</h3></td>
+		 		</tr>	
+		 		<c:forEach items="${rlist }" var="role">
+		 		<tr>
+		 			<td>${role.roleId }</td>
+		 			<td>${role.roleName }</td>
+		 			<td>
+		 			   <button type="button" class="btn btn-primary" onclick="showDetail(${role.roleId })">详情</button>&nbsp;&nbsp;
+		 			   <button type="button" class="btn btn-primary" onclick="deleteRole(${role.roleId })">删除</button>
+		 			</td>
+		 		</tr>
+		 		</c:forEach>
+			</table>
+			<div>
+				<button onclick="skipPage(1)" class="btn btn-sm btn-primary" style="margin-right:20px">首页</button>
+			    <button onclick="skipPage('${page.indexPage>1?page.indexPage-1:1}')" class="btn btn-sm btn-primary" style="margin-right:20px">上一页</button>
+			    ${page.indexPage }/${page.pageCount }
+				<button onclick="skipPage('${page.indexPage<page.pageCount?page.indexPage+1:page.pageCount}')" class="btn btn-sm btn-primary" style="margin-right:20px;margin-left:20px">下一页</button>
+				<button onclick="skipPage('${page.pageCount}')" class="btn btn-sm btn-primary" style="margin-right:20px">尾页</button>
+			</div>
+		</div>
+
+	</center> 
+	
+	<!--添加 Modal -->
+	<div class="modal fade" id="myaddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel">添加角色</h4>
+	      </div>
+	      <form action="../../../addRole.do" method="post" name="rform">
+	      <div class="modal-body">
+	      		角色名：<input type="text" name="roleName" id="add_rolename"/>
+	      		<label id="msg"></label>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" id="add_close" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="add">保存</button>
+	      </div>
+	      </form>
+	    </div>
+	  </div>
+	</div>
+	<!-- jQuery -->
+     <script src="../../../vendors/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+    <script src="../../../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../../vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="../../../vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="../../../vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="../../../vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="../../../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="../../../vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="../../../vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="../../../vendors/Flot/jquery.flot.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.time.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="../../../vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="../../../vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="../../../vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="../../../vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="../../../vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="../../../vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="../../../vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="../../../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="../../../vendors/moment/min/moment.min.js"></script>
+    <script src="../../../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../../build/js/custom.min.js"></script>
+	<script src="../../js/Dispath.js"></script>
+	<script src="../../../src/js/jquery-1.8.3.js"></script>
+	<script src="../../../src/js/system/rolesmanage.js"></script>
+	<script>
+		$(function(){
+			$("#msg").text("");
+   			$("#add").click(function(){
+   				if($("#add_rolename").val()==null||$("#add_rolename").val()==""){
+   					$("#msg").text("角色名不能为空");
+   					$("#msg").css("color","red");
+   					return;
+   				}else{
+   					$("#msg").text("");
+   				}
+   				document.rform.submit();
+   			})
+		})
+	</script>
+  </body>
+</html>

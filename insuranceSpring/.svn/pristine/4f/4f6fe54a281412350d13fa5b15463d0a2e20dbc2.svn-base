@@ -1,0 +1,121 @@
+package com.dxm.insuranceSpring.services;
+/**
+ * 车损模块业务接口
+ * @author 王威
+ *
+ */
+
+import com.dxm.insuranceSpring.pojo.AdverseCarDamage;
+import com.dxm.insuranceSpring.pojo.AdverseCarDamageDetails;
+import com.dxm.insuranceSpring.pojo.Assessment;
+import com.dxm.insuranceSpring.pojo.CarType;
+import com.dxm.insuranceSpring.pojo.Case;
+import com.dxm.insuranceSpring.pojo.MyCarDamage;
+import com.dxm.insuranceSpring.pojo.MyCarDamageDetails;
+import com.dxm.insuranceSpring.utils.APIRequest;
+
+public interface ICarLossServices {
+	/**
+	 * 根据查询条件（案件信息，当前页面）查询案件信息
+	 * @param ca
+	 * @param indexPage
+	 * @return
+	 */
+	public APIRequest<Case> queryCaseInfoByHandleAndCurrentPage(Case ca,Integer indexPage);
+	
+	/**
+	 * 根据案件编号查找定损的案件信息以及购买险种信息
+	 * @param caseId
+	 * @return
+	 */
+	public APIRequest queryMyHandleCaseByCaseId(Case ca);
+	
+	/**
+	 * 添加我方车损所有信息
+	 * @param mcd
+	 * @param carDamageDetails
+	 * @return
+	 */
+	public APIRequest addMyCarLossAllInfo(MyCarDamage mcd,MyCarDamageDetails...carDamageDetails);
+	
+	/**
+	 *  添加对方车损所有信息
+	 * @param acd
+	 * @param carDamageDetails
+	 * @return
+	 */
+	public APIRequest addAdverseCarLossAllInfo(AdverseCarDamage acd,AdverseCarDamageDetails...carDamageDetails);
+	
+	/**
+	 * 添加定损信息
+	 * @param at
+	 * @return
+	 */
+	public APIRequest addCarLossAllInfo(Assessment at);
+	
+	/**
+	 *根据案件编号 查询所有的定损信息以及详情
+	 * @param id
+	 * @return
+	 */
+	public APIRequest<Assessment> queryAllCarLossInfoByCaseId(Integer caseid); 
+	
+	/**
+	 * 更新定损信息
+	 * @param at
+	 * @return
+	 */
+	public APIRequest updateAssessment(Assessment at);
+	
+	/**
+	 * 更新我方车损信息
+	 * @param mcd
+	 * @return
+	 */
+	public APIRequest updateMyCarDamage(MyCarDamage mcd);
+	
+	/**
+	 * 更新我方车损详情
+	 * @param mcdd
+	 * @return
+	 */
+	public APIRequest updateMyCarDamageDetails(MyCarDamageDetails mcdd);
+	
+	/**
+	 * 删除我方车损详情
+	 * @param id
+	 * @return
+	 */
+	public APIRequest deleteMyCarDamageDetails(Integer id);
+	
+	/**
+	 * 更新对方车损信息
+	 * @param acd
+	 * @return
+	 */
+	public APIRequest updateAdverseCarDamage(AdverseCarDamage acd);
+	
+	/**
+	 * 更新对方车损详情
+	 * @param acdd
+	 * @return
+	 */
+	public APIRequest updateAdverseCarDamageDetails(AdverseCarDamageDetails acdd);
+	
+	/**
+	 * 删除对方车损详情
+	 * @param id
+	 * @return
+	 */
+	public APIRequest deleteAdverseCarDamageDetails(Integer id);
+	
+	
+	/**
+	 * 根据车辆类型名模糊查询车辆信息
+	 * @param carName
+	 * @return
+	 */
+	public APIRequest<CarType> queryCarTypeByCarName(String carName);
+	
+	//public APIRequest
+ }

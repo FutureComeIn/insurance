@@ -1,0 +1,216 @@
+//function loadUnCheck(indexPage){
+//	
+//	$("#content").empty();
+//	$.ajax({
+//		url:'http://localhost:8080/src/page/check/queryByUnCheck.do',
+//		type:'post',
+//		data:{
+//			'indexPage':indexPage
+//		},
+//		dataType:'json',
+//		success:function(data){
+//			//data = $.parseJSON(data);
+//			//控制输出
+//			//console.log(data);
+//			var contentHtml = "";
+//			for(var i=0; i < data.datas.length;i++){
+//				var rowHtml = "<tr><td>"+data.datas[i].reportId+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportPersonName+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportPersonPhone+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportTime+"</td>";
+//				rowHtml += "<td>"+data.datas[i].reportReason+"</td>";
+//				rowHtml += "<td>"+data.datas[i].province+"</td>";
+//				rowHtml += "<td>"+data.datas[i].city+"</td>";
+//				rowHtml += "<td>"+data.datas[i].area+"</td>";
+//				rowHtml += "<td>"+data.datas[i].road+"</td>";
+//				rowHtml += "<td>"+data.datas[i].road_direction+"</td>";
+//				rowHtml += "<td>"+data.datas[i].userName+"</td>";
+//				rowHtml += "<td>"+data.datas[i].caseStatus+"</td>";
+//				rowHtml += "<td><a href='add_check.jsp' class='btn btn-sm btn-primary'>我要勘察</a></td></tr>";
+//				//追加数据
+//				contentHtml += rowHtml;
+//			}
+//			$("#content").append(contentHtml);
+//		},
+//		error:function(){
+//			alert("查询失败");
+//		}
+//	})
+//}
+function ouradd(){
+				var tab=$("#sss");
+				var div=tab.parent();
+				var heig=div.css("height");
+				value=parseInt(heig.substr(0,heig.lastIndexOf("px")))+100;
+				heig=value+"px";
+				var tr="<tr class='other'><td id='textcenter' onclick='a()'>受损部件</td>"+
+				"<td><input type='text' class='form-control' id='inputwidth' name='carName'></td>"+
+				"<td id='textcenter'>受损数量</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>单价</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>小计金额</td><td>0</td></tr><tr><td id='textcenter'>维修地点</td>"
+				+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td id='textcenter'>受损图片</td><td><input type='file'/></td><td id='textcenter'  style='height: 42px;'>备注</td>"
+				+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+				+"<td><img src='../../img/sign_add.png' onclick='ouradd();'/></td>"
+				+"<td><img src='../../img/sign_remove.png' onclick='oursub(this);'/></td></tr>";
+				tab.append($(tr));
+				div.css({"height":heig})
+}
+
+function otheradd(){
+	var tab=$("#other");
+	var div=tab.parent();
+	var heig=div.css("height");
+	value=parseInt(heig.substr(0,heig.lastIndexOf("px")))+100;
+	heig=value+"px";
+	var tr="<tr class='other'><td id='textcenter' onclick='a()'>受损部件</td>"+
+	"<td><input type='text' class='form-control' id='inputwidth' name='carName'></td>"+
+	"<td id='textcenter'>受损数量</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>单价</td><td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>小计金额</td><td>0</td></tr><tr><td id='textcenter'>维修地点</td>"
+	+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td id='textcenter'>受损图片</td><td><input type='file'/></td><td id='textcenter'  style='height: 42px;'>备注</td>"
+	+"<td><input type='text' class='form-control' id='inputwidth' name='policyholders.policyholders_name'></td>"
+	+"<td><img src='../../img/sign_add.png' onclick='otheradd();'/></td>"
+	+"<td><img src='../../img/sign_remove.png' onclick='oursub(this);'/></td></tr>";
+	tab.append($(tr));
+	div.css({"height":heig})
+}
+
+function oursub(obj){
+	var td=$(obj).parent();
+	var tr2=td.parent();
+	var tr1=tr2.prev();
+	var cla=tr1.attr("class");
+	var carname=tr1.children().eq(1).children().val();
+	if(cla=="one"){
+		return false;
+	}
+	if(carname!=""){
+			if(window.confirm("你确定要删除已编辑的信息吗？")){
+				tr1.remove();
+				tr2.remove();
+			}else{
+				return false;
+			}
+		}
+	tr1.remove();
+	tr2.remove();
+}
+
+
+function onloadCarLossCase(assessmentId){
+	var assessmentId=1;
+	$("#caseinfo").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/dinsun/queryCaseInfoByHandleAndCurrentPage.do',
+		type:'post',
+		data:{
+			'assessmentId':assessmentId
+		},
+		dataType:'json',
+		success:function(data){
+			//控制输出
+			//console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].caseId+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+data.datas[i].address+"</td>";
+				rowHtml += "<td>"+data.datas[i].reportReason+"</td>";
+				if(data.datas[i].caseStatus==5){
+					rowHtml += "<td>已定损</td>";	
+				}else if(data.datas[i].caseStatus==4){
+					rowHtml += "<td>定损中</td>";
+				}else {
+					rowHtml += "<td>未定损</td>";
+				}
+				rowHtml += "<td><a href='../dinsun/begindinsun.jsp' class='btn btn-sm btn-primary'>定损</a></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#caseinfo").append(contentHtml);
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}
+
+function loadassessment(userId,indexpage){
+	//var userId=1;
+	$("#assessment").empty();
+	$.ajax({
+		url:'http://localhost:8080/src/page/dinsun/queryAssessmentByTerm.do',
+		type:'post',
+		data:{
+			'userId':userId,
+			'indexPage':indexpage
+		},
+		dataType:'json',
+		success:function(data){
+//			//控制输出
+			console.log(data);
+			var contentHtml = "";
+			for(var i=0; i < data.datas.length;i++){
+				var rowHtml = "<tr><td>"+data.datas[i].caseId+"</td>";
+				if(data.datas[i].myCarDamageInfo!=null ){
+					rowHtml += "<td>"+data.datas[i].myCarDamageInfo.name+"</td>";
+					rowHtml += "<td>"+data.datas[i].myCarDamageInfo.price+"</td>";	
+				}else{
+					rowHtml += "<td>无</td>";
+					rowHtml += "<td>无</td>";
+				}
+				if(data.datas[i].adverseCarDamageInfo!=null){
+					rowHtml += "<td>"+data.datas[i].adverseCarDamageInfo.name+"</td>";
+					rowHtml += "<td>"+data.datas[i].adverseCarDamageInfo.price+"</td>";
+				}else{ 
+					rowHtml += "<td>无</td>";
+					rowHtml += "<td>无</td>";
+				}
+					rowHtml += "<td>"+"</td>";
+				rowHtml += "<td>"+data.datas[i].assessmentTime+"</td>";
+				rowHtml += "<td>"+data.datas[i].totalPrice+"</td>";
+				if(data.datas[i].status==0){
+					rowHtml += "<td>未损中</td>";
+				}else if(data.datas[i].status==1){
+					rowHtml += "<td>定损中</td>";
+				}else{
+					rowHtml += "<td>已定损</td>";
+				}
+				rowHtml += "<td><button type='button' class='btn btn-primary btn-xs' data-toggle='modal' data-target='#upd-UserInfo' onclick='updatedinsun();'> 修改</button><button type='button' onclick='del()' class='btn btn-danger btn-xs'>删除</button></td></tr>";
+				//追加数据
+				contentHtml += rowHtml;
+			}
+			$("#assessment").append(contentHtml);
+			page(data.singerData,"loadassessment");
+		},
+		error:function(){
+			alert("查询失败");
+		}
+	})
+}
+
+//分页函数
+function page(page,method){
+	$("#page").empty();
+	var pagehtml = "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(1,\"1\")'>首页</button>";
+	if(page.indexPage == 1){
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px'>上一页</button>";
+	}else{
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(1,\""+(page.indexPage - 1)+"\")'>上一页</button>";
+	}
+	
+	pagehtml += page.indexPage + "/" + page.pageCount;
+	
+	if(page.indexPage == page.pageCount){
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px;margin-left:20px'>下一页</button>";
+	}else{
+		pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px;margin-left:20px' onclick='"+method+"(1,\""+(page.indexPage + 1)+"\")'>下一页</button>";
+	}
+	pagehtml += "<button class='btn btn-sm btn-primary' style='margin-right:20px' onclick='"+method+"(1,\""+page.pageCount+"\")'>尾页</button>";
+	$("#page").append(pagehtml);
+}

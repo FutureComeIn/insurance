@@ -1,0 +1,45 @@
+//加载数据
+function queryAllreport(){
+	//获取文本框的值
+	//alert(1);
+	$("#allreportInfo").empty();
+	$.ajax({
+		url:'http://localhost:8080/loadAllReport.do',
+		type:'post',
+	    dataType : 'json',
+	    data:{
+			"page":page
+		},
+		success : function(data) {
+			//data=$.parseJSON(data);
+			//alert(data.datas.length);
+			var contentHtml ="";
+			for (var i = 0; i<data.datas.length; i++) {
+				var rowHtml ="<tr>";
+				rowHtml+="<td >"+data.datas[i].reportId+"</td>";
+				rowHtml+="<td >"+data.datas[i].policyholdersName+"</td>";
+				rowHtml+="<td >"+data.datas[i].recognizeeName+"</td>";
+				rowHtml+="<td >"+data.datas[i].sailId+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportPersonName+"</td>";
+				rowHtml+="<td >"+data.datas[i].reporPersontPhone+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportReason+"</td>";
+				rowHtml+="<td >"+data.datas[i].province+"</td>";
+				rowHtml+="<td >"+data.datas[i].reportTime+"</td>";
+				rowHtml+="<a href='http://localhost:8080/loadAllReportDetial.do?id="+data.datas[i].reportId+"' >";
+				rowHtml+="查看详情</a>&nbsp;";
+				rowHtml+="<a href='http://localhost:8080/updateReport.do?id="+data.datas[i].reportId+"' >";
+				rowHtml+="<button class='btn btn-sm btn-primary'>修改</button></a>&nbsp;";
+				rowHtml+="<button class='btn btn-sm btn-primary' disabled='disabled'>删除</button></td></tr>";
+			contentHtml += rowHtml;
+				}
+			//alert(contentHtml);
+			$("#allreportInfo").append(contentHtml);
+				
+				//initPageBar(data.singerData,"loadRole");
+			},
+		error : function() {
+			alert("查找失败!");
+			}
+		})
+	}   
+

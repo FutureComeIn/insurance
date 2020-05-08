@@ -1,0 +1,63 @@
+package com.dxm.insuranceSpring.utils;
+
+import org.apache.ibatis.jdbc.SQL;
+
+import com.dxm.insuranceSpring.pojo.User;
+
+
+public class SqlUtils {
+	 //方法中的关键字是区分大小写的  SQL SELECT WHERE
+    //该方法会根据传递过来的map中的参数内容  动态构建sql语句
+    public String selectWhitParamSql(final String userName,final Integer uid,final Integer leaveStatus) {
+        return new SQL() {
+            {
+                SELECT("*");
+                FROM("T_USER");
+                if(leaveStatus!=null) {
+                	 WHERE("leaveStatus=#{leaveStatus}");
+                }else {
+                	WHERE("leaveStatus=0");
+                }
+                if (uid!=null) {
+                    WHERE("userid=#{id}");
+                }
+                if(userName!= null){
+                	WHERE("username like #{username}");
+                }
+            }
+            
+        }.toString();
+    }	
+    public String selectLog(String logName,String logTime) {
+    	return new SQL() {
+    		{
+    			SELECT("*");
+    			FROM("t_log");
+    			if(logName!=null) {
+    				WHERE("logName like #{logName}");
+    			}
+    			if(logTime!=null) {
+    				WHERE("logTime like #{logTime}");
+    			}
+    		}
+    	}.toString();
+    }
+    
+    public String updateWhitParamSql(final User param) {
+        return new SQL() {
+            {
+                UPDATE("t_user");
+               
+                if (param.getUserId() > 0) {
+                    SET("id=#{id}");
+                }
+                if(param.getUserName() != null){
+                	SET("id=#{id}");
+                }
+                WHERE("id=#{id}");
+            }
+            
+        }.toString();
+    }
+   
+}
